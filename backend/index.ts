@@ -25,14 +25,92 @@ app.use("/uploads/images", express.static("uploads/images"));
 
 // --------------IMPORT ROUTES-----------------
 
+// Import User Routes
+import authRoutes from "./src/routes/authRoute";
 
+// Import Bill Routes
+import billRoutes from "./src/routes/billRoute";
 
+// Import Member Routes
+import memberRoutes from "./src/routes/memberRoute";
+
+// Import Business Account Routes
+import businessAccRoutes from "./src/routes/businessAccRoute";
+
+// Import Ads Cost Routes
+import adsCostRoutes from "./src/routes/adsCostRoute";
+
+// Import platform Routes
+import platformRoutes from "./src/routes/platformRoute";
+
+// Import Expense Routes
+import expenseRoutes from "./src/routes/expenseRoute";
+
+// Import Product Routes
+import productRoutes from "./src/routes/productRoute";
+
+// Import Dashboard Routes
+import dashboardRoutes from "./src/routes/dashboardRoute";
+
+// Import Credit Routes
+import  creditRoutes from "./src/routes/creditRoute";
+
+// Import user Routes
+import userRoutes from "./src/routes/userRoute";
+
+// Import Post Routes
+import postRoutes from "./src/routes/postRoute";
+
+// Import Comment Routes
+import commentRoutes from "./src/routes/commentRoute";
+
+// Import report Routes
+import  reportRoutes  from "./src/routes/reportRoute";
 
 // --------------USE ROUTES-----------------
 
+// User Routes
+app.use("/auth", authRoutes);
 
+// Bill Routes
+app.use("/bill", billRoutes);
+
+// Member Routes
+app.use("/member", memberRoutes);
+
+// Business Account Routes
+app.use("/businessacc", businessAccRoutes);
+
+// Ads Cost Routes
+app.use("/ads", adsCostRoutes);
+
+// platform Routes
+app.use("/platform", platformRoutes);
+
+// Expense Routes
+app.use("/expense", expenseRoutes);
+
+// Product Routes
+app.use("/product", productRoutes);
+
+// Dashboard Routes
+app.use("/dashboard", dashboardRoutes);
+
+// Credit Routes
+app.use("/credit", creditRoutes);
+
+// User Routes
+app.use("/user", userRoutes);
+
+// Post Routes
+app.use("/post", postRoutes);
+
+// Comment Routes
+app.use("/comment", commentRoutes);
+
+// Report Routes
+app.use("/report", reportRoutes);
 
 //---------- Start the server ----------------
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
-
