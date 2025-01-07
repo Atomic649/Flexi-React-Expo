@@ -109,6 +109,7 @@ const login = async (req: Request, res: Response) => {
     }
     // Generate JWT token
     const token = jwt.sign({ id: user.id }, "secret",)
+    console.log('token:', token)
 
     
 
@@ -216,4 +217,16 @@ const getAvatar = async (req: Request, res: Response) => {
   }
 }
 
-export { register, login, getUsers, deleteUser, updateUser, getAvatar };
+// Logout by deleting the token
+const logout = async (req: Request, res: Response) => {
+  try {
+    res.json({ message: "logout successful" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "failed to logout" });
+  }
+}
+
+
+
+export { register, login, getUsers, deleteUser, updateUser, getAvatar, logout };

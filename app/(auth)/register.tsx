@@ -1,68 +1,174 @@
-import { View, Text, ScrollView, Image, Dimensions } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import FormField from '@/components/FormField'
-import CustomButton from '@/components/CustomButton'
-import { Link } from 'expo-router'
-import { images } from '@/constants'
+import { ScrollView, Image, Dimensions, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
+import { View } from '@/components/Themed';
+import FormField from '@/components/FormField';
+import { router } from 'expo-router';
+import Button from '@/components/Button';
+import CustomButton from '@/components/CustomButton';
+import { images } from '@/constants';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import CustomAlert from '@/components/CustomAlert';
+import { Text } from "@/components/CustomText";
+import CallAPIUser from '@/api/user';
 
-export default function register() {
+export default function Register() {
+  const { t } = useTranslation();
+  const [displayName, setDisplayName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  // Add alert config state
+  const [alertConfig, setAlertConfig] = useState<{
+    visible: boolean;
+    title: string;
+    message: string;
+    buttons: Array<{
+      text: string;
+      onPress: () => void;
+      style?: 'default' | 'cancel' | 'destructive';
+    }>;
+  }>({
+    visible: false,
+    title: '',
+    message: '',
+    buttons: []
+  });
+
+  // Handle register
+  const handleRegister = async () => {
+    setError('');
+
+    // Check if all fields are filled
+    if (!displayName || !email || !password || !phone) {
+      setAlertConfig({
+        visible: true,
+        title: t('auth.register.validation.incomplete'),
+        message: t('auth.register.validation.invalidData'),
+        buttons: [
+          {
+            text: t('common.ok'),
+            onPress: () => setAlertConfig(prev => ({ ...prev, visible: false }))
+          }
+        ]
+      });
+      return;
+    }
+
+    try {
+      // Call the register API
+      const data = await CallAPIUser.registerAPI({ displayName, phone, email, password });
+
+      if (data.error) throw new Error(data.error);
+
+      setAlertConfig({
+        visible: true,
+        title: t('auth.register.alerts.success'),
+        message: t('auth.register.alerts.successMessage'),
+        buttons: [
+          {
+            text: t('auth.register.alerts.ok'),
+            onPress: () => {
+              setAlertConfig(prev => ({ ...prev, visible: false }));
+              router.replace('/login');
+            }
+          }
+        ]
+      });
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
+
   return (
-    <SafeAreaView className="bg-primary h-full px-4 my-6">
-      <ScrollView>
-        <View
-          className="w-full flex justify-center h-full px-4 my-6"
-          style={{
-            minHeight: Dimensions.get("window").height - 100,
-          }}
-        >
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="h-[34px]"
-          />
+    <SafeAreaView className="h-full">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+      >
+        <ScrollView>
+          <View
+            className="w-full flex justify-center h-full px-4 py-10"
+            style={{
+              minHeight: Dimensions.get("window").height,
+            }}
+          >
+            <View className="flex items-center">
+              <Image
+                source={images.logo}
+                resizeMode="contain"
+                className="h-[34px]"
+              />
+            </View>
 
-          <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign Up to AuraShop
-          </Text>
-
-          <FormField
-            title="Username"
-            value={null}
-            otherStyles="mt-10"
-          />
-
-          <FormField
-            title="Email"
-            value={null}
-            otherStyles="mt-7"
-            keyboardType="email-address"
-          />
-
-          <FormField
-            title="Password"
-            value={null}
-            otherStyles="mt-7"
-          />
-
-          <CustomButton
-            title="Register"
-            handlePress={() => {}}
-            containerStyles="mt-7"
-          />
-
-          <View className="flex justify-center pt-5 flex-row gap-2">
-            <Text className="text-lg text-gray-100 font-pregular">
-              Have an account already?
+            <Text weight="medium" className="text-2xl mt-10">
+              {t('auth.register.title')}
             </Text>
-            <Link
-              href="/login"
-              className="text-lg font-psemibold text-secondary"
-            >
-              Login
-            </Link>
+
+            <FormField
+              title={t('auth.register.displayNameTitle')}
+              placeholder={t('auth.register.displayNamePlaceholder')}
+              value={displayName}
+              handleChangeText={setDisplayName}
+              otherStyles="mt-10"
+            />
+
+            <FormField
+              title={t('auth.register.phoneTitle')}
+              placeholder={t('auth.register.phonePlaceholder')}
+              value={phone}
+              handleChangeText={setPhone}
+              otherStyles="mt-7"
+              keyboardType="phone-pad"
+            />
+
+            <FormField
+              title={t('auth.register.emailPlaceholder')}
+              placeholder={t('auth.register.emailPlaceholder')}
+              value={email}
+              handleChangeText={setEmail}
+              otherStyles="mt-7"
+              keyboardType="email-address"
+            />
+
+            <FormField
+              title={t('auth.register.passwordPlaceholder')}
+              placeholder={t('auth.register.passwordPlaceholder')}
+              value={password}
+              handleChangeText={setPassword}
+              otherStyles="mt-7"
+              secureTextEntry
+            />
+
+            {error ? (
+              <Text className="text-red-500 mt-4">{error}</Text>
+            ) : null}
+
+            <CustomButton
+              title={t('auth.register.button')}
+              handlePress={handleRegister}
+              containerStyles="mt-7"
+              textStyles="!text-white"
+            />
+
+            <View className="flex justify-center pt-5 flex-row gap-2">
+              <Text weight="regular" className="text-lg text-gray-100">
+                {t('auth.register.hasAccount')}
+              </Text>
+              <Button title={t('auth.register.loginButton')} onPress={() => router.replace('/login')} />
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+
+      <CustomAlert
+        visible={alertConfig.visible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        buttons={alertConfig.buttons}
+        onClose={() => setAlertConfig(prev => ({ ...prev, visible: false }))}
+      />
     </SafeAreaView>
-  )
+  );
 }
