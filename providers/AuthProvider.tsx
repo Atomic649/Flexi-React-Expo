@@ -1,11 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import CallAPIUser from '@/api/user';
+import CallAPIUser from '@/api/auth_api';
 import { saveToken,  removeToken } from '@/utils/utility';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { id } from 'date-fns/locale';
+
+
 
 // Define the AuthContextType
 type AuthContextType = {
-  session: any | null; // Update the type according to your backend response
+  session: JSON | null; // Update the type according to your backend response
   loading: boolean; // Loading state for session
   login: (email: string, password: string) => Promise<any>; // Login function
   logout: () => void; // Logout function
@@ -28,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Check Session when the app starts
     const fetchSession = async () => {
       try {
-        const data = await CallAPIUser.getSession();
+        const data = await CallAPIUser.getSessionAPI(); 
         setSession(data.session);
       } catch (error) {
         console.error(error);
@@ -51,9 +54,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     try {
       const data = await CallAPIUser.loginAPI({ email, password });
-      setSession(data.session);
+        setSession(data.session);
       await saveToken(data.token); // Save the token
       await AsyncStorage.setItem('isLoggedIn', 'true'); // Save login status      
+      await AsyncStorage.setItem("token", "token");
       return data;
     } catch (error) {
       console.error(error);

@@ -47,4 +47,5 @@ const multerConfig = {
     keyUpload: "imageBill",
 };
 
+
 export default multerConfig

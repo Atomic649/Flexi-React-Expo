@@ -67,6 +67,9 @@ import commentRoutes from "./src/routes/commentRoute";
 // Import report Routes
 import  reportRoutes  from "./src/routes/reportRoute";
 
+// Import pdf Rou
+import pdfRoutes from "./src/routes/pdfRoute";
+
 // --------------USE ROUTES-----------------
 
 // User Routes
@@ -110,6 +113,9 @@ app.use("/comment", commentRoutes);
 
 // Report Routes
 app.use("/report", reportRoutes);
+
+// Pdf Routes
+app.use("/pdf", pdfRoutes);
 
 //---------- Start the server ----------------
 const port = process.env.PORT || 3000;

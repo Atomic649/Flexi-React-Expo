@@ -7,6 +7,7 @@ import {
   updateUser,
   getAvatar,
   logout,
+  session,
 } from "../controllers/authController";
 
 // Create express router
@@ -31,5 +32,8 @@ router.put("/update/:id", updateUser);
 
  //Logout
 router.get("/logout", logout);
+
+// session
+router.get("/session/", session);
 
 export default router;

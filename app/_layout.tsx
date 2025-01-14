@@ -1,49 +1,52 @@
 // Import your global CSS file
-import "../global.css"
-import "@/i18n"
-import React, { useEffect } from "react"
-import { Stack } from 'expo-router'
-import { useFonts } from 'expo-font'
-import { SafeAreaView, StatusBar } from 'react-native'
-import { ThemeProvider, useTheme } from '@/providers/ThemeProvider'
-import * as NavigationBar from 'expo-navigation-bar'
-import { AuthProvider } from "@/providers/AuthProvider"
-
+import "../global.css";
+import "@/i18n";
+import React, { useEffect } from "react";
+import { Stack } from "expo-router";
+import { useFonts } from "expo-font";
+import { SafeAreaView, StatusBar } from "react-native";
+import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
+import * as NavigationBar from "expo-navigation-bar";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 function RootLayoutNav() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   useEffect(() => {
     async function updateNavigationBar() {
       try {
-        const navBarColor = theme === 'dark' ? '#161622' : '#ffffff';
+        const navBarColor = theme === "dark" ? "#161622" : "#ffffff";
         await NavigationBar.setBackgroundColorAsync(navBarColor);
         // Set button style based on theme
-        await NavigationBar.setButtonStyleAsync(theme === 'dark' ? 'light' : 'dark');
+        await NavigationBar.setButtonStyleAsync(
+          theme === "dark" ? "light" : "dark"
+        );
       } catch (error) {
-        console.error('Error setting navigation bar:', error);
+        console.error("Error setting navigation bar:", error);
       }
     }
-    
+
     updateNavigationBar();
   }, [theme]);
 
-  return(
-    <SafeAreaView className={`h-screen ${theme === 'dark' ? 'bg-primary' : 'bg-white'}`}>
-      <StatusBar 
-        barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
-        backgroundColor={theme === 'dark' ? '#161622' : 'white'}
+  return (
+    <SafeAreaView
+      className={`h-screen ${theme === "dark" ? "bg-primary" : "bg-white"}`}
+    >
+      <StatusBar
+        barStyle={theme === "dark" ? "light-content" : "dark-content"}
+        backgroundColor={theme === "dark" ? "#161622" : "white"}
         animated={true}
       />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name='(auth)' options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>
     </SafeAreaView>
-  )
+  );
 }
 
 export default function RootLayout() {
@@ -76,7 +79,6 @@ export default function RootLayout() {
       <ThemeProvider>
         <RootLayoutNav />
       </ThemeProvider>
-    // </AuthProvider>
-  )
+    </AuthProvider>
+  );
 }
-

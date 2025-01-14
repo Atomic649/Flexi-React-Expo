@@ -44,11 +44,12 @@ const register = async (req: Request, res: Response) => {
     if (existingUser) {
       return res.status(400).json({
         status: "error",
-        message: "User already exists" });
+        message: "User already exists",
+      });
     }
     //Check if password matches
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(userInput.password, salt)
+    const hashedPassword = await bcrypt.hash(userInput.password, salt);
     const user = await connection.user.create({
       data: {
         email: userInput.email,
@@ -60,7 +61,7 @@ const register = async (req: Request, res: Response) => {
     });
     // Generate JWT token and process.env.JWT_SECRET
     // Generate JWT token
-    const token = jwt.sign({ id: user.id }, "secret",)
+    const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1day" });
 
     res.json({
       status: "ok",
@@ -76,42 +77,40 @@ const register = async (req: Request, res: Response) => {
     });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: "failed to register" })
+    res.status(500).json({ message: "failed to register" });
   }
 };
 
 // Login function by prisma
 
 const login = async (req: Request, res: Response) => {
-  const userInput: UserInput = req.body
+  const userInput: UserInput = req.body;
   const schema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-  })
+  });
   const { error } = schema.validate(userInput);
   if (error) {
-    return res.status(400).json({ message: error.details[0].message })
+    return res.status(400).json({ message: error.details[0].message });
   }
   try {
     const user = await connection.user.findUnique({
       where: {
         email: userInput.email,
       },
-    })
+    });
     if (!user) {
-      return res.status(401).json({ message: "invalid credentials" })
+      return res.status(401).json({ message: "invalid credentials" });
     }
-    const valid = await bcrypt.compare(userInput.password, user.password)
+    const valid = await bcrypt.compare(userInput.password, user.password);
     if (!valid) {
       return res
         .status(401)
-        .json({ message: "Email and password does not match" })
+        .json({ message: "Email and password does not match" });
     }
     // Generate JWT token
-    const token = jwt.sign({ id: user.id }, "secret",)
-    console.log('token:', token)
-
-    
+    const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1day" });
+    // console.log('token:', token)
 
     res.json({
       status: "ok",
@@ -124,16 +123,13 @@ const login = async (req: Request, res: Response) => {
         lastName: user.lastName,
         avatar: user.avatar,
         phone: user.phone,
-        bio : user.bio,
-        username : user.username,
-
-        
-        
+        bio: user.bio,
+        username: user.username,
       },
-    })
+    });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: "failed to login" })
+    res.status(500).json({ message: "failed to login" });
   }
 };
 
@@ -160,13 +156,13 @@ const deleteUser = async (req: Request, res: Response) => {
     res.json(user);
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: "failed to delete user" })
+    res.status(500).json({ message: "failed to delete user" });
   }
 };
 
 // Update user by id by prisma validation by joi and bcrypt and jwt
 const updateUser = async (req: Request, res: Response) => {
-  const { id } = req.params
+  const { id } = req.params;
   const userInput: UserInput = req.body;
   const schema = Joi.object({
     email: Joi.string().email().required(),
@@ -175,14 +171,14 @@ const updateUser = async (req: Request, res: Response) => {
     lastName: Joi.string().required(),
     avatar: Joi.string().required(),
     phone: Joi.string().required().min(10).max(10),
-  })
+  });
   const { error } = schema.validate(userInput);
   if (error) {
-    return res.status(400).json({ message: error.details[0].message })
+    return res.status(400).json({ message: error.details[0].message });
   }
   try {
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(userInput.password, salt)
+    const hashedPassword = await bcrypt.hash(userInput.password, salt);
     const user = await connection.user.update({
       where: {
         id: Number(id),
@@ -195,16 +191,16 @@ const updateUser = async (req: Request, res: Response) => {
         avatar: userInput.avatar,
         phone: userInput.phone,
       },
-    })
+    });
     res.json(user);
     // Generate JWT token
-    const token = jwt.sign({ id: user.id }, "secret")
+    const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1day" });
     res.json({ token });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: "failed to update user" })
+    res.status(500).json({ message: "failed to update user" });
   }
-}
+};
 
 // get avatar by name
 const getAvatar = async (req: Request, res: Response) => {
@@ -215,7 +211,7 @@ const getAvatar = async (req: Request, res: Response) => {
     console.error(e);
     res.status(500).json({ message: "failed to get avatar" });
   }
-}
+};
 
 // Logout by deleting the token
 const logout = async (req: Request, res: Response) => {
@@ -225,8 +221,38 @@ const logout = async (req: Request, res: Response) => {
     console.error(e);
     res.status(500).json({ message: "failed to logout" });
   }
-}
+};
 
+// Session endpoint
+const session = async (req: Request, res: Response) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
 
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
 
-export { register, login, getUsers, deleteUser, updateUser, getAvatar, logout };
+  try {
+    const decoded = jwt.verify(token, "secret") as { id: number };
+    const user = await connection.user.findUnique({
+      where: {
+        id: decoded.id,
+      },
+    });
+    res.json({ session: user });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "failed to get session" });
+  }
+};
+
+export {
+  register,
+  login,
+  getUsers,
+  deleteUser,
+  updateUser,
+  getAvatar,
+  logout,
+  session,
+};

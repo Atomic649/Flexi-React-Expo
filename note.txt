@@ -58,3 +58,31 @@ npm i jsonwebtoken
 
 
 
+log emoji
+✅ - get
+💾 - save
+🗑️ - delete
+🔍 - search
+🔧 - Configuratio
+📝 - Documentation
+🐛 - Bug Fix
+🚀 - New Feature
+🔥 - Remove Code
+🤖 - Tests
+🛠 - Refactor
+🎨 - Style
+🔖 - Version Tag
+📰 - Release
+🚧 - Work In Progress
+💄 - UI
+📦 - Package.json
+👷 - CI/CD
+🔊 - Logging
+🚨 - Breaking Change
+👌 - Code Review
+👽 - Compatibility
+📦 - Dependency
+🚚 - Move File
+📄 - License
+🚑 - Critical Hotfix
+📦 - Package.json

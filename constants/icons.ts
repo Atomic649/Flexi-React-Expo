@@ -1,4 +1,4 @@
-import bookmark from "../assets/icons/bookmark.png"
+import expense from "../assets/icons/expense.png"
 import home from "../assets/icons/home.png"
 import plus from "../assets/icons/plus.png"
 import profile from "../assets/icons/profile.png"
@@ -16,7 +16,7 @@ import flagth from "../assets/icons/thailand.png"
 import flagen from "../assets/icons/united-kingdom.png"
 
 export default {
-  bookmark,
+  expense,
   home,
   plus,
   profile,

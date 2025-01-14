@@ -16,9 +16,11 @@ import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomAlert from "@/components/CustomAlert";
 import { Text } from "@/components/CustomText";
-import CallAPIUser from "@/api/user";
+import CallAPIUser from "@/api/auth_api";
 import images from "@/constants/images";
 import { t } from "i18next";
+import { da } from "date-fns/locale";
+import { saveToken } from "@/utils/utility";
 
 export default function Login() {
   // State variables for email and password
@@ -68,7 +70,7 @@ export default function Login() {
       return;
     }
 
-    const { data, error } = await CallAPIUser.loginAPI(form);
+    const { error, token } = await CallAPIUser.loginAPI(form);
 
     // // Handle successful login (e.g., navigate to another screen)
     if (error) {
@@ -86,13 +88,9 @@ export default function Login() {
       });
     } else {
       // บันทึก Token ลงใน AsyncStorage
-      await AsyncStorage.setItem("token", "token");
+      saveToken(token);
       // บันทึกสถานะการเข้าสู่ระบบลงใน AsyncStorage
       await AsyncStorage.setItem("isLoggedIn", "true");
-
-      // // Console log AsyncStorage
-      // console.log(await AsyncStorage.getItem("token"));
-      // console.log(await AsyncStorage.getItem("isLoggedIn"));
 
       setAlertConfig({
         visible: true,
