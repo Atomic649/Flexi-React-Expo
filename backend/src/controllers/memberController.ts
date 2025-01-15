@@ -28,6 +28,10 @@ const createMember = async (req: Request, res: Response) => {
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
+
+  // convert string to number in userId
+  memberInput.userId = Number(memberInput.userId);
+  
   try {
     const member = await prisma.member.create({
       data: {
@@ -36,8 +40,9 @@ const createMember = async (req: Request, res: Response) => {
         userId: memberInput.userId,
       },
     });
-  
+ 
     res.json(member);
+
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "failed to create member" });
@@ -157,7 +162,7 @@ const searchMember = async (req: Request, res: Response) => {
 };
 
 // Export the createMember function
-export {
+export {  
   createMember,
   getMembers,
   getMemberIDByUserID,

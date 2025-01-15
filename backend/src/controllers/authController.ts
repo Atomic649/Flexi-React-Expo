@@ -15,11 +15,12 @@ interface UserInput {
   phone: string;
 }
 
-// Register function by prisma and bcrypt and validation by joi
-// Compare the password with the hashed password in the database
-// Generate JWT token for the registered user
 
 const connection = new PrismaClient();
+
+// JWT token expiration configuration
+const tokenConfig = { expiresIn: "30day" };
+
 
 const register = async (req: Request, res: Response) => {
   const userInput: UserInput = req.body;
@@ -59,9 +60,8 @@ const register = async (req: Request, res: Response) => {
         phone: userInput.phone,
       },
     });
-    // Generate JWT token and process.env.JWT_SECRET
     // Generate JWT token
-    const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1day" });
+    const token = jwt.sign({ id: user.id }, "secret", tokenConfig);
 
     res.json({
       status: "ok",
@@ -109,8 +109,7 @@ const login = async (req: Request, res: Response) => {
         .json({ message: "Email and password does not match" });
     }
     // Generate JWT token
-    const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1day" });
-    // console.log('token:', token)
+    const token = jwt.sign({ id: user.id }, "secret", tokenConfig);
 
     res.json({
       status: "ok",
@@ -194,7 +193,7 @@ const updateUser = async (req: Request, res: Response) => {
     });
     res.json(user);
     // Generate JWT token
-    const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1day" });
+    const token = jwt.sign({ id: user.id }, "secret", tokenConfig);
     res.json({ token });
   } catch (e) {
     console.error(e);

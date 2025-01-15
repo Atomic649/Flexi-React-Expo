@@ -45,9 +45,32 @@
         "successMessage": "Press OK to login",
         "ok": "OK"
       },
-      "displayNameTitle": "Full Name",
+      "firstName": "Full Name",
+      "lastName": "Last Name",
       "phoneTitle": "Phone Number",
       "phonePlaceholder": "Enter your phone number"
+    },
+    "businessRegister": {
+      "title": "Business Registration",
+      "displayNamePlaceholder": "Business Name",
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Password",
+      "button": "Register",
+      "hasAccount": "Already have an account?",
+      "loginButton": "Login",
+      "validation": {
+        "incomplete": "Incomplete Data",
+        "invalidData": "Please enter valid data"
+      },
+      "alerts": {
+        "success": "Registration Successful",
+        "successMessage": "Press OK to login",
+        "ok": "OK"
+      },
+      "businessName": "Business Name",
+      "taxType": "Tax Type",
+      "vatId": "VAT ID",
+      "businessType": "Business Type"
     }
   },
   "product": {
@@ -296,4 +319,4 @@
       }
     }
   }
-} 
+}

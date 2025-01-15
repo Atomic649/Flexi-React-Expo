@@ -1,12 +1,11 @@
 import express from "express";
 import authenticateToken from "../middleware/authMiddleware";
-import { extractPdf } from "../controllers/pdfController";
+import { pdfExtract} from '../controllers/expensePDFController';
 // Create express router
 const router = express.Router();
 
-// Import pdf controller
-router.get("/extract", authenticateToken,extractPdf)
 
+router.get("/pdfExtract", authenticateToken,pdfExtract)
 
 
 

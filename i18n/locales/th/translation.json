@@ -45,9 +45,29 @@
         "successMessage": "กรุณากดปุ่ม OK เพื่อเข้าสู่ระบบ",
         "ok": "ตกลง"
       },
-      "displayNameTitle": "ชื่อ-นามสกุล",
+      "firstName": "ชื่อจริง",
+      "lastName": "นามสกุล",
       "phoneTitle": "เบอร์โทรศัพท์",
       "phonePlaceholder": "กรอกเบอร์โทรศัพท์"
+    },
+    "businessRegister": {
+      "title": "สมัครสมาชิกธุรกิจ",        
+      "button": "สมัครสมาชิก",
+      "hasAccount": "มีบัญชีอยู่แล้ว ?",
+      "loginButton": "เข้าสู่ระบบ",
+      "validation": {
+        "incomplete": "ข้อมูลไม่ครบ",
+        "invalidData": "กรุณาระบุข้อมูลให้ถูกต้อง"
+      },
+      "alerts": {
+        "success": "ลงทะเบียนสำเร็จ",
+        "successMessage": "กรุณากดปุ่ม OK เพื่อเข้าสู่ระบบ",
+        "ok": "ตกลง"
+      },
+      "businessName": "ชื่อธุรกิจ",
+      "taxType": "ประเภทภาษี",
+      "vatId": "เลขผู้เสียภาษี",
+      "businessType": "ประเภทธุรกิจ"
     }
   },
   "product": {

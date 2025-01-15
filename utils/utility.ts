@@ -1,10 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Network from 'expo-network';
+import jwtDecode from 'jwt-decode';
 
+
+
+// Function to check the network status
 export const checkNetwork = async (): Promise<boolean> => {
-  // Implement your network check logic here
-  // For example, you can use the `NetInfo` library in React Native
-  // return await NetInfo.fetch().then(state => state.isConnected);
-  return true; // Placeholder implementation
+  try {
+    const networkState = await Network.getNetworkStateAsync();
+    return networkState.isConnected ?? false;
+  } catch (error) {
+    console.error('Error checking network status:', error);
+    return false;
+  }
 };
 
 // Function to save the token to AsyncStorage
@@ -18,8 +26,7 @@ export const saveToken = async (token: string) => {
 };
 
 // Function to get the token from AsyncStorage
-export const getToken = async ():
-Promise<string | null> => {
+export const getToken = async (): Promise<string | null> => {
   try {
     const token = await AsyncStorage.getItem('token');
     console.log('✅ Token Get :', token);
@@ -39,4 +46,3 @@ export const removeToken = async () => {
     console.error('Error removing token:', error);
   }
 };
-

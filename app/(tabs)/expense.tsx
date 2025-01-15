@@ -11,12 +11,10 @@ import * as DocumentPicker from "expo-document-picker";
 import { WebView } from "react-native-webview";
 import * as FileSystem from "expo-file-system";
 
-
 export default function Expense() {
   const [pdfUri, setPdfUri] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
- 
 
   const pickAndProcessPdf = async () => {
     const result = await DocumentPicker.getDocumentAsync({
@@ -50,7 +48,6 @@ export default function Expense() {
         <Button title="Select PDF" onPress={pickAndProcessPdf} />
         {loading && <ActivityIndicator size="large" />}
         {error && <Text style={styles.error}>{error}</Text>}
-        // show pdf in webview
         {pdfUri && (
           <WebView
             style={styles.pdf}
@@ -58,7 +55,6 @@ export default function Expense() {
             source={{ uri: pdfUri }}
           />
         )}
-        
       </View>
     </SafeAreaView>
   );

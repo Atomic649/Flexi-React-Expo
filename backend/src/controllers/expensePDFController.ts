@@ -2,9 +2,7 @@ import { Request, Response } from "express";
 import fs from "fs";
 import pdfParse from "pdf-parse";
 
-// post url from device to backend
-// hardcoded url for now
-export const extractPdf = async (req: Request, res: Response): Promise<void> => {
+export const pdfExtract = async (req: Request, res: Response): Promise<void> => {
     // hardcoded file path
     const filePath = "/Volumes/LACIES/Flexi-React-Expo/backend/uploads/images/pdf/AcctSt2.pdf";
 
@@ -14,7 +12,8 @@ export const extractPdf = async (req: Request, res: Response): Promise<void> => 
     let text = data.text;
 
     console.log("🔥text", text);
-
+    
+   
     // extract specific patterns
     // pattern to match: X1/ENET and X2/ENET  both credit and debit
     // const pattern = /\bX[12]\/ENET\d{1,3}(?:,\d{3})*\.\d{2}\d{1,3}(?:,\d{3})*\.\d{2}\b/g;
@@ -29,5 +28,7 @@ export const extractPdf = async (req: Request, res: Response): Promise<void> => 
     });
 
     res.json({ matches: formattedMatches });
-};
 
+
+
+}

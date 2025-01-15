@@ -2,8 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import CallAPIUser from '@/api/auth_api';
 import { saveToken,  removeToken } from '@/utils/utility';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { id } from 'date-fns/locale';
-
+import { router } from 'expo-router';
 
 
 // Define the AuthContextType
@@ -35,6 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(data.session);
       } catch (error) {
         console.error(error);
+        router.navigate('login'); // Redirect to login page
       } finally {
         setLoading(false);
       }
@@ -89,3 +89,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
+// TODO : when token expired,it still no error message and still able to access the page

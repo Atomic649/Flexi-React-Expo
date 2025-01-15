@@ -17,8 +17,7 @@
     "@prisma/client": "^5.16.1",
     "@tsed/multipartfiles": "^5.65.9",
     "@types/body-parser": "^1.19.5",
-    "@types/pdf-parse": "^1.1.4",
-    "@types/stopword": "^2.0.3",
+    "@types/pdf-parse": "^1.1.4",   
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -27,8 +26,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.4",
     "mysql2": "^3.10.0",
-    "pdf-parse": "^1.1.1",
-    "pdf-table-extractor": "^1.0.3",
+    "pdf-parse": "^1.1.1",    
     "ts-node-register": "^1.0.0"
   },
   "devDependencies": {
