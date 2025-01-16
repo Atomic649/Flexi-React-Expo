@@ -151,6 +151,7 @@ export default function Login() {
               value={form.password}
               handleChangeText={(e: any) => setForm({ ...form, password: e })}
               otherStyles="mt-7"
+             
             />
 
             <CustomButton

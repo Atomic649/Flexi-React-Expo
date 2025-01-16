@@ -15,7 +15,7 @@ import authenticateToken from "../middleware/authMiddleware";
 const router = express.Router();
 
 // Create New Business Acc 
-router.post("/", createBusinessAcc);
+router.post("/register", createBusinessAcc);
 
 // Getting all Business Accounts
 router.get("/", authenticateToken, getBusinessAcc);

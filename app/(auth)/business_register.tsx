@@ -8,8 +8,7 @@ import {
 } from "react-native";
 import { View } from "@/components/Themed";
 import FormField from "@/components/FormField";
-import { router } from "expo-router";
-import Button from "@/components/Button";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
 import { useState } from "react";
@@ -17,9 +16,12 @@ import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
 import { Text } from "@/components/CustomText";
 import Dropdown from "@/components/Dropdown";
+import CallAPIBusiness from "@/api/business_api";
 
 export default function Register() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const { userId, uniqueId } = useLocalSearchParams();
   const [businessName, setbusinessName] = useState("");
   const [taxType, settaxType] = useState("");
   const [vatId, setvatId] = useState("");
@@ -64,13 +66,21 @@ export default function Register() {
       return;
     }
 
+    console.log("userId", userId);
+    console.log("uniqueId", uniqueId);
+
     try {
       // Call the register API
-      // const data = await CallAPIUser.registerAPI({}):
+      const data = await CallAPIBusiness.RegisterAPI({
+        businessName,
+        vatId,
+        businessType,
+        taxType,
+        userId: Number(userId),
+        memberId: uniqueId,
+      });
 
-      // TODO - call API business register
-
-      // if (data.error) throw new Error(data.error);
+      if (data.error) throw new Error(data.error);
 
       setAlertConfig({
         visible: true,
