@@ -52,8 +52,7 @@
     },
     "businessRegister": {
       "title": "สมัครสมาชิกธุรกิจ",        
-      "button": "สมัครสมาชิก",
-      "hasAccount": "มีบัญชีอยู่แล้ว ?",
+      "button": "สมัครสมาชิก",     
       "loginButton": "เข้าสู่ระบบ",
       "validation": {
         "incomplete": "ข้อมูลไม่ครบ",
@@ -67,7 +66,25 @@
       "businessName": "ชื่อธุรกิจ",
       "taxType": "ประเภทภาษี",
       "vatId": "เลขผู้เสียภาษี",
-      "businessType": "ประเภทธุรกิจ"
+      "businessType": "ประเภทธุรกิจ",
+      "taxTypeOption": {
+        "" : "เลือกประเภทภาษี",
+        "Individual": "บุคคล",
+        "Juristic": "นิติบุคคล"
+      },
+      "chooseBusinessType": "เลือกประเภทธุรกิจ",
+      "businessTypeOption": {
+        ""  : "เลือกประเภทธุรกิจ",
+        "OnlineSale": "ขายออนไลน์",
+        "Massage": "การนวด",
+        "Restaurant": "ร้านอาหาร",
+        "Bar" : "บาร์",
+        "Cafe": "ร้านกาแฟ",
+        "Hotel": "โรงแรม / รีสอร์ต ",
+        "Tutor" : "ติวเตอร์ / โค้ช",
+        "Influencer": "อินฟลูเอนเซอร์",
+        "Other": "อื่นๆ"
+      }
     }
   },
   "product": {
@@ -316,4 +333,4 @@
       }
     }
   }
-} 
+  }

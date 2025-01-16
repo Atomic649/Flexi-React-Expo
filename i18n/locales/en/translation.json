@@ -52,11 +52,7 @@
     },
     "businessRegister": {
       "title": "Business Registration",
-      "displayNamePlaceholder": "Business Name",
-      "emailPlaceholder": "Email",
-      "passwordPlaceholder": "Password",
       "button": "Register",
-      "hasAccount": "Already have an account?",
       "loginButton": "Login",
       "validation": {
         "incomplete": "Incomplete Data",
@@ -70,7 +66,25 @@
       "businessName": "Business Name",
       "taxType": "Tax Type",
       "vatId": "VAT ID",
-      "businessType": "Business Type"
+      "businessType": "Business Type",
+      "taxTypeOption": {
+        "": "Select Tax Type",
+        "Individual": "Individual",
+        "Juristic": "Juristic"
+      },
+      "chooseBusinessType": "Select Business Type",
+      "businessTypeOption": {
+        "": "Select Business Type",
+        "OnlineSale": "Online Sale",
+        "Massage": "Massage",
+        "Restaurant": "Restaurant",
+        "Bar": "Bar",
+        "Cafe": "Cafe",
+        "Hotel": "Hotel / Resort",
+        "Tutor": "Tutor / Coach",
+        "Influencer": "Influencer",
+        "Other": "Other"
+      }
     }
   },
   "product": {

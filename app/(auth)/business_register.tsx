@@ -130,13 +130,18 @@ export default function Register() {
             <Dropdown
               title={t("auth.businessRegister.taxType")}
               options={[
-                { label: "Juristic", value: "Juristic" },
-                { label: "Individual", value: "Individual" },
-                // TODO - en/th translation  and add more options
+                {
+                  label: t("auth.businessRegister.taxTypeOption.Individual"),
+                  value: "Individual",
+                },
+                {
+                  label: t("auth.businessRegister.taxTypeOption.Juristic"),
+                  value: "Juristic",
+                },
               ]}
               placeholder={t("auth.businessRegister.taxType")}
               onValueChange={settaxType}
-              selectedValue={taxType}
+              selectedValue={t(`auth.businessRegister.taxTypeOption.${taxType}`)}
               otherStyles="mt-7"
             />
 
@@ -152,12 +157,51 @@ export default function Register() {
             <Dropdown
               title={t("auth.businessRegister.businessType")}
               options={[
-                { label: "OnlineSale", value: "OnlineSale" },
-                { label: "Massage", value: "Massage" },
-                // TODO - en/th translation  and add more options
+                {
+                  label: t(
+                    "auth.businessRegister.businessTypeOption.OnlineSale"
+                  ),
+                  value: "OnlineSale",
+                },
+                {
+                  label: t("auth.businessRegister.businessTypeOption.Massage"),
+                  value: "Massage",
+                },
+                {
+                  label: t(
+                    "auth.businessRegister.businessTypeOption.Restaurant"
+                  ),
+                  value: "Restaurant",
+                },
+                {
+                  label: t("auth.businessRegister.businessTypeOption.Bar"),
+                  value: "Bar",
+                },
+                {
+                  label: t("auth.businessRegister.businessTypeOption.Cafe"),
+                  value: "Cafe",
+                },
+                {
+                  label: t("auth.businessRegister.businessTypeOption.Hotel"),
+                  value: "Hotel",
+                },
+                {
+                  label: t("auth.businessRegister.businessTypeOption.Tutor"),
+                  value: "Tutor",
+                },
+                {
+                  label: t(
+                    "auth.businessRegister.businessTypeOption.Influencer"
+                  ),
+                  value: "Influencer",
+                },
+                {
+                  label: t("auth.businessRegister.businessTypeOption.Other"),
+                  value: "Other",
+                },
               ]}
-              placeholder={t("auth.businessRegister.businessType")}
-              selectedValue={businessType}
+              placeholder={t("auth.businessRegister.chooseBusinessType")}
+              selectedValue={t(`auth.businessRegister.businessTypeOption.${businessType}`)}
               onValueChange={setbusinessType}
               otherStyles="mt-7"
             />
@@ -170,16 +214,6 @@ export default function Register() {
               containerStyles="mt-7"
               textStyles="!text-white"
             />
-
-            <View className="flex justify-center pt-5 flex-row gap-2">
-              <Text weight="regular" className="text-lg text-gray-100">
-                {t("auth.register.hasAccount")}
-              </Text>
-              <Button
-                title={t("auth.register.loginButton")}
-                onPress={() => router.replace("/login")}
-              />
-            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
