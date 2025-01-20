@@ -1,11 +1,11 @@
-import { View, Text, Image } from 'react-native'
-import React from 'react'
-import { icons } from '@/constants'
+import { View, Text, Image } from "react-native";
+import React from "react";
+import { icons } from "@/constants";
 
 export default function ProductCard({
-    productname, 
-    productprice,
-    productimage
+  productname,
+  productprice,
+  productimage,
 }: any) {
   return (
     <View className="flex flex-col items-center px-4 my-2">
@@ -13,7 +13,7 @@ export default function ProductCard({
         <View className="flex justify-center items-center flex-row flex-1">
           <View className="w-[90px] h-[90px] rounded-lg border border-secondary flex justify-center items-center p-0.5">
             <Image
-              source={{uri: productimage}}
+              source={{ uri: productimage }}
               className="w-full h-full rounded-lg"
               resizeMode="cover"
             />
@@ -21,16 +21,16 @@ export default function ProductCard({
 
           <View className="flex justify-center flex-1 ml-3 gap-y-1">
             <Text
-              className="font-psemibold text-lg text-white"
+              className="font-psemibold text-lg text-gray-500"
               numberOfLines={3}
             >
               {productname}
             </Text>
             <Text
-              className="text-xl text-gray-100 font-pregular"
+              className="text-xl text-gray-500 font-pregular"
               numberOfLines={1}
             >
-             {productprice}
+              {productprice}
             </Text>
           </View>
         </View>
@@ -40,5 +40,5 @@ export default function ProductCard({
         </View>
       </View>
     </View>
-  )
+  );
 }

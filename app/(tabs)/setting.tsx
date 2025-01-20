@@ -1,4 +1,3 @@
-// rnf
 import React, { useState } from "react";
 import { ScrollView, Pressable, SafeAreaView } from "react-native";
 import { View } from "@/components/Themed";
@@ -14,10 +13,12 @@ import { Text } from "@/components/CustomText";
 import CallAPIUser from "@/api/auth_api";
 import i18n from "i18next";
 import { removeToken } from "@/utils/utility";
+import { useTextColorClass } from "@/utils/themeUtils";
 
 export default function Setting() {
   const { t, i18n } = useTranslation(); // กำหนดตัวแปรใช้งานภาษา
   const { theme, toggleTheme } = useTheme(); // กำหนดตัวแปรใช้งานธีม
+  const textColorClass = useTextColorClass();
   const [alertConfig, setAlertConfig] = useState<{
     visible: boolean;
     title: string;
@@ -330,14 +331,13 @@ const Section = ({
   children: React.ReactNode;
 }) => {
   const { theme } = useTheme();
+  const textColorClass = useTextColorClass();
 
   return (
     <View className="my-4">
       <Text
         weight="medium"
-        className={`text-lg mb-2 ${
-          theme === "dark" ? "text-gray-300" : "text-gray-700"
-        }`}
+        className={`text-lg mb-2 ${textColorClass}`}
       >
         {title}
       </Text>
@@ -362,6 +362,7 @@ const SectionItem = ({
   onPress?: () => void;
 }) => {
   const { theme } = useTheme();
+  const textColorClass = useTextColorClass();
 
   return (
     <Pressable
@@ -381,9 +382,7 @@ const SectionItem = ({
         />
         <Text
           weight="regular"
-          className={`text-base flex-1 ${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
-          }`}
+          className={`text-base flex-1 ${textColorClass}`}
         >
           {text}
         </Text>
