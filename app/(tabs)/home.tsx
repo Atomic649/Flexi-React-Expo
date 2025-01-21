@@ -63,7 +63,7 @@ export default function Home() {
         )}
         ListHeaderComponent={() => (
           <View className="my-6 px-4">
-            <Text className={`text-xl font-semibold text-right ${textColorClass}`}>
+            <Text className={`text-xl font-semibold  ${textColorClass}`}>
               Products
             </Text>
           </View>

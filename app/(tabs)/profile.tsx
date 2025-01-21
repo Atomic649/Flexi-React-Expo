@@ -17,6 +17,7 @@ import CallAPICredit from "@/api/credit_api";
 import { IMAGE_URL } from "@/utils/config";
 import { images } from "@/constants";
 
+
 export default function Profile() {
   const { theme } = useTheme();
   const textColorClass = useTextColorClass();
@@ -69,7 +70,7 @@ export default function Profile() {
           />
         </TouchableOpacity>
 
-        <Text className={`${textColorClass} text-xl font-bold `}>
+        <Text className={`${textColorClass} text-lg font-bold `}>
           {userData.businessName}
         </Text>
 
@@ -85,15 +86,15 @@ export default function Profile() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView >
+      <ScrollView>
         {/* Profile Section */}
-        <View className="items-center mt-2">
+        <View className="items-center mt-5">
           <Image
             source={{ uri: IMAGE_URL + userData.avatar }}
             className="w-24 h-24 rounded-full"
           />
 
-          <Text className={`text-xl font-bold mt-4 ${textColorClass}`}>
+          <Text className={`text-lg font-bold mt-4 ${textColorClass}`}>
             {userData.firstName} {userData.lastName}
           </Text>
           <Text className="text-gray-500">{userData.username}</Text>
@@ -131,11 +132,17 @@ export default function Profile() {
           placeholderTextColor={theme === "dark" ? "#ccc" : "#666"}
         />
          
+         
+
+
 
         {/* Creditors List */}
-        <View className="mt-2 ml-2">
+        <View className="flex-row mt-5 ml-2 items-baseline ">
           <Text className={`text-lg font-bold mb-2 ${textColorClass}`}>
             Creditors
+          </Text>
+          <Text className={` mt-2 text-gray-500 px-2 mb-2`}>
+            Your inver circle
           </Text>
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -143,19 +150,24 @@ export default function Profile() {
             <View key={index} className="mx-safe px-0 items-center">
               <Image
                 source={{ uri: IMAGE_URL + creditor.avatar }}
-                className="w-20 h-20  "
+                style={{  width : 78 ,height: 100 }}
+                className= "square cropped"                
                 resizeMode="cover"
+
+
               />
-              <Text className={`text-sm mt-1 text-right ${textColorClass}`}>
-                {creditor.firstName}
-              </Text>
-              <Text className={`text-sm text-right ${textColorClass}`}>
-                {creditor.lastName}
-              </Text>
+              <View className="items-start text-wrap w-20 h-12">
+                <Text className={`text-sm mt-1  ${textColorClass}`}>
+                  {creditor.firstName}
+                </Text>
+                <Text className={`text-sm  ${textColorClass}`}>
+                  {creditor.lastName}
+                </Text>
+              </View>
             </View>
           ))}
         </ScrollView>
-        </ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 }
