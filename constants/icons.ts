@@ -14,6 +14,7 @@ import play from "../assets/icons/play.png"
 import setting from "../assets/icons/setting.png"
 import flagth from "../assets/icons/thailand.png"
 import flagen from "../assets/icons/united-kingdom.png"
+import tools from "../assets/icons/tool-box.png"
 
 export default {
   expense,
@@ -32,4 +33,5 @@ export default {
   setting,
   flagth,
   flagen,
+  tools,
 }

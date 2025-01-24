@@ -9,6 +9,7 @@ import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 import * as NavigationBar from "expo-navigation-bar";
 import { AuthProvider } from "@/providers/AuthProvider";
 
+
 function RootLayoutNav() {
   const { theme } = useTheme();
 
@@ -42,6 +43,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="(toolbar)" options={{ headerShown: false }} /> */}
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>
@@ -81,4 +83,8 @@ export default function RootLayout() {
       </ThemeProvider>
     </AuthProvider>
   );
+
+
+ 
 }
+
