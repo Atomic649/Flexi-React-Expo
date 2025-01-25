@@ -288,10 +288,15 @@
   },
   "tabs": {
     "home": "Home",
-    "expense": "Expense",
+    "income" : "Income",
     "create": "Tools",
+    "expense": "Expense",
+    "shop": "Shop",   
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "product": "Product",
+    "sell": "Sell",
+    "ads": "Ads"    
   },
   "landing": {
     "slogan": {

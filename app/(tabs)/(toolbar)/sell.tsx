@@ -4,7 +4,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-export default function ads() {
+export default function sell() {
    const { theme } = useTheme();
   return (
     <SafeAreaView className={`h-full ${theme === "dark" ? "bg-primary" : "bg-white"}`}>

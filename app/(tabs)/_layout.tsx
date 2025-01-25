@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@/providers/ThemeProvider";
 import { i18n } from "i18next";
 
+
 const ToolBarTextStyle = (i18n: i18n) => ({
   fontSize: 12,
   fontFamily:
@@ -35,7 +36,7 @@ const TabIcon = ({ icon, color, focused, size = "normal" }: TabIconProps) => {
     <View
       className={`
       flex items-center justify-center
-      ${size === "large" ? "-mt-7" : ""}  // ขยับไอคอนขึ้นถ้าเป็นขนาดใหญ่
+      ${size === "large" ? "-mt-6" : ""}  // ขยับไอคอนขึ้นถ้าเป็นขนาดใหญ่
     `}
     >
       <View
@@ -50,7 +51,7 @@ const TabIcon = ({ icon, color, focused, size = "normal" }: TabIconProps) => {
           source={icon}
           resizeMode="contain"
           tintColor={size === "large" ? "#FFFFFF" : color}
-          className={size === "large" ? "w-9 h-9" : "w-6 h-8"}
+          className={size === "large" ? "w-9 h-9" : "w-9 h-7"}
         />
       </View>
     </View>
@@ -118,14 +119,13 @@ export default function TabLayout() {
             ),
           }}
         />
-
         <Tabs.Screen
-          name="profile"
+          name="income"
           options={{
-            title: t("tabs.profile"),
+            title: t("tabs.income"),
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon icon={icons.profile} color={color} focused={focused} />
+              <TabIcon icon={icons.income} color={color} focused={focused} />
             ),
           }}
         />
@@ -134,18 +134,18 @@ export default function TabLayout() {
           name="create"
           options={{
             title: t("tabs.create"),
-            headerShown: false,
+            headerShown: false,            
             tabBarIcon: ({ color, focused }) => (
               <TouchableOpacity onPress={() => setToolbarVisible(true)}>
                 <TabIcon
-                  icon={icons.plus}
+                  icon={icons.fx}
                   color={color}
                   focused={focused}
                   size="large" // กำหนดให้เป็นขนาดใหญ่
                 />
               </TouchableOpacity>
             ),
-            // tabBarLabel: () => null, // ซ่อน label สำหรับปุ่มตรงกลาง
+            //  tabBarLabel: () => null, // ซ่อน label สำหรับปุ่มตรงกลาง
           }}
         />
 
@@ -161,18 +161,18 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-          name="setting"
+          name="profile"
           options={{
-            title: t("tabs.settings"),
+            title: t("tabs.shop"),
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon icon={icons.setting} color={color} focused={focused} />
+              <TabIcon icon={icons.shop2} color={color} focused={focused}  />
             ),
           }}
         />
 
         <Tabs.Screen
-          name="(toolbar)"          
+          name="(toolbar)"
           options={{
             headerShown: false,
             tabBarItemStyle: {
@@ -182,6 +182,7 @@ export default function TabLayout() {
         />
       </Tabs>
       <Toolbar
+       
         visible={toolbarVisible}
         onClose={() => setToolbarVisible(false)}
       />
@@ -192,9 +193,10 @@ export default function TabLayout() {
 const Toolbar = ({ visible, onClose }: ToolbarProps) => {
   const { t, i18n } = useTranslation();
   const { theme } = useTheme();
+  const ModalComponent = Platform.OS === "web" ? View : Modal;
 
   return (
-    <Modal
+    <ModalComponent
       transparent={true}
       animationType="slide"
       visible={visible}
@@ -202,12 +204,12 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
     >
       <TouchableOpacity activeOpacity={1} onPress={onClose} style={{ flex: 1 }}>
         <View className="flex-row justify-center items-end flex-1">
-          <TouchableOpacity
+            <TouchableOpacity
             activeOpacity={1}
             onPress={() => {}}
             className="flex-row bg-orange-400 rounded-t-full items-center justify-evenly"
             style={{
-              width: "95%",
+              width: Platform.OS === "web" ? "30%" : "95%",
               height: "7%",
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
@@ -217,24 +219,24 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
               position: "relative",
               bottom: 145,
             }}
-          >
+            >
             <TouchableOpacity
               onPress={() => router.push("ads")}
               className="flex items-center mx-2"
             >
-              <Ionicons name="create-outline" size={24} color="white" />
-              <Text className="text-white" style={ToolBarTextStyle(i18n)}>
-                Ads
+              <TabIcon icon={icons.ads2} color="white" focused={false} />
+              <Text className="text-white" style={[ToolBarTextStyle(i18n), { marginTop: 2 }]}>
+              {t("tabs.ads")}
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => router.push("shop")}
+              onPress={() => router.push("sell")}
               className="flex items-center mx-2"
             >
-              <Ionicons name="home-outline" size={24} color="white" />
-              <Text className="text-white" style={ToolBarTextStyle(i18n)}>
-                Shop
+              <TabIcon icon={icons.sell} color="white" focused={false} /> 
+              <Text className="text-white" style={[ToolBarTextStyle(i18n), { marginTop: 2 }]}>
+              {t("tabs.sell")}
               </Text>
             </TouchableOpacity>
 
@@ -242,9 +244,9 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
               onPress={() => router.push("product")}
               className="flex items-center mx-2"
             >
-              <Ionicons name="people-outline" size={24} color="white" />
-              <Text className="text-white" style={ToolBarTextStyle(i18n)}>
-                Product
+              <TabIcon icon={icons.product} color="white" focused={false} /> 
+              <Text className="text-white" style={[ToolBarTextStyle(i18n), { marginTop: 2 }]}>
+              {t("tabs.product")}
               </Text>
             </TouchableOpacity>
 
@@ -253,13 +255,13 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
               className="flex items-center mx-2"
             >
               <TabIcon icon={icons.setting} color="white" focused={false} />
-              <Text className="text-white" style={ToolBarTextStyle(i18n)}>
-                {t("tabs.settings")}
+              <Text className="text-white" style={[ToolBarTextStyle(i18n), { marginTop: 2 }]}>
+              {t("tabs.settings")}
               </Text>
             </TouchableOpacity>
-          </TouchableOpacity>
+            </TouchableOpacity>
         </View>
       </TouchableOpacity>
-    </Modal>
+    </ModalComponent>
   );
 };

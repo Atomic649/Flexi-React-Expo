@@ -10,8 +10,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as DocumentPicker from "expo-document-picker";
 import { WebView } from "react-native-webview";
 import * as FileSystem from "expo-file-system";
+import { useTheme } from "@/providers/ThemeProvider";
 
 export default function Expense() {
+  const { theme } = useTheme();
   const [pdfUri, setPdfUri] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +45,9 @@ export default function Expense() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView 
+    className={`h-full ${theme === "dark" ? "bg-primary" : "bg-white"}`}
+    style={styles.container}>
       <View style={styles.content}>
         <Button title="Select PDF" onPress={pickAndProcessPdf} />
         {loading && <ActivityIndicator size="large" />}

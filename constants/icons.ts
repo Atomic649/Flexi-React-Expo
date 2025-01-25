@@ -15,7 +15,14 @@ import setting from "../assets/icons/setting.png"
 import flagth from "../assets/icons/thailand.png"
 import flagen from "../assets/icons/united-kingdom.png"
 import tools from "../assets/icons/tool-box.png"
-
+import product from "../assets/icons/product.png"
+import ads from "../assets/icons/ads.png"
+import sell from "../assets/icons/sell.png"
+import income from "../assets/icons/income.png"
+import fx from "../assets/icons/fx.png"
+import shop from "../assets/icons/shop.png"
+import shop2 from "../assets/icons/shop2.png"
+import ads2 from "../assets/icons/ads2.png"
 export default {
   expense,
   home,
@@ -34,4 +41,12 @@ export default {
   flagth,
   flagen,
   tools,
+  product,
+  ads,
+  sell,
+  income,
+  fx,
+  shop,
+  shop2,
+  ads2
 }
