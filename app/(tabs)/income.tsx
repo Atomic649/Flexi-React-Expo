@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { Dimensions } from "react-native";
+import { useBackgroundColorClass, useTextColorClass } from "@/utils/themeUtils";
 
 const Income = () => {
   const { theme } = useTheme();
@@ -16,24 +17,24 @@ const Income = () => {
   const renderScene = SceneMap({
     byOrder: () => (
       <View className="flex-1 justify-center items-center">
-        <Text>byOrder</Text>
+        <Text className={useTextColorClass()}>byOrder</Text>
       </View>
     ),
     daily: () => (
       <View className="flex-1 justify-center items-center">
-        <Text>Expense</Text>
+      <Text className={useTextColorClass()}>Expense</Text>
       </View>
     ),
     monthly: () => (
       <View className="flex-1 justify-center items-center">
-        <Text>Summary</Text>
+      <Text className={useTextColorClass()}>Summary</Text>
       </View>
     ),
   });
 
   return (
     <SafeAreaView
-      className={`h-full ${theme === "dark" ? "bg-primary" : "bg-white"}`}
+      className={`h-full ${useBackgroundColorClass()}`}
     >
       <TabView
         navigationState={{ index, routes }}
@@ -46,16 +47,16 @@ const Income = () => {
             tabStyle={
               theme === "dark"
                 ? {
-                    backgroundColor: "#161622",
+                    backgroundColor: "#18181b",
                     margin: 5,
                     borderRadius: 10,
                   }
-                : { backgroundColor: "#ff8513", borderColor: "gray" }
+                : { backgroundColor: "#00d2b6", borderColor: "gray" }
             }
-            indicatorStyle={{ backgroundColor: "#ff9d00" }}
+            indicatorStyle={{ backgroundColor: "#1afee0" }}
             style={
               theme === "dark"
-                ? { backgroundColor: "#161622" }
+                ? { backgroundColor: "#18181b" }
                 : { backgroundColor: "#fff" }
             }
           />

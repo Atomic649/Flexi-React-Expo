@@ -46,7 +46,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
       >
         <View 
           className={`w-[300px] rounded-2xl ${
-            theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+            theme === 'dark' ? 'bg-zinc-800' : 'bg-white'
           }`}
         >
           {/* Title */}
@@ -67,7 +67,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
             <Text 
               weight="regular"
               className={`text-center ${
-                theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                theme === 'dark' ? 'text-zinc-300' : 'text-zinc-600'
               }`}
               style={{ 
                 fontFamily: i18n.language === 'th' ? 'NotoSansThai-Regular' : 'Poppins-Regular'
@@ -79,13 +79,13 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
 
           {/* Buttons */}
           <View className={`border-t ${
-            theme === 'dark' ? 'border-gray-700' : 'border-gray-200'
+            theme === 'dark' ? 'border-zinc-700' : 'border-zinc-200'
           }`}>
             {buttons.map((button, index) => (
               <React.Fragment key={index}>
                 {index > 0 && (
                   <View className={
-                    theme === 'dark' ? 'border-t border-gray-700' : 'border-t border-gray-200'
+                    theme === 'dark' ? 'border-t border-zinc-700' : 'border-t border-zinc-200'
                   } />
                 )}
                 {Platform.OS === 'android' ? (
@@ -111,7 +111,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
                 ) : (
                   <TouchableOpacity
                     onPress={button.onPress}
-                    className="p-4 active:bg-gray-100 dark:active:bg-gray-700"
+                    className="p-4 active:bg-zinc-600 dark:active:bg-zinc-700"
                     activeOpacity={0.7}
                   >
                     <Text 

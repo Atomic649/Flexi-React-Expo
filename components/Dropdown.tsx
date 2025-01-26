@@ -14,9 +14,9 @@ const Dropdown = ({
 
     return (
         <View className={`space-y-2 ${otherStyles}`}>
-             <Text className="text-base text-gray-100 font-pmedium mb-4">{title}</Text>
+             <Text className="text-base text-zinc-400 font-pmedium mb-4">{title}</Text>
             <TouchableOpacity
-                className="w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 flex flex-row items-center justify-between"
+                className="w-full h-16 px-4 bg-zinc-800 rounded-2xl border-2 border-black-200 flex flex-row items-center justify-between"
                 onPress={() => setIsOpen(!isOpen)}
             >
                 <Text className="text-white font-psemibold text-base">
@@ -33,13 +33,13 @@ const Dropdown = ({
                     keyExtractor={(item) => item.value}
                     renderItem={({ item }) => (
                         <TouchableOpacity
-                            className="w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 flex flex-row items-center"
+                            className="w-full h-16 px-4 bg-zinc-800 rounded-2xl border-2 border-black-200 flex flex-row items-center"
                             onPress={() => {
                                 onValueChange(item.value);
                                 setIsOpen(false);
                             }}
                         >
-                            <Text className="text-white font-psemibold text-base">
+                            <Text className="text-zinc-100 font-psemibold text-base">
                                 {item.label}
                             </Text>
                         </TouchableOpacity>

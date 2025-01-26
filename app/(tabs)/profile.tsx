@@ -17,7 +17,6 @@ import CallAPICredit from "@/api/credit_api";
 import { IMAGE_URL } from "@/utils/config";
 import { images } from "@/constants";
 
-
 export default function Profile() {
   const { theme } = useTheme();
   const textColorClass = useTextColorClass();
@@ -54,7 +53,7 @@ export default function Profile() {
 
   return (
     <SafeAreaView
-      className={`h-full ${theme === "dark" ? "bg-primary" : "bg-white"}`}
+      className={`h-full ${theme === "dark" ? "bg-zinc-900" : "bg-white"}`}
     >
       {/* Header */}
       <View
@@ -66,7 +65,7 @@ export default function Profile() {
           <Ionicons
             name="list"
             size={24}
-            color={theme === "dark" ? "white" : "primary"}
+            color={theme === "dark" ? "white" : "zinc-300"}
           />
         </TouchableOpacity>
 
@@ -78,9 +77,9 @@ export default function Profile() {
           <Ionicons
             name="people"
             size={24}
-            color={theme === "dark" ? "white" : "primary"}
+            color={theme === "dark" ? "white" : "zinc-300"}
           />
-          <Text className="text-xs font-bold text-white bg-orange-400 rounded-full px-1 absolute -top-1 -right-3">
+          <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
             2
           </Text>
         </TouchableOpacity>
@@ -97,9 +96,9 @@ export default function Profile() {
           <Text className={`text-lg font-bold mt-4 ${textColorClass}`}>
             {userData.firstName} {userData.lastName}
           </Text>
-          <Text className="text-gray-500">{userData.username}</Text>
-          <Text className="italic mt-2 text-gray-500">{userData.bio}</Text>
-          <View className="bg-orange-400 px-2 py-1 rounded-full mt-2">
+          <Text className="text-zinc-500">{userData.username}</Text>
+          <Text className="italic mt-2 text-zinc-500">{userData.bio}</Text>
+          <View className="bg-teal-400 px-2 py-1 rounded-full mt-2">
             <Text className="text-white text-xs">7% TAX</Text>
           </View>
         </View>
@@ -108,15 +107,15 @@ export default function Profile() {
         <View className="flex-row justify-around mt-8">
           <View className="items-center">
             <Text className={`text-xl font-bold ${textColorClass}`}>4</Text>
-            <Text className="text-gray-500">Crediting</Text>
+            <Text className="text-zinc-500">Crediting</Text>
           </View>
           <View className="items-center">
             <Text className={`text-xl font-bold ${textColorClass}`}>6</Text>
-            <Text className="text-gray-500">Creditors</Text>
+            <Text className="text-zinc-500">Creditors</Text>
           </View>
           <View className="items-center">
             <Text className={`text-xl font-bold ${textColorClass}`}>96.4K</Text>
-            <Text className="text-gray-500">Credit</Text>
+            <Text className="text-zinc-500">Credit</Text>
           </View>
         </View>
 
@@ -124,24 +123,20 @@ export default function Profile() {
         <TextInput
           className={`mx-3 min-w-min h-16 px-4 rounded-2xl border-2 focus:border-secondary mt-8 ${
             theme === "dark"
-              ? "bg-black-100 border-black-200"
-              : "bg-white border-gray-100"
+              ? "bg-zinc-800 border-black-200"
+              : "bg-white border-zinc-300"
           }`}
           value=""
           placeholder="Tell universe if your business need help?"
           placeholderTextColor={theme === "dark" ? "#ccc" : "#666"}
         />
-         
-         
-
-
 
         {/* Creditors List */}
         <View className="flex-row mt-5 ml-2 items-baseline ">
           <Text className={`text-lg font-bold mb-2 ${textColorClass}`}>
             Creditors
           </Text>
-          <Text className={` mt-2 text-gray-500 px-2 mb-2`}>
+          <Text className={` mt-2 text-zinc-500 px-2 mb-2`}>
             Your inver circle
           </Text>
         </View>
@@ -150,11 +145,9 @@ export default function Profile() {
             <View key={index} className="mx-safe px-0 items-center">
               <Image
                 source={{ uri: IMAGE_URL + creditor.avatar }}
-                style={{  width : 78 ,height: 100 }}
-                className= "square cropped"                
+                style={{ width: 78, height: 100 }}
+                className="square cropped"
                 resizeMode="cover"
-
-
               />
               <View className="items-start text-wrap w-20 h-12">
                 <Text className={`text-sm mt-1  ${textColorClass}`}>

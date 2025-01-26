@@ -195,9 +195,9 @@ export default function Register() {
               <Text weight="regular" className="text-lg text-gray-100">
                 {t("auth.register.hasAccount")}
               </Text>
-              <Button
-                title={t("auth.register.loginButton")}
-                onPress={() => router.replace("/business_register")}
+              <Button              
+                title={t("auth.register.loginButton" )}                
+                onPress={() => router.replace("/login")}
               />
             </View>
           </View>

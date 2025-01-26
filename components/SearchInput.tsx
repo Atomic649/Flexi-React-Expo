@@ -5,6 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useTheme } from '@/providers/ThemeProvider'
 import { icons } from "../constants";
 import CustomAlert from '@/components/CustomAlert';
+import React from "react";
 
 interface SearchInputProps {
   initialQuery?: string
@@ -71,7 +72,7 @@ const SearchInput = ({ initialQuery = '', onChangeText, placeholder }: SearchInp
           className="flex-1 text-lg"
           value={query}
           placeholder={placeholder}
-          placeholderTextColor={theme === 'dark' ? '#9ca3af' : '#6b7280'}
+          placeholderTextColor={theme === 'dark' ? '#a1a1a1' : '#6b7280'}
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
           returnKeyType="search"

@@ -16,7 +16,7 @@ function RootLayoutNav() {
   useEffect(() => {
     async function updateNavigationBar() {
       try {
-        const navBarColor = theme === "dark" ? "#161622" : "#ffffff";
+        const navBarColor = theme === "dark" ? "#18181b" : "#ffffff";
         await NavigationBar.setBackgroundColorAsync(navBarColor);
         // Set button style based on theme
         await NavigationBar.setButtonStyleAsync(
@@ -32,11 +32,11 @@ function RootLayoutNav() {
 
   return (
     <SafeAreaView
-      className={`h-screen ${theme === "dark" ? "bg-primary" : "bg-white"}`}
+      className={`h-screen ${theme === "dark" ? "bg-zinc-900" : "bg-white"}`}
     >
       <StatusBar
         barStyle={theme === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={theme === "dark" ? "#161622" : "white"}
+        backgroundColor={theme === "dark" ? "#18181b" : "white"}
         animated={true}
       />
       <Stack>

@@ -11,6 +11,7 @@ import * as DocumentPicker from "expo-document-picker";
 import { WebView } from "react-native-webview";
 import * as FileSystem from "expo-file-system";
 import { useTheme } from "@/providers/ThemeProvider";
+import { useBackgroundColorClass } from "@/utils/themeUtils";
 
 export default function Expense() {
   const { theme } = useTheme();
@@ -46,10 +47,11 @@ export default function Expense() {
 
   return (
     <SafeAreaView 
-    className={`h-full ${theme === "dark" ? "bg-primary" : "bg-white"}`}
+    className={`h-full ${useBackgroundColorClass()}`}
     style={styles.container}>
       <View style={styles.content}>
-        <Button title="Select PDF" onPress={pickAndProcessPdf} />
+        <Button 
+        title="Select PDF" onPress={pickAndProcessPdf} />
         {loading && <ActivityIndicator size="large" />}
         {error && <Text style={styles.error}>{error}</Text>}
         {pdfUri && (

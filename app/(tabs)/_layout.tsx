@@ -1,4 +1,3 @@
-// rnf
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
@@ -14,13 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/providers/ThemeProvider";
 import { i18n } from "i18next";
-
-
-const ToolBarTextStyle = (i18n: i18n) => ({
-  fontSize: 12,
-  fontFamily:
-    i18n.language === "th" ? "NotoSansThai-Regular" : "Poppins-Regular",
-});
+import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
 
 // สรับปรุง interface ของ TabIcon
 interface TabIconProps {
@@ -35,23 +28,24 @@ const TabIcon = ({ icon, color, focused, size = "normal" }: TabIconProps) => {
   return (
     <View
       className={`
-      flex items-center justify-center
-      ${size === "large" ? "-mt-6" : ""}  // ขยับไอคอนขึ้นถ้าเป็นขนาดใหญ่
+      flex items-center justify-center 
+      ${size === "large" ? "-mt-5" : ""}  // ขยับไอคอนขึ้นถ้าเป็นขนาดใหญ่
     `}
     >
       <View
         className={`
         flex items-center justify-center
         ${
-          size === "large" ? "bg-secondary-200 p-3 rounded-full" : ""
+          size === "large" ? "bg-teal-400 p-3 rounded-full  "  : ""
         }  // เพิ่มพื้นหลังถ้าเป็นขนาดใหญ่
       `}
       >
         <Image
           source={icon}
           resizeMode="contain"
-          tintColor={size === "large" ? "#FFFFFF" : color}
-          className={size === "large" ? "w-9 h-9" : "w-9 h-7"}
+          // Color Icon of Middle Tab
+          tintColor={size === "large" ? "#ffffff" : color}
+          className={size === "large" ? "w-9 h-9  " : "w-9 h-7"}
         />
       </View>
     </View>
@@ -69,10 +63,10 @@ export default function TabLayout() {
   const [toolbarVisible, setToolbarVisible] = useState(false);
 
   // Define colors based on theme
-  const tabBarBackgroundColor = theme === "dark" ? "#161622" : "#ffffff";
+  const tabBarBackgroundColor = theme === "dark" ? "#18181b" : "#ffffff";
   const tabBarBorderColor = theme === "dark" ? "#232533" : "#e0e0e0";
-  const tabBarActiveTintColor = theme === "dark" ? "#FFA001" : "#FFA001";
-  const tabBarInactiveTintColor = theme === "dark" ? "#CDCDE0" : "#8e8e93";
+  const tabBarActiveTintColor = theme === "dark" ? "#03dcc7" : "#2dd4bf";
+  const tabBarInactiveTintColor = theme === "dark" ? "#a1a1a1" : "#75726a";
 
   return (
     // -------- Major Tap --------
@@ -90,7 +84,8 @@ export default function TabLayout() {
                 ? "NotoSansThai-Regular"
                 : "Poppins-Regular",
             marginTop: 5,
-          },
+          },         
+       
           tabBarStyle: {
             backgroundColor: tabBarBackgroundColor,
             borderTopWidth: 0,
@@ -101,8 +96,8 @@ export default function TabLayout() {
             paddingBottom: Platform.OS === "ios" ? 30 : 5,
             ...Platform.select({
               ios: {
-                height: 90,
-                paddingBottom: 35,
+                height: 60,
+                paddingBottom: 0,
                 safeAreaInsets: { bottom: 35 },
               },
             }),
@@ -134,18 +129,18 @@ export default function TabLayout() {
           name="create"
           options={{
             title: t("tabs.create"),
-            headerShown: false,            
+            headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TouchableOpacity onPress={() => setToolbarVisible(true)}>
                 <TabIcon
-                  icon={icons.fx}
+                  icon={icons.flexi}
                   color={color}
                   focused={focused}
                   size="large" // กำหนดให้เป็นขนาดใหญ่
                 />
               </TouchableOpacity>
             ),
-            //  tabBarLabel: () => null, // ซ่อน label สำหรับปุ่มตรงกลาง
+              tabBarLabel: () => null, // ซ่อน label สำหรับปุ่มตรงกลาง
           }}
         />
 
@@ -166,7 +161,7 @@ export default function TabLayout() {
             title: t("tabs.shop"),
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon icon={icons.shop2} color={color} focused={focused}  />
+              <TabIcon icon={icons.shop2} color={color} focused={focused} />
             ),
           }}
         />
@@ -182,7 +177,6 @@ export default function TabLayout() {
         />
       </Tabs>
       <Toolbar
-       
         visible={toolbarVisible}
         onClose={() => setToolbarVisible(false)}
       />
@@ -204,29 +198,45 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
     >
       <TouchableOpacity activeOpacity={1} onPress={onClose} style={{ flex: 1 }}>
         <View className="flex-row justify-center items-end flex-1">
-            <TouchableOpacity
+          <TouchableOpacity
             activeOpacity={1}
             onPress={() => {}}
-            className="flex-row bg-orange-400 rounded-t-full items-center justify-evenly"
+            className="flex-row rounded-t-full items-center justify-evenly"
             style={{
+              backgroundColor: theme === "dark" ? "#18181b" : "#75726a",  
+              borderColor: theme === "dark" ? "#2c3030" : "#75726a",
+              borderStyle: "solid",
+              //shadowColor: "#baf0ff",
+              // shadowOffset: {
+              //   width: 2,
+              //   height: 2,
+              // },
+              // shadowOpacity: 0.5,
+              borderWidth: 1,    
               width: Platform.OS === "web" ? "30%" : "95%",
               height: "7%",
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               borderBottomLeftRadius: 30,
               borderBottomRightRadius: 30,
-              backgroundColor: "#FFA001",
               position: "relative",
-              bottom: 145,
+              bottom: 110,
             }}
-            >
+          >
             <TouchableOpacity
               onPress={() => router.push("ads")}
               className="flex items-center mx-2"
             >
-              <TabIcon icon={icons.ads2} color="white" focused={false} />
-              <Text className="text-white" style={[ToolBarTextStyle(i18n), { marginTop: 2 }]}>
-              {t("tabs.ads")}
+              <TabIcon
+                icon={icons.ads2}
+                color={getIconColor(theme)}
+                focused={false}
+              />
+              <Text
+                className="text-white"
+                style={[ToolBarTextStyle(i18n, theme)]}
+              >
+                {t("tabs.ads")}
               </Text>
             </TouchableOpacity>
 
@@ -234,9 +244,16 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
               onPress={() => router.push("sell")}
               className="flex items-center mx-2"
             >
-              <TabIcon icon={icons.sell} color="white" focused={false} /> 
-              <Text className="text-white" style={[ToolBarTextStyle(i18n), { marginTop: 2 }]}>
-              {t("tabs.sell")}
+              <TabIcon
+                icon={icons.sell}
+                color={getIconColor(theme)}
+                focused={false}
+              />
+              <Text
+                className="text-white"
+                style={[ToolBarTextStyle(i18n, theme)]}
+              >
+                {t("tabs.sell")}
               </Text>
             </TouchableOpacity>
 
@@ -244,9 +261,16 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
               onPress={() => router.push("product")}
               className="flex items-center mx-2"
             >
-              <TabIcon icon={icons.product} color="white" focused={false} /> 
-              <Text className="text-white" style={[ToolBarTextStyle(i18n), { marginTop: 2 }]}>
-              {t("tabs.product")}
+              <TabIcon
+                icon={icons.product}
+                color={getIconColor(theme)}
+                focused={false}
+              />
+              <Text
+                className="text-white"
+                style={[ToolBarTextStyle(i18n, theme)]}
+              >
+                {t("tabs.product")}
               </Text>
             </TouchableOpacity>
 
@@ -254,14 +278,35 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
               onPress={() => router.push("settings")}
               className="flex items-center mx-2"
             >
-              <TabIcon icon={icons.setting} color="white" focused={false} />
-              <Text className="text-white" style={[ToolBarTextStyle(i18n), { marginTop: 2 }]}>
-              {t("tabs.settings")}
+              <TabIcon
+                icon={icons.setting}
+                color={getIconColor(theme)}
+                focused={false}
+              />
+              <Text
+                className="text-white"
+                style={[ToolBarTextStyle(i18n, theme)]}
+              >
+                {t("tabs.settings")}
               </Text>
             </TouchableOpacity>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     </ModalComponent>
   );
 };
+
+const ToolBarTextStyle = (i18n: i18n, theme: string) => ({
+  // ปรับปรุงสีข้อความของ TabBar
+  color: theme === "dark" ? "#a1a1a1" : "#ffffff",
+  fontSize: 12,
+  fontFamily:
+    i18n.language === "th" ? "NotoSansThai-Regular" : "Poppins-Regular",
+  marginTop: 2,
+});
+
+// Define a function to get the color based on the theme
+const getIconColor = (theme: string) =>
+  // ปรับปรุงสีไอคอนของ TabBar
+  theme === "dark" ? "#a1a1a1" : "#ffffff";

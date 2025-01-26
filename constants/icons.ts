@@ -23,6 +23,7 @@ import fx from "../assets/icons/fx.png"
 import shop from "../assets/icons/shop.png"
 import shop2 from "../assets/icons/shop2.png"
 import ads2 from "../assets/icons/ads2.png"
+import flexi from "../assets/icons/flexi.png"
 export default {
   expense,
   home,
@@ -48,5 +49,6 @@ export default {
   fx,
   shop,
   shop2,
-  ads2
+  ads2,
+  flexi,
 }

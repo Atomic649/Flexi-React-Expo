@@ -5,7 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import CallAPIProduct from "@/api/product_api";
 import { IMAGE_URL } from "@/utils/config";
 import { useTheme } from "@/providers/ThemeProvider";
-import { useTextColorClass } from "@/utils/themeUtils";
+import { useBackgroundColorClass, useTextColorClass } from "@/utils/themeUtils";
 
 type Product = {
   id: number;
@@ -50,7 +50,9 @@ export default function Home() {
   };
 
   return (
-    <SafeAreaView className={`h-full ${theme === "dark" ? "bg-primary" : "bg-white"}`}>
+    <SafeAreaView 
+    className={`h-full ${useBackgroundColorClass()}`}
+    >
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}

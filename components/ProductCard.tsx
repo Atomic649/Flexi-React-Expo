@@ -11,7 +11,7 @@ export default function ProductCard({
     <View className="flex flex-col items-center px-4 my-2">
       <View className="flex flex-row gap-3 items-start">
         <View className="flex justify-center items-center flex-row flex-1">
-          <View className="w-[90px] h-[90px] rounded-lg border border-secondary flex justify-center items-center p-0.5">
+          <View className="w-[90px] h-[90px] rounded-lg border border-teal-200 flex justify-center items-center p-0.5">
             <Image
               source={{ uri: productimage }}
               className="w-full h-full rounded-lg"
@@ -27,7 +27,7 @@ export default function ProductCard({
               {productname}
             </Text>
             <Text
-              className="text-xl text-gray-500 font-pregular"
+              className="text-xl text-zinc-500 font-pregular"
               numberOfLines={1}
             >
               {productprice}

@@ -343,7 +343,7 @@ const Section = ({
       </Text>
       <View
         className={`rounded-xl overflow-hidden border ${
-          theme === "dark" ? "border-gray-700" : "border-gray-200"
+          theme === "dark" ? "border-zinc-700" : "border-zinc-200"
         }`}
       >
         {children}
@@ -368,7 +368,7 @@ const SectionItem = ({
     <Pressable
       className={`
         flex-row items-center justify-between p-4
-        ${theme === "dark" ? "bg-gray-800" : "bg-white"}
+        ${theme === "dark" ? "bg-zinc-800" : "bg-white"}
       `}
       onPress={onPress || (() => console.log(`Pressed: ${text}`))}
       android_ripple={{ color: "rgba(104, 104, 104, 0.3)" }}
@@ -390,7 +390,7 @@ const SectionItem = ({
           <FontAwesome
             name="chevron-right"
             size={12}
-            color={theme === "dark" ? "#666" : "#999"}
+            color={theme === "dark" ? "#666666" : "#918b8b"}
           />
         )}
       </View>

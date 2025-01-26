@@ -22,7 +22,7 @@ export function Text({ children, weight = 'regular', style, ...props }: CustomTe
       style={[
         { 
           fontFamily: getFontFamily(),
-          color: theme === 'dark' ? '#fff' : '#000'
+          color: theme === 'dark' ? '#fff' : '#2a2a2a'
         }, 
         style
       ]}
