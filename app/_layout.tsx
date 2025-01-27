@@ -2,13 +2,14 @@
 import "../global.css";
 import "@/i18n";
 import React, { useEffect } from "react";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { useFonts } from "expo-font";
-import { SafeAreaView, StatusBar } from "react-native";
+import { SafeAreaView, StatusBar, TouchableOpacity, Text } from "react-native";
 import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 import * as NavigationBar from "expo-navigation-bar";
 import { AuthProvider } from "@/providers/AuthProvider";
-
+import { Ionicons } from "@expo/vector-icons";
+import { BackHandler } from "../node_modules/react-native/Libraries/Utilities/BackHandler.d";
 
 function RootLayoutNav() {
   const { theme } = useTheme();
@@ -40,9 +41,42 @@ function RootLayoutNav() {
         animated={true}
       />
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            ...mainTopBar(theme),
+            title: "",
+            //TODO : 🚧 add business name here
+          }}
+        />
+        <Stack.Screen
+          name="(auth)"
+          options={{
+            ...HideTopBar(),
+            title: "Authentication",
+          }}
+        />
+        <Stack.Screen
+          name="index"
+          options={{
+            ...HideTopBar(),
+            title: "Home",
+          }}
+        />
+        <Stack.Screen
+          name="profile" // file name
+          options={{
+            ...showTopBarAndBackIcon(theme),
+            title: "User Profile", // Tab Name
+          }}
+        />
+        <Stack.Screen
+          name="business_info" // file name
+          options={{
+            ...showTopBarAndBackIcon(theme),
+            title: "Business Information", // Tab Name
+          }}
+        />
         {/* <Stack.Screen name="(toolbar)" options={{ headerShown: false }} /> */}
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
@@ -52,6 +86,7 @@ function RootLayoutNav() {
 }
 
 export default function RootLayout() {
+  // Load fonts before rendering the app
   const [fontsLoaded, error] = useFonts({
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
     "Poppins-ExtraLight": require("../assets/fonts/Poppins-ExtraLight.ttf"),
@@ -83,8 +118,48 @@ export default function RootLayout() {
       </ThemeProvider>
     </AuthProvider>
   );
-
-
- 
 }
 
+// Reuseable functions for showing Top bar
+const showTopBarAndBackIcon = (theme: string) => ({
+  headerShown: true,
+  headerStyle: {
+    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff",
+  },
+  headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
+  headerLeft: () => (
+    // Back button
+    <Ionicons
+      name="chevron-back"
+      size={24}
+      color={theme === "dark" ? "#ffffff" : "#18181b"}
+      onPress={() => router.back()}
+    />
+  ),
+});
+
+// Reuseable functions for hiding Top bar
+const HideTopBar = () => ({
+  headerShown: false,
+});
+
+// Reuseable functions for Main Top bar
+const mainTopBar = (theme: string) => ({
+  headerShown: true,
+  headerStyle: {
+    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", // 
+  },
+  headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
+  headerRight: () => (
+    <TouchableOpacity onPress={() => router.back()}>
+      <Ionicons
+      name="people"
+      size={24}
+      color={theme === "dark" ? "#ffffff" : "#75726a"}
+      />
+      <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
+      2
+      </Text>
+    </TouchableOpacity>
+  ),
+});

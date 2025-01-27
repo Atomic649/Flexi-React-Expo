@@ -15,7 +15,6 @@ import { useState, useEffect } from "react";
 import CallAPIUser from "@/api/user_api";
 import CallAPICredit from "@/api/credit_api";
 import { IMAGE_URL } from "@/utils/config";
-import { images } from "@/constants";
 
 export default function Profile() {
   const { theme } = useTheme();
@@ -57,11 +56,11 @@ export default function Profile() {
     >
       {/* Header */}
       <View
-        className={`flex-row justify-between items-center p-4 
+        className={`flex-row justify-between items-center p-0 
          
           `}
       >
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Ionicons
             name="list"
             size={24}
@@ -82,7 +81,7 @@ export default function Profile() {
           <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
             2
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <ScrollView>

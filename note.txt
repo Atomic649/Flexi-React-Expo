@@ -86,6 +86,14 @@ log emoji
 📄 - License
 🚑 - Critical Hotfix
 📦 - Package.json
+🔒 - Securit
+🔑 - Key
+📈 - Analytic
+🔌 - Plugi
+🔋 - Performance
+📦 - Package.json
+
+
 
 
 

@@ -156,7 +156,7 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-          name="profile"
+          name="shop"
           options={{
             title: t("tabs.shop"),
             headerShown: false,
