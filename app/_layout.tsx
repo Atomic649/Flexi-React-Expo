@@ -16,7 +16,7 @@ function RootLayoutNav() {
   useEffect(() => {
     async function updateNavigationBar() {
       try {
-        const navBarColor = theme === "dark" ? "#18181b" : "#ffffff";
+        const navBarColor = theme === "dark" ? "#18181b" : "#f4f4f5";
         await NavigationBar.setBackgroundColorAsync(navBarColor);
         // Set button style based on theme
         await NavigationBar.setButtonStyleAsync(
@@ -32,11 +32,11 @@ function RootLayoutNav() {
 
   return (
     <SafeAreaView
-      className={`h-screen ${theme === "dark" ? "bg-zinc-900" : "bg-white"}`}
+      className={`h-screen ${theme === "dark" ? "bg-zinc-900" : "bg-zinc-100"}`}
     >
       <StatusBar
         barStyle={theme === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={theme === "dark" ? "#18181b" : "white"}
+        backgroundColor={theme === "dark" ? "#18181b" : "#f4f4f5"}
         animated={true}
       />
       <Stack>
@@ -74,6 +74,15 @@ function RootLayoutNav() {
           options={{
             ...showTopBarAndBackIcon(theme),
             title: "Business Information", // Tab Name
+          }}
+        />
+
+        // Roadmap
+        <Stack.Screen
+          name="roadmap" // file name
+          options={{
+            ...showTopBarAndBackIcon(theme),
+            title: "Roadmap", // Tab Name
           }}
         />
 
@@ -123,7 +132,7 @@ export default function RootLayout() {
 const showTopBarAndBackIcon = (theme: string) => ({
   headerShown: true,
   headerStyle: {
-    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff",
+    backgroundColor: theme === "dark" ? "#18181b" : "#f4f4f5",
   },
   headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
   headerLeft: () => (
@@ -146,11 +155,11 @@ const HideTopBar = () => ({
 const mainTopBar = (theme: string) => ({
   headerShown: true,
   headerStyle: {
-    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", //
+    backgroundColor: theme === "dark" ? "#18181b" : "#f4f4f5", //
   },
   headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
   headerRight: () => (
-    <TouchableOpacity onPress={() => router.back()}>
+    <TouchableOpacity onPress={() => router.push("roadmap")} className="mr-2">
       <Ionicons
         name="people"
         size={24}

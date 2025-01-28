@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useTextColorClass } from "@/utils/themeUtils";
 import { useState, useEffect } from "react";

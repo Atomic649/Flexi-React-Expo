@@ -44,7 +44,7 @@ const TabIcon = ({ icon, color, focused, size = "normal" }: TabIconProps) => {
           source={icon}
           resizeMode="contain"
           // Color Icon of Middle Tab
-          tintColor={size === "large" ? "#ffffff" : color}
+          tintColor={size === "large" ? "#f4f4f5" : color}
           className={size === "large" ? "w-9 h-9  " : "w-9 h-7"}
         />
       </View>
@@ -63,7 +63,7 @@ export default function TabLayout() {
   const [toolbarVisible, setToolbarVisible] = useState(false);
 
   // Define colors based on theme
-  const tabBarBackgroundColor = theme === "dark" ? "#18181b" : "#ffffff";
+  const tabBarBackgroundColor = theme === "dark" ? "#18181b" : "#f4f4f5"; // C2 - Main Tab Bar BG Color
   const tabBarBorderColor = theme === "dark" ? "#232533" : "#e0e0e0";
   const tabBarActiveTintColor = theme === "dark" ? "#03dcc7" : "#2dd4bf";
   const tabBarInactiveTintColor = theme === "dark" ? "#a1a1a1" : "#75726a";

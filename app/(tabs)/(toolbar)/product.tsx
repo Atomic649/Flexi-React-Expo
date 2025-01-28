@@ -23,7 +23,7 @@ type Product = {
 };
 
 export default function Home() {
-  const { theme } = useTheme();
+  useTheme();
   const textColorClass = useTextColorClass();
   const [products, setProducts] = useState<Product[]>([]);
 

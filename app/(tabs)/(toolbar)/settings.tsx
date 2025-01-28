@@ -497,7 +497,7 @@ const SectionItem = ({
     <Pressable
       className={`
         flex-row items-center justify-between p-4
-        ${theme === "dark" ? "bg-zinc-800" : "bg-white"}
+        ${theme === "dark" ? "bg-zinc-800" : "bg-zinc-100"}
       `}
       onPress={onPress || (() => console.log(`Pressed: ${text}`))}
       android_ripple={{ color: "rgba(104, 104, 104, 0.3)" }}

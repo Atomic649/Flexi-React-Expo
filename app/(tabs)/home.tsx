@@ -1,19 +1,37 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, ScrollView, SafeAreaView } from "react-native";
 import React from "react";
 import { useTheme } from "@/providers/ThemeProvider";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useBackgroundColorClass, useTextColorClass } from "@/utils/themeUtils";
+import { useBackgroundColorClass } from "@/utils/themeUtils";
+import TotalSale from "@/components/home/TotalSale";
+import PlatFormCard from "@/components/home/PlatformCard";
 
 export default function home() {
   const { theme } = useTheme();
   return (
     <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
       <ScrollView>
-        <View className="flex flex-col items-center justify-center h-full">
-           <Text className={`${useTextColorClass()}`}>dashboard</Text>
+        <TotalSale />
+        <View className="flex flex-wrap flex-row justify-around">
+          <View className="w-1/2 p-0 pt-0">
+            <PlatFormCard />
+          </View>
+          <View className="w-1/2 p-0">
+            <PlatFormCard />
+          </View>
+          <View className="w-1/2 p-0">
+            <PlatFormCard />
+          </View>
+          <View className="w-1/2 p-0">
+            <PlatFormCard />
+          </View>
+          <View className="w-1/2 p-0">
+            <PlatFormCard />
+          </View>
+          <View className="w-1/2 p-0">
+            <PlatFormCard />
+          </View>
         </View>
       </ScrollView>
-
     </SafeAreaView>
   );
 }
