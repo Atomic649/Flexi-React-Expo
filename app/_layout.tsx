@@ -9,7 +9,6 @@ import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 import * as NavigationBar from "expo-navigation-bar";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Ionicons } from "@expo/vector-icons";
-import { BackHandler } from "../node_modules/react-native/Libraries/Utilities/BackHandler.d";
 
 function RootLayoutNav() {
   const { theme } = useTheme();
@@ -77,7 +76,7 @@ function RootLayoutNav() {
             title: "Business Information", // Tab Name
           }}
         />
-        
+
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>
@@ -147,18 +146,18 @@ const HideTopBar = () => ({
 const mainTopBar = (theme: string) => ({
   headerShown: true,
   headerStyle: {
-    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", // 
+    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", //
   },
   headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
   headerRight: () => (
     <TouchableOpacity onPress={() => router.back()}>
       <Ionicons
-      name="people"
-      size={24}
-      color={theme === "dark" ? "#ffffff" : "#75726a"}
+        name="people"
+        size={24}
+        color={theme === "dark" ? "#ffffff" : "#75726a"}
       />
       <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
-      2
+        2
       </Text>
     </TouchableOpacity>
   ),
