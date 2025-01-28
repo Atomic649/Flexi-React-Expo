@@ -15,7 +15,7 @@ import { useTheme } from "@/providers/ThemeProvider";
 import { i18n } from "i18next";
 import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
 
-// สรับปรุง interface ของ TabIcon
+// ปรับปรุง interface ของ TabIcon
 interface TabIconProps {
   icon: any;
   color: string;

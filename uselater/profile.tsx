@@ -99,6 +99,7 @@ export default function Profile() {
           </Text>
           <Text className="text-gray-500">{userData.username}</Text>
           <Text className="italic mt-2 text-gray-500">{userData.bio}</Text>
+          <Text className={`mt-2 ${textColorClass}`}>{userData.email}</Text>
           <View className="bg-orange-400 px-2 py-1 rounded-full mt-2">
             <Text className="text-white text-xs">7% TAX</Text>
           </View>

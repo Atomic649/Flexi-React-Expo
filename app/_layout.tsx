@@ -77,7 +77,7 @@ function RootLayoutNav() {
             title: "Business Information", // Tab Name
           }}
         />
-        {/* <Stack.Screen name="(toolbar)" options={{ headerShown: false }} /> */}
+        
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>
