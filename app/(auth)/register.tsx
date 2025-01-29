@@ -18,7 +18,7 @@ import CustomAlert from "@/components/CustomAlert";
 import { Text } from "@/components/CustomText";
 import CallAPIUser from "@/api/auth_api";
 import CallMemberAPI from "@/api/member_api";
-
+import { useTextColorClass } from "@/utils/themeUtils";
 
 export default function Register() {
   const { t } = useTranslation();
@@ -28,7 +28,6 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
- 
 
   // Add alert config state
   const [alertConfig, setAlertConfig] = useState<{
@@ -107,9 +106,9 @@ export default function Register() {
       // go to business register with params
       router.replace({
         pathname: "/business_register",
-        params: { userId: data.user.id, uniqueId: data2.uniqueId },      });
-
-          } catch (error: any) {
+        params: { userId: data.user.id, uniqueId: data2.uniqueId },
+      });
+    } catch (error: any) {
       setError(error.message);
     }
   };
@@ -127,15 +126,7 @@ export default function Register() {
               minHeight: Dimensions.get("window").height,
             }}
           >
-            <View className="flex items-center">
-              <Image
-                source={images.logo}
-                resizeMode="contain"
-                className="h-[34px]"
-              />
-            </View>
-
-            <Text weight="medium" className="text-2xl mt-10">
+            <Text className={`text-2xl font-bold mt-4 justify-center ${useTextColorClass()}`}>
               {t("auth.register.title")}
             </Text>
 
@@ -195,8 +186,8 @@ export default function Register() {
               <Text weight="regular" className="text-lg text-gray-100">
                 {t("auth.register.hasAccount")}
               </Text>
-              <Button              
-                title={t("auth.register.loginButton" )}                
+              <Button
+                title={t("auth.register.loginButton")}
                 onPress={() => router.replace("/login")}
               />
             </View>

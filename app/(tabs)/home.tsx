@@ -3,32 +3,34 @@ import React from "react";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import TotalSale from "@/components/home/TotalSale";
-import PlatFormCard from "@/components/home/PlatformCard";
+import PlatFormCard from "@/components/home/FacebookCard";
+import FacebookCard from "@/components/home/FacebookCard";
+import TiktokCard from "@/components/home/TiktokCard";
+import ShopeeCard from "@/components/home/ShopeeCard";
+import ShopCard from "@/components/home/StoreForntCard";
+import LineCard from "@/components/home/LineCard";
 
 export default function home() {
   const { theme } = useTheme();
   return (
-    <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
+    <SafeAreaView className={`h-full ${theme === "dark" ? "bg-zinc-900" : "bg-stone-200"}`}>
       <ScrollView>
         <TotalSale />
         <View className="flex flex-wrap flex-row justify-around">
-          <View className="w-1/2 p-0 pt-0">
-            <PlatFormCard />
+          <View className="w-1/2 pl-3 ">
+            <FacebookCard />
           </View>
           <View className="w-1/2 p-0">
-            <PlatFormCard />
+            <TiktokCard />
+          </View>         
+          <View className="w-1/2 pl-3">
+            <ShopeeCard />
           </View>
           <View className="w-1/2 p-0">
-            <PlatFormCard />
+            <LineCard />
           </View>
-          <View className="w-1/2 p-0">
-            <PlatFormCard />
-          </View>
-          <View className="w-1/2 p-0">
-            <PlatFormCard />
-          </View>
-          <View className="w-1/2 p-0">
-            <PlatFormCard />
+          <View className="w-full p-0"> 
+            <ShopCard />
           </View>
         </View>
       </ScrollView>

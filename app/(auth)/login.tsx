@@ -21,6 +21,7 @@ import images from "@/constants/images";
 import { t } from "i18next";
 import { da } from "date-fns/locale";
 import { saveToken } from "@/utils/utility";
+import { useTextColorClass } from "@/utils/themeUtils";
 
 export default function Login() {
   // State variables for email and password
@@ -126,13 +127,13 @@ export default function Login() {
           >
             <View className="flex items-center">
               <Image
-                source={images.logo}
+                source={images.logo}               
                 resizeMode="contain"
-                className="h-[34px]"
+                className="h-[190px]"
               />
             </View>
 
-            <Text weight="medium" className="text-2xl mt-10">
+            <Text className={`text-2xl font-bold mt-4 ${useTextColorClass()}`}>
               {t("auth.login.title")}
             </Text>
 

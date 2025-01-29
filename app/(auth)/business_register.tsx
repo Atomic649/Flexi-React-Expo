@@ -17,6 +17,7 @@ import CustomAlert from "@/components/CustomAlert";
 import { Text } from "@/components/CustomText";
 import Dropdown from "@/components/Dropdown";
 import CallAPIBusiness from "@/api/business_api";
+import { useTextColorClass } from "@/utils/themeUtils";
 
 export default function Register() {
   const { t } = useTranslation();
@@ -112,20 +113,12 @@ export default function Register() {
       >
         <ScrollView>
           <View
-            className="w-full flex justify-center h-full px-4 py-10"
+            className="w-full flex justify-center h-full px-4 "
             style={{
               minHeight: Dimensions.get("window").height,
             }}
           >
-            <View className="flex items-center">
-              <Image
-                source={images.logo}
-                resizeMode="contain"
-                className="h-[34px]"
-              />
-            </View>
-
-            <Text weight="medium" className="text-2xl mt-10">
+             <Text className={`text-lg font-bold mt-4 ${useTextColorClass()}`}>
               {t("auth.businessRegister.title")}
             </Text>
 
