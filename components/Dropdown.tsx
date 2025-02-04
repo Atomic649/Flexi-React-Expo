@@ -16,7 +16,7 @@ const Dropdown = ({
         <View className={`space-y-2 ${otherStyles}`}>
              <Text className="text-base text-zinc-500 font-pmedium mb-4">{title}</Text>
             <TouchableOpacity
-                className="w-full h-16 px-4 bg-stone-500  rounded-2xl border-2 border-stone-500 flex flex-row items-center justify-between"
+                className="w-full h-16 px-4 bg-[#423f39]  rounded-2xl border-2 border-[#423f39] flex flex-row items-center justify-between"
                 onPress={() => setIsOpen(!isOpen)}
             >
                 <Text className="text-white font-psemibold text-base">

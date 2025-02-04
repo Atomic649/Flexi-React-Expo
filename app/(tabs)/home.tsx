@@ -1,39 +1,56 @@
 import { View, ScrollView, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
-import { useBackgroundColorClass } from "@/utils/themeUtils";
 import TotalSale from "@/components/home/TotalSale";
-import PlatFormCard from "@/components/home/FacebookCard";
 import FacebookCard from "@/components/home/FacebookCard";
 import TiktokCard from "@/components/home/TiktokCard";
 import ShopeeCard from "@/components/home/ShopeeCard";
-import ShopCard from "@/components/home/StoreForntCard";
 import LineCard from "@/components/home/LineCard";
+import { Ionicons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import Dropdown from "@/components/Dropdown";
 
-export default function home() {
+const Home = () => {
   const { theme } = useTheme();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   return (
-    <SafeAreaView className={`h-full ${theme === "dark" ? "bg-[#1B1B1E]" : "bg-[#dbf0f0]"}`}>
+    <SafeAreaView
+      className={`h-full ${theme === "dark" ? "bg-[#1B1B1E]" : "bg-[#e0fafa]"}`}
+    >
       <ScrollView>
+        <View className="flex-row justify-end mt-3 px-3">
+          {/* Datetime Picker */}
+          <DateTimePicker
+            value={selectedDate}
+            mode="date"
+            display="default"
+            onChange={(event, date) => {
+              if (date) {
+                setSelectedDate(date);
+              }
+            }}
+          />
+        </View>
         <TotalSale />
+
         <View className="flex flex-wrap flex-row justify-around">
           <View className="w-1/2 pl-3 ">
             <FacebookCard />
           </View>
           <View className="w-1/2 p-0">
             <TiktokCard />
-          </View>         
+          </View>
           <View className="w-1/2 pl-3">
             <ShopeeCard />
           </View>
           <View className="w-1/2 p-0">
             <LineCard />
           </View>
-          {/* <View className="w-full p-0"> 
-            <ShopCard />
-          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
+
+export default Home;

@@ -9,8 +9,8 @@ const FacebookCard = () => {
     <PlatFormCard
       sale="1,999,979"
       adsCost="456,548"
-      profit="555"
-      percentAds="35%"
+      profit="1,185.9"
+      percentAds="35"
       average="256"
       otherStyles=""
       iconType= "FontAwesome"

@@ -1,13 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
-import { useTextColorClass } from "@/utils/themeUtils";
-import {
-  FontAwesome,
-  Ionicons,
-  MaterialIcons,
-  AntDesign,
-} from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
 const PlatFormCard = ({
   sale,
@@ -26,14 +20,15 @@ const PlatFormCard = ({
     const IconComponent = iconType === "FontAwesome" ? FontAwesome : Ionicons;
     return (
       <IconComponent
-      name={icon}
-      size={iconSize}
-      color={theme === "dark" ? "#27272a" : "#ffffff"}
+        name={icon}
+        size={iconSize}
+        color={theme === "dark" ? "#27272a" : "#ffffff"}
       />
     );
   };
-// styles
-  const titleStyle = "text-sm text-[#A6A6A6] text-center font-bold";
+  // TEXT styles
+  const titleStyle = "text-sm text-[#48453e] text-center font-normal";
+  const percentadsarv = "text-sm text-[#7f7765] text-center font-bold";
 
   return (
     <View
@@ -44,7 +39,7 @@ const PlatFormCard = ({
         <View
           className={`
             w-12 h-12
-            ${theme === "dark" ? "bg-[#a8a29e]" : "bg-[#3c22ff]"}
+            ${theme === "dark" ? "bg-[#a8a29e]" : "bg-[#423f39]"}
             rounded-full 
             items-center 
             justify-center 
@@ -57,22 +52,18 @@ const PlatFormCard = ({
         </View>
       </View>
       <View className="relative">
+        {/* adjust size box here */}
         <View
           className={`${
             theme === "dark" ? "bg-zinc-800" : "bg-white"
-          } px-2 items-center justify-center w-52 h-44 rounded-2xl
-            
-          shadow-violet-600
-          
-            
-
-            
+          } px-2 items-center justify-center w-52 h-36 rounded-2xl border
+          ${ theme === "dark" ? "border-zinc-700" : "border-[#61fff2]"}                     
             `}
         >
           {/* Sales */}
-          <View className="flex-row justify-center w-full  ps-6">
+          <View className="flex-row justify-center mt-1 w-full  ps-6">
             <Text
-              className={`text-lg ${useTextColorClass()} font-bold`}
+              className={`text-lg text-[#423f39] font-bold`}
               numberOfLines={1}
               adjustsFontSizeToFit
             >
@@ -80,13 +71,13 @@ const PlatFormCard = ({
             </Text>
             <Text className={titleStyle}>sale</Text>
           </View>
-          <View className="flex-row justify-around w-full mt-2 px-0 ps-4">
+          <View className="flex-row justify-around w-full mt-1 px-0 ps-4">
             {/* ADS */}
             <View className="flex-colum">
-              <Text className={titleStyle}>Ads</Text>
+              <Text className={titleStyle}>ads</Text>
               <Text
                 className={`text-base ${
-                  theme === "dark" ? "text-stone-400 " : "text-stone-500" 
+                  theme === "dark" ? "text-stone-400 " : "text-[#7d776a] "
                 } font-bold text-center`}
                 numberOfLines={1}
                 adjustsFontSizeToFit
@@ -97,13 +88,13 @@ const PlatFormCard = ({
 
             {/* Profit */}
             <View className="flex-colum items-center justify-items-center ">
-              <Text className={titleStyle}>Profit</Text>
+              <Text className={titleStyle}>profit</Text>
               <Text
                 className={`text-base font-bold text-center ${
-                  profit >= 0
+                  parseFloat(profit)  >= 0
                     ? theme === "dark"
                       ? "text-teal-400"
-                      : "text-[#3c22ff]"
+                      : "text-[#5500ff]"
                     : "text-[#FF006E] "
                 }`}
                 numberOfLines={1}
@@ -118,9 +109,9 @@ const PlatFormCard = ({
           <View className="flex-row justify-around w-full mt-2 px-0 ps-4">
             {/* %ADS */}
             <View className="flex-colum">
-              <Text className={titleStyle}>%Ads</Text>
+              <Text className={titleStyle}>%ads</Text>
               <Text
-                className="text-base text-stone-400 font-bold text-center"
+                className={percentadsarv}
                 numberOfLines={1}
                 adjustsFontSizeToFit
               >
@@ -130,9 +121,9 @@ const PlatFormCard = ({
 
             {/* Average */}
             <View className="flex-colum items-center justify-between ">
-              <Text className={titleStyle}>Avr.</Text>
+              <Text className={titleStyle}>arv.</Text>
               <Text
-                className="text-base text-stone-400 font-bold text-center"
+              className={percentadsarv}
                 numberOfLines={1}
                 adjustsFontSizeToFit
               >

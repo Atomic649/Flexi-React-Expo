@@ -1,11 +1,11 @@
 const Colors = {
   light: {
-    text: '#18181b',
+    text: '#423f39',
     background: '#fff',
   },
   dark: {
     text: '#fff',
-    background: '#18181b',
+    background: '#423f39',
   },
 }
 
