@@ -16,7 +16,7 @@ function RootLayoutNav() {
   useEffect(() => {
     async function updateNavigationBar() {
       try {
-        const navBarColor = theme === "dark" ? "#18181b" : "#f4f4f5";
+        const navBarColor = theme === "dark" ? "#18181b" : "#ffffff";
         await NavigationBar.setBackgroundColorAsync(navBarColor);
         // Set button style based on theme
         await NavigationBar.setButtonStyleAsync(
@@ -32,11 +32,11 @@ function RootLayoutNav() {
 
   return (
     <SafeAreaView
-      className={`h-screen ${theme === "dark" ? "bg-zinc-900" : "bg-zinc-100"}`}
+      className={`h-screen ${theme === "dark" ? "bg-zinc-900" : "bg-white"}`} // color of last bottom bar
     >
       <StatusBar
         barStyle={theme === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={theme === "dark" ? "#18181b" : "#f4f4f5"}
+        backgroundColor={theme === "dark" ? "#18181b" : "#ffffff"}
         animated={true}
       />
       <Stack>
@@ -132,7 +132,7 @@ export default function RootLayout() {
 const showTopBarAndBackIcon = (theme: string) => ({
   headerShown: true,
   headerStyle: {
-    backgroundColor: theme === "dark" ? "#18181b" : "#f4f4f5",
+    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff",
   },
   headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
   headerLeft: () => (
@@ -155,7 +155,7 @@ const HideTopBar = () => ({
 const mainTopBar = (theme: string) => ({
   headerShown: true,
   headerStyle: {
-    backgroundColor: theme === "dark" ? "#18181b" : "#f4f4f5", //
+    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", //
   },
   headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
   headerRight: () => (

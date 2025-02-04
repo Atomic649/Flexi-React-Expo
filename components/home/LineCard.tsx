@@ -4,7 +4,7 @@ import PlatFormCard from "@/components/PlatformCard";
 const LineCard = () => {
     return (
         <PlatFormCard
-            sale="5,555.25฿"
+            sale="5,555.25"
             adsCost="8888"
             profit="555"
             percentAds="35%"

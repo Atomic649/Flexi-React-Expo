@@ -9,7 +9,7 @@ const TotalSale = () => {
     <View className="flex flex-col pt-3 pb-2 px-2 items-center justify-center">
       <View
         className={`flex-row ${
-          theme === "dark" ? "bg-zinc-800" : "bg-zinc-50"
+          theme === "dark" ? "bg-zinc-800" : "bg-white"
         } items-center w-full h-60 rounded-2xl border ${
           theme === "dark" ? "border-zinc-700" : "border-zinc-300"
         }`}
@@ -23,6 +23,10 @@ const TotalSale = () => {
             <View className="bg-teal-300 items-center justify-center w-36 h-36 rounded-full absolute">
               {/* Smaller Circle */}
             </View>
+            <View className="bg-white items-center justify-center w-36 h-36 rounded-full absolute">
+              {/* Smaller Circle */}
+            </View>
+
           </View>
         </View>
 
@@ -61,8 +65,9 @@ const TotalSale = () => {
               <Text
                 className={`text-base font-bold ${
                   999.99 >= 0
+                   
                     ? theme === "dark"
-                      ? "text-teal-400"
+                    ? "text-teal-400"
                       : "text-teal-500"
                     : "text-red-500"
                 }`}

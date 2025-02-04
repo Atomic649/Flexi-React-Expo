@@ -102,3 +102,14 @@ utils/themeUtils.ts
 
 ! C2 Main Tab Bar BG Color
 _layout(tabs) > tabBarBackgroundColor
+
+
+
+
+rs={
+            theme === "dark" 
+              ? ['#18181b', '#27272a'] 
+              : ['#ffffff', '#f5f5f4']
+          }
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}

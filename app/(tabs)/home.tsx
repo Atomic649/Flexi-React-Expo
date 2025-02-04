@@ -13,7 +13,7 @@ import LineCard from "@/components/home/LineCard";
 export default function home() {
   const { theme } = useTheme();
   return (
-    <SafeAreaView className={`h-full ${theme === "dark" ? "bg-zinc-900" : "bg-stone-200"}`}>
+    <SafeAreaView className={`h-full ${theme === "dark" ? "bg-[#1B1B1E]" : "bg-[#dbf0f0]"}`}>
       <ScrollView>
         <TotalSale />
         <View className="flex flex-wrap flex-row justify-around">
@@ -29,9 +29,9 @@ export default function home() {
           <View className="w-1/2 p-0">
             <LineCard />
           </View>
-          <View className="w-full p-0"> 
+          {/* <View className="w-full p-0"> 
             <ShopCard />
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>

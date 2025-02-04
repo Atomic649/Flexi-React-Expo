@@ -36,7 +36,7 @@ const TabIcon = ({ icon, color, focused, size = "normal" }: TabIconProps) => {
         className={`
         flex items-center justify-center
         ${
-          size === "large" ? "bg-teal-400 p-3 rounded-full  "  : ""
+          size === "large" ? "bg-[#19d6c0] p-3 rounded-full  "  : ""
         }  // เพิ่มพื้นหลังถ้าเป็นขนาดใหญ่
       `}
       >
@@ -44,7 +44,7 @@ const TabIcon = ({ icon, color, focused, size = "normal" }: TabIconProps) => {
           source={icon}
           resizeMode="contain"
           // Color Icon of Middle Tab
-          tintColor={size === "large" ? "#f4f4f5" : color}
+          tintColor={size === "large" ? "#ffffff" : color}
           className={size === "large" ? "w-9 h-9  " : "w-9 h-7"}
         />
       </View>
@@ -63,10 +63,10 @@ export default function TabLayout() {
   const [toolbarVisible, setToolbarVisible] = useState(false);
 
   // Define colors based on theme
-  const tabBarBackgroundColor = theme === "dark" ? "#18181b" : "#f4f4f5"; // C2 - Main Tab Bar BG Color
+  const tabBarBackgroundColor = theme === "dark" ? "#18181b" : "#ffffff"; // C2 - Main Tab Bar BG Color
   const tabBarBorderColor = theme === "dark" ? "#232533" : "#e0e0e0";
-  const tabBarActiveTintColor = theme === "dark" ? "#03dcc7" : "#2dd4bf";
-  const tabBarInactiveTintColor = theme === "dark" ? "#a1a1a1" : "#75726a";
+  const tabBarActiveTintColor = theme === "dark" ? "#03dcc7" : "#00d0c9"; // choose icon
+  const tabBarInactiveTintColor = theme === "dark" ? "#a1a1a1" : "#4e4b47"; // icon
 
   return (
     // -------- Major Tap --------
@@ -92,7 +92,6 @@ export default function TabLayout() {
             borderTopColor: tabBarBorderColor,
             height: Platform.OS === "ios" ? 90 : 70,
             paddingTop: 5,
-            // paddingLeft: 40,
             paddingBottom: Platform.OS === "ios" ? 30 : 5,
             ...Platform.select({
               ios: {
@@ -203,8 +202,8 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
             onPress={() => {}}
             className="flex-row rounded-t-full items-center justify-evenly"
             style={{
-              backgroundColor: theme === "dark" ? "#18181b" : "#75726a",  
-              borderColor: theme === "dark" ? "#2c3030" : "#75726a",
+              backgroundColor: theme === "dark" ? "#18181b" : "#4e4b47",  
+              borderColor: theme === "dark" ? "#2c3030" : "#ffffff",
               borderStyle: "solid",
               //shadowColor: "#baf0ff",
               // shadowOffset: {

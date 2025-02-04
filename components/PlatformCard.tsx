@@ -2,7 +2,12 @@ import React from "react";
 import { View, Text } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useTextColorClass } from "@/utils/themeUtils";
-import { FontAwesome, Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Ionicons,
+  MaterialIcons,
+  AntDesign,
+} from "@expo/vector-icons";
 
 const PlatFormCard = ({
   sale,
@@ -18,13 +23,17 @@ const PlatFormCard = ({
   const { theme } = useTheme();
 
   const renderIcon = () => {
-    if (iconType === "FontAwesome") {
-      return <FontAwesome name={icon} size={iconSize} color={theme === "dark" ? "#27272a" : "#ffffff"} />;
-    } else if (iconType === "Ionicons") {
-      return <Ionicons name={icon} size={iconSize} color={theme === "dark" ? "#27272a" : "#ffffff"} />;
-    }
-    return null;
+    const IconComponent = iconType === "FontAwesome" ? FontAwesome : Ionicons;
+    return (
+      <IconComponent
+      name={icon}
+      size={iconSize}
+      color={theme === "dark" ? "#27272a" : "#ffffff"}
+      />
+    );
   };
+// styles
+  const titleStyle = "text-sm text-[#A6A6A6] text-center font-bold";
 
   return (
     <View
@@ -35,7 +44,7 @@ const PlatFormCard = ({
         <View
           className={`
             w-12 h-12
-            ${theme === "dark" ? "bg-stone-400" : "bg-stone-500"}
+            ${theme === "dark" ? "bg-[#a8a29e]" : "bg-[#3c22ff]"}
             rounded-full 
             items-center 
             justify-center 
@@ -50,9 +59,13 @@ const PlatFormCard = ({
       <View className="relative">
         <View
           className={`${
-            theme === "dark" ? "bg-zinc-800" : "bg-zinc-50"
+            theme === "dark" ? "bg-zinc-800" : "bg-white"
           } px-2 items-center justify-center w-52 h-44 rounded-2xl
             
+          shadow-violet-600
+          
+            
+
             
             `}
         >
@@ -65,15 +78,15 @@ const PlatFormCard = ({
             >
               {sale}
             </Text>
-            <Text className="text-xs text-zinc-500 text-right">sale</Text>
+            <Text className={titleStyle}>sale</Text>
           </View>
           <View className="flex-row justify-around w-full mt-2 px-0 ps-4">
             {/* ADS */}
             <View className="flex-colum">
-              <Text className="text-xss text-zinc-500 text-center">Ads</Text>
+              <Text className={titleStyle}>Ads</Text>
               <Text
                 className={`text-base ${
-                  theme === "dark" ? "text-stone-400 " : "text-orange-400 "
+                  theme === "dark" ? "text-stone-400 " : "text-stone-500" 
                 } font-bold text-center`}
                 numberOfLines={1}
                 adjustsFontSizeToFit
@@ -84,14 +97,14 @@ const PlatFormCard = ({
 
             {/* Profit */}
             <View className="flex-colum items-center justify-items-center ">
-              <Text className="text-sm text-zinc-500 justify-center text-center">Profit</Text>
+              <Text className={titleStyle}>Profit</Text>
               <Text
                 className={`text-base font-bold text-center ${
                   profit >= 0
                     ? theme === "dark"
                       ? "text-teal-400"
-                      : "text-teal-500"
-                    : "text-red-500"
+                      : "text-[#3c22ff]"
+                    : "text-[#FF006E] "
                 }`}
                 numberOfLines={1}
                 adjustsFontSizeToFit
@@ -105,7 +118,7 @@ const PlatFormCard = ({
           <View className="flex-row justify-around w-full mt-2 px-0 ps-4">
             {/* %ADS */}
             <View className="flex-colum">
-              <Text className="text-sm text-stone-500 text-center">%Ads</Text>
+              <Text className={titleStyle}>%Ads</Text>
               <Text
                 className="text-base text-stone-400 font-bold text-center"
                 numberOfLines={1}
@@ -117,7 +130,7 @@ const PlatFormCard = ({
 
             {/* Average */}
             <View className="flex-colum items-center justify-between ">
-              <Text className="text-sm text-stone-500 text-center">Avr.</Text>
+              <Text className={titleStyle}>Avr.</Text>
               <Text
                 className="text-base text-stone-400 font-bold text-center"
                 numberOfLines={1}

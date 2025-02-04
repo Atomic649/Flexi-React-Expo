@@ -4,7 +4,7 @@ import PlatFormCard from "@/components/PlatformCard";
 const ShopeeCard = () => {
     return (
         <PlatFormCard
-            sale="125,555.25฿"
+            sale="125,555."
             adsCost="8888"
             profit="555"
             percentAds="35%"

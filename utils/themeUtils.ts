@@ -2,7 +2,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 
 export const useTextColorClass = () => {
   const { theme } = useTheme();
-  return theme === 'dark' ? 'text-stone-400' : 'text-stone-500';
+  return theme === 'dark' ? 'text-stone-400' : 'text-bg-[#A6A6A6]';
  
 };
 

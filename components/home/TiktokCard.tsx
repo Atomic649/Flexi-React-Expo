@@ -4,7 +4,7 @@ import PlatFormCard from "@/components/PlatformCard";
 const TiktokCard = () => {
   return (
     <PlatFormCard
-      sale="5,555.25฿"
+      sale="5,555.25"
       adsCost="88,568.33"
       profit="-350.36"
       percentAds="35%"
