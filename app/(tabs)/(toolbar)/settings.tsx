@@ -12,7 +12,7 @@ import CustomAlert from "@/components/CustomAlert";
 import { Text } from "@/components/CustomText";
 import CallAPIUser from "@/api/auth_api";
 import { removeToken } from "@/utils/utility";
-import { useTextColorClass } from "@/utils/themeUtils";
+import { useTextColorClass, useBackgroundColorClass } from "@/utils/themeUtils";
 
 export default function Setting() {
   const [Marketing, setMarketing] = useState("ads");
@@ -189,9 +189,9 @@ export default function Setting() {
   };
 
   return (
-    <SafeAreaView className="h-full">
+    <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
       <ScrollView>
-        <View className="px-4 pt-5 pb-5">
+        <View className={`px-4 pt-5 pb-5`}>
           {/* Settings Management */}
           <Section title={t("settings.management")}>
             <View>
@@ -238,7 +238,7 @@ export default function Setting() {
                 </View>
                 <View
                   className={`w-14 h-8 rounded-full p-1 ${
-                    theme === "dark" ? "bg-gray-700" : "bg-zinc-200"
+                    theme === "dark" ? "bg-gray-500" : "bg-zinc-200"
                   }`}
                 >
                   <AnimatedToggle theme={theme} />
@@ -472,7 +472,7 @@ const Section = ({
       </Text>
       <View
         className={`rounded-xl overflow-hidden border ${
-          theme === "dark" ? "border-zinc-700" : "border-zinc-200"
+          theme === "dark" ? "border-zinc-500" : "border-zinc-200"
         }`}
       >
         {children}

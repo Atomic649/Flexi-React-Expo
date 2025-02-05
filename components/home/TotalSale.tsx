@@ -2,13 +2,12 @@ import React from "react";
 import { View, Text } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import CircularChart from "@/components/CircularChart";
-
-const titleStyle = "text-sm text-[#48453e] text-center font-normal";
-const percentadsarv = "text-sm text-[#7f7765] text-center font-bold";
-
+import { useTextColorClass } from "@/utils/themeUtils";
 
 const TotalSale = () => {
   const { theme } = useTheme();
+  const titleStyle = `text-sm ${theme === "dark" ? "text-[#ababab]" : "text-[#48453e]"} text-center font-normal`;
+  const percentadsarv = `text-sm ${theme === "dark" ? "text-[#c6c7c7]" : "text-[#7f7765]"} text-center font-bold`;
   return (
     <View className="flex flex-col pt-3 pb-2 px-2 items-center justify-center">
       <View
@@ -26,17 +25,17 @@ const TotalSale = () => {
         </View>
 
         {/* Total Sale */}
-        <View className="bg-transparent items-center ps-8 justify-center w-52 h-60 rounded-2xl">
+        <View className="bg-transparent items-center ps-6 justify-center w-52 h-60 rounded-2xl">
           <View className="flex-row justify-center w-full">
             <Text
-              className={`text-2xl font-bold  text-[#423f39]`}
+              className={`text-xl font-bold ${useTextColorClass()}`}
               numberOfLines={1}
               adjustsFontSizeToFit
             >
               1,999,999
             </Text>
 
-            <Text className="text-xs  text-zinc-500">sale</Text>
+            <Text className={titleStyle}>sale</Text>
           </View>
           {/* row Ads and Profit */}
           <View className="flex-row justify-around  mt-2 px-6 ps-3">
@@ -45,7 +44,7 @@ const TotalSale = () => {
               <Text className={titleStyle}>ads</Text>
               <Text
                 className={`text-lg ${
-                  theme === "dark" ? "text-stone-400 " : "text-orange-400 "
+                  theme === "dark" ? "text-[#ffb700] " : "text-orange-400 "
                 } font-bold text-center`}
                 numberOfLines={1}
                 adjustsFontSizeToFit
@@ -76,25 +75,25 @@ const TotalSale = () => {
           <View className="flex-row justify-around mt-3 px-0 ps-4">
             {/* %ADS */}
             <View className="flex-colum">
-              <Text className={titleStyle}>%ads</Text>
+              <Text className={titleStyle}>ROI</Text>
               <Text
                 className={ percentadsarv}
                 numberOfLines={1}
                 adjustsFontSizeToFit
               >
-                9%
+                3
               </Text>
             </View>
 
             {/* Average */}
             <View className="flex-colum items-center justify-between w-full">
-              <Text className={titleStyle}>avr.</Text>
+              <Text className={titleStyle}>AVR</Text>
               <Text
             className={percentadsarv}
                 numberOfLines={1}
                 adjustsFontSizeToFit
               >
-                99
+                590
               </Text>
             </View>
           </View>

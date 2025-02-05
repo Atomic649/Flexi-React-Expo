@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { useTextColorClass } from "@/utils/themeUtils";
+import {
+  FontAwesome,
+  Ionicons,
+} from "@expo/vector-icons";
 
 const PlatFormCard = ({
   sale,
@@ -20,30 +24,30 @@ const PlatFormCard = ({
     const IconComponent = iconType === "FontAwesome" ? FontAwesome : Ionicons;
     return (
       <IconComponent
-        name={icon}
-        size={iconSize}
-        color={theme === "dark" ? "#27272a" : "#ffffff"}
+      name={icon}
+      size={iconSize}
+      color={theme === "dark" ? "#27272a" : "#ffffff"}
       />
     );
   };
   // TEXT styles
-  const titleStyle = "text-sm text-[#48453e] text-center font-normal";
-  const percentadsarv = "text-sm text-[#7f7765] text-center font-bold";
+  const titleStyle = `text-sm ${theme === "dark" ? "text-[#c9c9c9]" : "text-[#48453e]"} text-center font-normal`;
+  const percentadsarv = `text-sm ${theme === "dark" ? "text-[#c6c7c7]" : "text-[#7f7765]"} text-center font-bold`;
 
   return (
     <View
-      className={`flex flex-col p-1 items-center justify-center ${otherStyles}`}
+      className={`flex flex-col  items-center justify-center ${otherStyles}`}
     >
       {/* Icon */}
       <View className="flex flex-col items-center justify-center mb-1">
         <View
           className={`
             w-12 h-12
-            ${theme === "dark" ? "bg-[#a8a29e]" : "bg-[#423f39]"}
+            ${theme === "dark" ? "bg-[#8d8c8b]" : "bg-[#3c22ff]"}
             rounded-full 
             items-center 
             justify-center 
-            absolute -top-2        
+            absolute -top-1        
             right-16
             z-10
           `}
@@ -52,18 +56,17 @@ const PlatFormCard = ({
         </View>
       </View>
       <View className="relative">
-        {/* adjust size box here */}
         <View
           className={`${
-            theme === "dark" ? "bg-zinc-800" : "bg-white"
-          } px-2 items-center justify-center w-52 h-36 rounded-2xl border
+            theme === "dark" ? "bg-[#27272a]" : "bg-white" 
+          }  items-center justify-center m-1 pt-2 w-52 h-36 rounded-2xl border
           ${ theme === "dark" ? "border-zinc-700" : "border-[#61fff2]"}                     
             `}
         >
           {/* Sales */}
-          <View className="flex-row justify-center mt-1 w-full  ps-6">
+          <View className="flex-row justify-center w-full  ps-6">
             <Text
-              className={`text-lg text-[#423f39] font-bold`}
+              className={`text-lg ${useTextColorClass()} font-bold`}
               numberOfLines={1}
               adjustsFontSizeToFit
             >
@@ -77,7 +80,7 @@ const PlatFormCard = ({
               <Text className={titleStyle}>ads</Text>
               <Text
                 className={`text-base ${
-                  theme === "dark" ? "text-stone-400 " : "text-[#7d776a] "
+                  theme === "dark" ? "text-[#dddddd]" : "text-stone-500" 
                 } font-bold text-center`}
                 numberOfLines={1}
                 adjustsFontSizeToFit
@@ -93,7 +96,7 @@ const PlatFormCard = ({
                 className={`text-base font-bold text-center ${
                   parseFloat(profit)  >= 0
                     ? theme === "dark"
-                      ? "text-teal-400"
+                      ? "text-[#00fad9]"
                       : "text-[#5500ff]"
                     : "text-[#FF006E] "
                 }`}
@@ -106,7 +109,7 @@ const PlatFormCard = ({
             </View>
           </View>
 
-          <View className="flex-row justify-around w-full mt-2 px-0 ps-4">
+          <View className="flex-row justify-around w-full mt-1 mb-1 px-0 ps-4">
             {/* %ADS */}
             <View className="flex-colum">
               <Text className={titleStyle}>%ads</Text>
@@ -121,7 +124,7 @@ const PlatFormCard = ({
 
             {/* Average */}
             <View className="flex-colum items-center justify-between ">
-              <Text className={titleStyle}>arv.</Text>
+              <Text className={titleStyle}>avr.</Text>
               <Text
               className={percentadsarv}
                 numberOfLines={1}

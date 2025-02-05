@@ -13,7 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/providers/ThemeProvider";
 import { i18n } from "i18next";
-import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
+
 
 // ปรับปรุง interface ของ TabIcon
 interface TabIconProps {
@@ -36,7 +36,7 @@ const TabIcon = ({ icon, color, focused, size = "normal" }: TabIconProps) => {
         className={`
         flex items-center justify-center
         ${
-          size === "large" ? "bg-[#19d6c0] p-3 rounded-full  "  : ""
+          size === "large" ? "bg-[#23ffda] p-3 rounded-full  "  : ""
         }  // เพิ่มพื้นหลังถ้าเป็นขนาดใหญ่
       `}
       >
@@ -65,7 +65,7 @@ export default function TabLayout() {
   // Define colors based on theme
   const tabBarBackgroundColor = theme === "dark" ? "#18181b" : "#ffffff"; // C2 - Main Tab Bar BG Color
   const tabBarBorderColor = theme === "dark" ? "#232533" : "#e0e0e0";
-  const tabBarActiveTintColor = theme === "dark" ? "#03dcc7" : "#00d0c9"; // choose icon
+  const tabBarActiveTintColor = theme === "dark" ? "#03dcc7" : "hsl(174, 97%, 47%)"; // choose icon
   const tabBarInactiveTintColor = theme === "dark" ? "#a1a1a1" : "#4e4b47"; // icon
 
   return (

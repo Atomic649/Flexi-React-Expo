@@ -22,8 +22,8 @@ const CircularChart = ({
   const circumference = 2 * Math.PI * (radius - strokeWidth / 2);
   const strokeDashoffset = useSharedValue(circumference);
 
-  const strokeColor = theme === "dark" ? "#2dd4bf" : "#ffb30e";
-  const bgStrokeColor = theme === "dark" ? "#2dd4bf" : "#18ffe4";
+  const strokeColor = theme === "dark" ? "#f2aa10" : "#ffb30e";
+  const bgStrokeColor = theme === "dark" ? "#00fad9" : "#18ffe4";
 
   useEffect(() => {
     strokeDashoffset.value = withTiming(circumference - (percentage / 100) * circumference, {

@@ -6,9 +6,8 @@ import FacebookCard from "@/components/home/FacebookCard";
 import TiktokCard from "@/components/home/TiktokCard";
 import ShopeeCard from "@/components/home/ShopeeCard";
 import LineCard from "@/components/home/LineCard";
-import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import Dropdown from "@/components/Dropdown";
+
 
 const Home = () => {
   const { theme } = useTheme();

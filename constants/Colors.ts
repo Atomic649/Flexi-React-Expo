@@ -5,7 +5,7 @@ const Colors = {
   },
   dark: {
     text: '#fff',
-    background: '#423f39',
+    background: '#181818',
   },
 }
 
