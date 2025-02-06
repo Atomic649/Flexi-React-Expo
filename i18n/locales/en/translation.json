@@ -6,7 +6,7 @@
     "loading": "Loading...",
     "error": "Error",
     "success": "Success",
-    "clear": "Reset",
+    "clear": "Clear",
     "ok": "OK"
   },
   "auth": {
@@ -18,13 +18,13 @@
       "noAccount": "Don't have an account?",
       "registerButton": "Register",
       "validation": {
-        "incomplete": "Incomplete Data",
+        "incomplete": "Incomplete data",
         "invalidData": "Please enter valid data"
       },
       "alerts": {
-        "error": "Login Failed",
-        "success": "Login Successful",
-        "successMessage": "Press OK to continue",
+        "error": "Login failed",
+        "success": "Login successful",
+        "successMessage": "Please press OK to proceed",
         "ok": "OK"
       }
     },
@@ -37,30 +37,30 @@
       "hasAccount": "Already have an account?",
       "loginButton": "Login",
       "validation": {
-        "incomplete": "Incomplete Data",
+        "incomplete": "Incomplete data",
         "invalidData": "Please enter valid data"
       },
       "alerts": {
-        "success": "Registration Successful",
-        "successMessage": "Press OK to login",
+        "success": "Registration successful",
+        "successMessage": "Please press OK to proceed",
         "ok": "OK"
       },
-      "firstName": "Full Name",
+      "firstName": "First Name",
       "lastName": "Last Name",
       "phoneTitle": "Phone Number",
-      "phonePlaceholder": "Enter your phone number"
+      "phonePlaceholder": "Enter phone number"
     },
     "businessRegister": {
-      "title": "Business Registration",
-      "button": "Register",
+      "title": "Business Registration",        
+      "button": "Register",     
       "loginButton": "Login",
       "validation": {
-        "incomplete": "Incomplete Data",
+        "incomplete": "Incomplete data",
         "invalidData": "Please enter valid data"
       },
       "alerts": {
-        "success": "Registration Successful",
-        "successMessage": "Press OK to login",
+        "success": "Registration successful",
+        "successMessage": "Please press OK to proceed",
         "ok": "OK"
       },
       "businessName": "Business Name",
@@ -68,27 +68,28 @@
       "vatId": "VAT ID",
       "businessType": "Business Type",
       "taxTypeOption": {
-        "": "Select Tax Type",
+        "" : "Select Tax Type",
         "Individual": "Individual",
         "Juristic": "Juristic"
       },
       "chooseBusinessType": "Select Business Type",
       "businessTypeOption": {
-        "": "Select Business Type",
+        ""  : "Select Business Type",
         "OnlineSale": "Online Sale",
         "Massage": "Massage",
         "Restaurant": "Restaurant",
-        "Bar": "Bar",
+        "Bar" : "Bar",
         "Cafe": "Cafe",
         "Hotel": "Hotel / Resort",
-        "Tutor": "Tutor / Coach",
+        "Tutor" : "Tutor / Coach",
         "Influencer": "Influencer",
         "Other": "Other"
       }
     }
   },
   "product": {
-    "title": "Product Name",
+    "Products": "Products",
+    "title": "Shop Name",
     "price": "Price",
     "description": "Description",
     "category": "Category",
@@ -97,10 +98,10 @@
     "location": "Location",
     "createProduct": "Create Product",
     "uploadImage": "Upload Image",
-    "imageLimit": "Can upload up to {{count}} images",
+    "imageLimit": "You can upload up to {{count}} images",
     "alerts": {
       "imageLimit": {
-        "upload": "Maximum 5 images allowed"
+        "upload": "You can upload up to 5 images"
       }
     }
   },
@@ -120,11 +121,11 @@
       "save": "Save",
       "cancel": "Cancel",
       "success": "Name updated successfully",
-      "error": "Could not update name"
+      "error": "Failed to update name"
     },
     "avatar": {
       "pickTitle": "Change Profile Picture",
-      "pickMessage": "Choose how to add a photo",
+      "pickMessage": "Choose how to add a picture",
       "camera": "Take Photo",
       "gallery": "From Gallery",
       "error": "Failed to update profile picture"
@@ -152,24 +153,38 @@
     "management": "Settings Management",
     "language": "Language",
     "notifications": "Notifications",
-    "location": "Location",
-    "additional": "Additional Actions",
-    "simpleCreate": "Use Simple Product Creation",
-    "followers": "Allow People to Follow You",
-    "customMessage": "Custom Message Settings",
+    "userProfile": "User Profile",
+    "businessInfo": "Business Info",
+    "ads": "Ads",
+    "organic" : "Organic",
     "privacy": {
       "title": "Privacy",
       "settings": "Privacy Settings",
       "security": "Security"
     },
+    "marketing": {
+      "title": "Marketing Strategies",
+      "ads": "Ads",
+      "organic": "Organic"
+    },
+    "socialMedia": {
+      "title": "Social Media",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "line": "Line",
+      "tiktok": "Tiktok",
+      "shopee": "Shopee",
+      "youtube": "YouTube"
+    },
     "logout": {
       "logout": "Logout",
       "confirmTitle": "Confirm Logout",
       "confirmMessage": "Are you sure you want to logout?",
-      "error": "Failed to logout. Please try again."
+      "error": "Failed to logout, please try again"
     },
     "appearance": {
-      "title": "Theme",
+      "title": "Appearance",
       "light": "Light",
       "dark": "Dark",
       "system": "System"
@@ -178,7 +193,7 @@
   "create": {
     "title": "Create Product",
     "fields": {
-      "title": "Product Name",
+      "title": "Product Title",
       "price": "Price",
       "description": "Description",
       "location": "Location",
@@ -186,27 +201,27 @@
       "condition": "Condition"
     },
     "placeholders": {
-      "title": "Product Name",
-      "price": "Price",
-      "description": "Description",
-      "location": "Location",
-      "category": "Category",
-      "condition": "Condition"
+      "title": "Enter product title",
+      "price": "Enter price",
+      "description": "Enter description",
+      "location": "Enter location",
+      "category": "Select category",
+      "condition": "Select condition"
     },
     "validation": {
-      "title": "Please enter product name",
+      "title": "Please enter product title",
       "price": {
         "required": "Please enter product price",
-        "invalid": "Please enter valid price"
+        "invalid": "Please enter a valid price"
       },
       "description": "Please enter product description",
       "category": "Please select product category",
       "condition": "Please select product condition",
       "location": "Please enter location",
-      "image": "Please select at least 1 product image",
+      "image": "Please select at least one product image",
       "imageLimit": {
-        "upload": "Can upload up to 5 images",
-        "select": "Can select up to {{count}} more images"
+        "upload": "You can upload up to 5 images",
+        "select": "You can select up to {{count}} images"
       }
     },
     "buttons": {
@@ -214,15 +229,15 @@
       "saving": "Saving..."
     },
     "messages": {
-      "loginRequired": "Please login to create product",
+      "loginRequired": "Please login before creating a product",
       "success": "Product saved successfully",
-      "error": "Error creating product"
+      "error": "Failed to create product"
     },
     "alerts": {
       "error": {
         "required": "Please fill in all required fields",
         "update": "Failed to update product",
-        "image": "Failed to pick image",
+        "image": "Failed to select image",
         "imageDelete": "Failed to delete image"
       },
       "success": {
@@ -237,9 +252,9 @@
         "title": "Select Condition",
         "options": {
           "new": "New",
-          "likeNew": "Used - Like New",
-          "good": "Used - Good",
-          "fair": "Used - Fair"
+          "likeNew": "Like New",
+          "good": "Good",
+          "fair": "Fair"
         }
       }
     },
@@ -247,9 +262,9 @@
       "title": "Add Image",
       "message": "Choose how to add an image",
       "camera": "Take Photo",
-      "library": "Choose from Library",
-      "error": "Error picking image",
-      "limitReached": "Maximum {{count}} images allowed"
+      "library": "Select from Library",
+      "error": "Failed to select image",
+      "limitReached": "You can add up to {{count}} images"
     }
   },
   "bookmark": {
@@ -257,7 +272,7 @@
     "empty": "No products found",
     "product": {
       "status": {
-        "available": "In Stock"
+        "available": "Available"
       }
     },
     "actions": {
@@ -276,39 +291,39 @@
       "guest": "Guest"
     },
     "search": {
-      "placeholder": "Search products..."
+      "placeholder": "Search for products..."
     },
     "sections": {
       "recommended": "Recommended Products"
     },
     "empty": {
       "noProducts": "No products found",
-      "noSearchResults": "No products match your search"
+      "noSearchResults": "No products found for your search"
     }
   },
   "tabs": {
     "home": "Home",
-    "income" : "Income",
+    "income": "Income",
     "create": "Tools",
     "expense": "Expense",
-    "shop": "Shop",   
+    "shop": "Shop",
     "profile": "Profile",
     "settings": "Settings",
     "product": "Product",
-    "sell": "Sell",
-    "ads": "Ads"    
+    "sell": "Storefront",
+    "ads": "Ads"
   },
   "landing": {
     "slogan": {
-      "line1": "Discover",
-      "line2": "Experience"
+      "line1": "Discover Unlimited",
+      "line2": "Experiences at"
     },
-    "description": "Find new creativity every day: Start your limitless creative journey with Aura",
+    "description": "Find new creative ideas every day: Start your journey of limitless creativity with Aura",
     "button": "Get Started"
   },
   "editProduct": {
     "title": "Edit Product",
-    "titlePlaceholder": "Product Name",
+    "titlePlaceholder": "Product Title",
     "priceLabel": "Price",
     "pricePlaceholder": "Enter price",
     "descriptionLabel": "Description",
@@ -316,9 +331,9 @@
     "locationLabel": "Location",
     "locationPlaceholder": "Enter location",
     "categoryLabel": "Category",
-    "selectCategory": "Select Category",
+    "selectCategory": "Select category",
     "conditionLabel": "Condition",
-    "selectCondition": "Select Condition",
+    "selectCondition": "Select condition",
     "existingImages": "Current Images",
     "newImages": "New Images",
     "addImages": "Add Images",
@@ -337,5 +352,15 @@
         "required": "Please fill in all required fields"
       }
     }
+  },
+  "dashboard" : {
+    "title": "Dashboard",
+    "ads": "ads",
+    "selectDate": "Select Date",
+    "sale": "Sale",
+    "profit": "Profit",
+    "roi": "ROI",
+    "avr": "AVR"
+   
   }
 }

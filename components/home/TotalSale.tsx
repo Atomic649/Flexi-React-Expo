@@ -3,11 +3,18 @@ import { View, Text } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import CircularChart from "@/components/CircularChart";
 import { useTextColorClass } from "@/utils/themeUtils";
+import { useTranslation } from "react-i18next";
+
 
 const TotalSale = () => {
   const { theme } = useTheme();
-  const titleStyle = `text-sm ${theme === "dark" ? "text-[#ababab]" : "text-[#48453e]"} text-center font-normal`;
-  const percentadsarv = `text-sm ${theme === "dark" ? "text-[#c6c7c7]" : "text-[#7f7765]"} text-center font-bold`;
+  const { t } = useTranslation(); // กำหนดตัวแปรใช้งานภาษา
+  const titleStyle = `text-sm ${
+    theme === "dark" ? "text-[#ababab]" : "text-[#48453e]"
+  } text-center font-normal`;
+  const percentadsarv = `text-sm ${
+    theme === "dark" ? "text-[#c6c7c7]" : "text-[#7f7765]"
+  } text-center font-bold`;
   return (
     <View className="flex flex-col pt-3 pb-2 px-2 items-center justify-center">
       <View
@@ -35,13 +42,13 @@ const TotalSale = () => {
               1,999,999
             </Text>
 
-            <Text className={titleStyle}>sale</Text>
+            <Text className={titleStyle}>{t("dashboard.sale")}</Text>
           </View>
           {/* row Ads and Profit */}
           <View className="flex-row justify-around  mt-2 px-6 ps-3">
             {/* ADS */}
             <View className="flex-colum ">
-              <Text className={titleStyle}>ads</Text>
+              <Text className={titleStyle}>{t("dashboard.ads")}</Text>
               <Text
                 className={`text-lg ${
                   theme === "dark" ? "text-[#ffb700] " : "text-orange-400 "
@@ -55,14 +62,14 @@ const TotalSale = () => {
 
             {/* Profit */}
             <View className="flex-colum items-center justify-between w-full">
-              <Text className={titleStyle}>profit</Text>
+              <Text className={titleStyle}>{t("dashboard.profit")}</Text>
               <Text
-                 className={`text-lg font-bold ${
+                className={`text-lg font-bold ${
                   parseFloat("-999.99") >= 0
-                  ? theme === "dark"
-                    ? "text-teal-400"
-                    : "text-teal-500"
-                  : "text-[#FF006E]"
+                    ? theme === "dark"
+                      ? "text-teal-400"
+                      : "text-teal-500"
+                    : "text-[#FF006E]"
                 }`}
                 numberOfLines={1}
                 adjustsFontSizeToFit
@@ -75,9 +82,9 @@ const TotalSale = () => {
           <View className="flex-row justify-around mt-3 px-0 ps-4">
             {/* %ADS */}
             <View className="flex-colum">
-              <Text className={titleStyle}>ROI</Text>
+              <Text className={titleStyle}>{t("dashboard.roi")}</Text>
               <Text
-                className={ percentadsarv}
+                className={percentadsarv}
                 numberOfLines={1}
                 adjustsFontSizeToFit
               >
@@ -87,9 +94,9 @@ const TotalSale = () => {
 
             {/* Average */}
             <View className="flex-colum items-center justify-between w-full">
-              <Text className={titleStyle}>AVR</Text>
+              <Text className={titleStyle}>{t("dashboard.avr")}</Text>
               <Text
-            className={percentadsarv}
+                className={percentadsarv}
                 numberOfLines={1}
                 adjustsFontSizeToFit
               >
