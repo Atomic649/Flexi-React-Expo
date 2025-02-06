@@ -19,10 +19,7 @@ import product from "../assets/icons/product.png"
 import ads from "../assets/icons/ads.png"
 import sell from "../assets/icons/sell.png"
 import income from "../assets/icons/income.png"
-import fx from "../assets/icons/fx.png"
 import shop from "../assets/icons/shop.png"
-import shop2 from "../assets/icons/shop2.png"
-import ads2 from "../assets/icons/ads2.png"
 import flexi from "../assets/icons/flexi.png"
 export default {
   expense,
@@ -45,10 +42,7 @@ export default {
   product,
   ads,
   sell,
-  income,
-  fx,
-  shop,
-  shop2,
-  ads2,
+  income,  
+  shop,  
   flexi,
 }

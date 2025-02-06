@@ -76,7 +76,7 @@ const PlatFormCard = ({
           </View>
           <View className="flex-row justify-around w-full mt-1 px-0 ps-4">
             {/* ADS */}
-            <View className="flex-colum">
+            <View className="flex-col">
               <Text className={titleStyle}>ads</Text>
               <Text
                 className={`text-base ${
@@ -90,7 +90,7 @@ const PlatFormCard = ({
             </View>
 
             {/* Profit */}
-            <View className="flex-colum items-center justify-items-center ">
+            <View className="flex-col selection:items-center justify-items-center ">
               <Text className={titleStyle}>profit</Text>
               <Text
                 className={`text-base font-bold text-center ${
@@ -111,7 +111,7 @@ const PlatFormCard = ({
 
           <View className="flex-row justify-around w-full mt-1 mb-1 px-0 ps-4">
             {/* %ADS */}
-            <View className="flex-colum">
+            <View className="flex-col">
               <Text className={titleStyle}>%ads</Text>
               <Text
                 className={percentadsarv}

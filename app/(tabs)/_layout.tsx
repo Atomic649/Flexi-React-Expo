@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
-import { icons } from "@/constants";
+import { icons, images } from "@/constants";
 import {
   View,
   Image,
@@ -21,32 +21,41 @@ interface TabIconProps {
   color: string;
   focused: boolean;
   size?: "normal" | "large"; // เพิ่ม prop สำหรับกำหนดขนาด
+  isImage?: boolean; // เพิ่ม prop สำหรับกำหนดว่าเป็น image หรือไม่
 }
 
 // ปรับปรุง TabIcon component
-const TabIcon = ({ icon, color, focused, size = "normal" }: TabIconProps) => {
+const TabIcon = ({ icon, color, focused, size = "normal", isImage = false }: TabIconProps) => {
   return (
     <View
       className={`
       flex items-center justify-center 
-      ${size === "large" ? "-mt-5" : ""}  // ขยับไอคอนขึ้นถ้าเป็นขนาดใหญ่
+      ${size === "large" ? "mt-1" : ""}  // ขยับไอคอนขึ้นถ้าเป็นขนาดใหญ่
     `}
     >
       <View
         className={`
         flex items-center justify-center
         ${
-          size === "large" ? "bg-[#23ffda] p-3 rounded-full  "  : ""
+          size === "large" ? "bg-[#ffffff00] p-3 rounded-full  "  : ""
         }  // เพิ่มพื้นหลังถ้าเป็นขนาดใหญ่
       `}
       >
-        <Image
-          source={icon}
-          resizeMode="contain"
-          // Color Icon of Middle Tab
-          tintColor={size === "large" ? "#ffffff" : color}
-          className={size === "large" ? "w-9 h-9  " : "w-9 h-7"}
-        />
+        {isImage ? (
+          <Image
+            source={icon}
+            resizeMode="contain"
+            style={{ width: size === "large" ? 52 : 40, height: size === "large" ? 52 : 40 }}
+          />
+        ) : (
+          <Image
+            source={icon}
+            resizeMode="contain"
+            // Color Icon of Middle Tab
+            tintColor={size === "large" ? "#ffffff" : color}
+            className={size === "large" ? "w-9 h-9  " : "w-9 h-7"}
+          />
+        )}
       </View>
     </View>
   );
@@ -65,7 +74,7 @@ export default function TabLayout() {
   // Define colors based on theme
   const tabBarBackgroundColor = theme === "dark" ? "#18181b" : "#ffffff"; // C2 - Main Tab Bar BG Color
   const tabBarBorderColor = theme === "dark" ? "#232533" : "#e0e0e0";
-  const tabBarActiveTintColor = theme === "dark" ? "#03dcc7" : "hsl(174, 97%, 47%)"; // choose icon
+  const tabBarActiveTintColor = theme === "dark" ? "#03dcc7" : "#04ecd5"; // choose icon
   const tabBarInactiveTintColor = theme === "dark" ? "#a1a1a1" : "#4e4b47"; // icon
 
   return (
@@ -132,10 +141,11 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <TouchableOpacity onPress={() => setToolbarVisible(true)}>
                 <TabIcon
-                  icon={icons.flexi}
+                  icon={images.logo}
                   color={color}
                   focused={focused}
                   size="large" // กำหนดให้เป็นขนาดใหญ่
+                  isImage={true} // กำหนดว่าเป็น image
                 />
               </TouchableOpacity>
             ),
@@ -160,7 +170,7 @@ export default function TabLayout() {
             title: t("tabs.shop"),
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon icon={icons.shop2} color={color} focused={focused} />
+              <TabIcon icon={icons.shop} color={color} focused={focused} />
             ),
           }}
         />
@@ -219,7 +229,7 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
               borderBottomLeftRadius: 30,
               borderBottomRightRadius: 30,
               position: "relative",
-              bottom: 110,
+              bottom: 95,
             }}
           >
             <TouchableOpacity
@@ -227,7 +237,7 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
               className="flex items-center mx-2"
             >
               <TabIcon
-                icon={icons.ads2}
+                icon={icons.ads}
                 color={getIconColor(theme)}
                 focused={false}
               />
