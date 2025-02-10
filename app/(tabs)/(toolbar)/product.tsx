@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text, RefreshControl } from "react-native";
+import { FlatList, View, Text, RefreshControl, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "@/components/ProductCard";
 import CallAPIProduct from "@/api/product_api";
 import { IMAGE_URL } from "@/utils/config";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass, useTextColorClass } from "@/utils/themeUtils";
+import { Ionicons } from "@expo/vector-icons";
 
 type Product = {
   id: number;
@@ -23,7 +24,7 @@ type Product = {
 };
 
 export default function Home() {
-  useTheme();
+  const { theme } = useTheme();
   const textColorClass = useTextColorClass();
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -79,6 +80,22 @@ export default function Home() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          bottom: 65,
+          right: 30,
+          backgroundColor: theme === 'dark' ? '#444541' : '#04eccd',
+          borderRadius: 50,
+          padding: 15,
+          elevation: 5,
+        }}
+        onPress={() => {
+          // Handle button press
+        }}
+      >
+        <Ionicons name="add" size={24} color={theme === 'dark' ? '#ffffff' : '#444541'} />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

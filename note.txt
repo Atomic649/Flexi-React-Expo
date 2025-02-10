@@ -1,3 +1,17 @@
+! -------- SAVE ON GIT--------------
+git add .  
+git commit -m " "
+git push
+! ----------WEBSITE USEFULL------------
+
+x dbdiagram
+https://dbdiagram.io/d
+
+
+! ------- UPDATE DATABASE ----------
+npx prisma migrate dev --name init
+
+
 x start 
 npx expo start
 
@@ -104,12 +118,3 @@ utils/themeUtils.ts
 _layout(tabs) > tabBarBackgroundColor
 
 
-
-
-rs={
-            theme === "dark" 
-              ? ['#18181b', '#27272a'] 
-              : ['#ffffff', '#f5f5f4']
-          }
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
