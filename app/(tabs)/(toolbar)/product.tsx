@@ -7,6 +7,8 @@ import { IMAGE_URL } from "@/utils/config";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass, useTextColorClass } from "@/utils/themeUtils";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { getMemberId } from "@/utils/utility";
 
 type Product = {
   id: number;
@@ -27,12 +29,16 @@ export default function Home() {
   const { theme } = useTheme();
   const textColorClass = useTextColorClass();
   const [products, setProducts] = useState<Product[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await CallAPIProduct.getProductsAPI();
-        setProducts(response);
+        const memberId = await getMemberId();
+        if (memberId) {
+          const response = await CallAPIProduct.getProductsAPI(memberId);
+          setProducts(response);
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -41,7 +47,7 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  const [refreshing, setRefreshing] = useState(false);
+  
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -54,6 +60,7 @@ export default function Home() {
     <SafeAreaView 
     className={`h-full ${useBackgroundColorClass()}`}
     >
+      
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}
@@ -85,16 +92,16 @@ export default function Home() {
           position: 'absolute',
           bottom: 65,
           right: 30,
-          backgroundColor: theme === 'dark' ? '#444541' : '#04eccd',
+          backgroundColor: theme === 'dark' ? '#04eccd' : '#04eccd',
           borderRadius: 50,
           padding: 15,
           elevation: 5,
         }}
         onPress={() => {
-          // Handle button press
+          router.push("createproduct");
         }}
       >
-        <Ionicons name="add" size={24} color={theme === 'dark' ? '#ffffff' : '#444541'} />
+        <Ionicons name="add" size={24} color={theme === 'dark' ? '#444541' : '#444541'} />
       </TouchableOpacity>
     </SafeAreaView>
   );

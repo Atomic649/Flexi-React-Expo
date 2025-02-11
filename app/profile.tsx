@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import CallAPIUser from "@/api/user_api";
 import CallAPICredit from "@/api/credit_api";
 import { IMAGE_URL } from "@/utils/config";
+import { getUserId } from "@/utils/utility";
 
 export default function Profile() {
   const { theme } = useTheme();
@@ -24,8 +25,11 @@ export default function Profile() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await CallAPIUser.getUserAPI(1);
-        setUserData(response);
+        const userId = await getUserId();
+        if (userId) {
+          const response = await CallAPIUser.getUserAPI(userId);
+          setUserData(response);
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -38,8 +42,11 @@ export default function Profile() {
   useEffect(() => {
     const fetchCreditorData = async () => {
       try {
-        const response = await CallAPICredit.getCreditAPI(1);
-        setCreditorData(response);
+        const userId = await getUserId();
+        if (userId) {
+          const response = await CallAPICredit.getCreditAPI(userId);
+          setCreditorData(response);
+        }
       } catch (error) {
         console.error("Error fetching creditor data:", error);
       }

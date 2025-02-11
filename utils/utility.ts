@@ -46,3 +46,47 @@ export const removeToken = async () => {
     console.error('Error removing token:', error);
   }
 };
+
+// Function to save userId  to AsyncStorage
+export const saveUserId = async (userId: number) => {
+  try {
+    await AsyncStorage.setItem('userId', userId.toString());
+    console.log('💾 userId saved:', userId);
+  } catch (error) {
+    console.error('Error saving userId:', error);
+  }
+}
+
+// Function to get userId from AsyncStorage and convert it to number
+export const getUserId = async (): Promise<number | null> => {
+  try {
+    const userId = await AsyncStorage.getItem('userId');
+    console.log('✅ userId Get :', userId);
+    return userId ? parseInt(userId) : null;
+  } catch (error) {
+    console.error('Error getting userId:', error);
+    return null;
+  }
+}
+
+// Fuction to save meberId to AsyncStorage
+export const saveMemberId = async (memberId: string) => {
+  try {
+    await AsyncStorage.setItem('memberId', memberId);
+    console.log('💾 memberId saved:', memberId);
+  } catch (error) {
+    console.error('Error saving memberId:', error);
+  }
+}
+
+// Function to get memberId from AsyncStorage
+export const getMemberId = async (): Promise<string | null> => {
+  try {
+    const memberId = await AsyncStorage.getItem('memberId');
+    console.log('✅ memberId Get :', memberId);
+    return memberId;
+  } catch (error) {
+    console.error('Error getting memberId:', error);
+    return null;
+  }
+}

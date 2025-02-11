@@ -8,7 +8,6 @@ import { View } from "@/components/Themed";
 import FormField from "@/components/FormField";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import CustomButton from "@/components/CustomButton";
-import { images } from "@/constants";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
@@ -16,6 +15,7 @@ import { Text } from "@/components/CustomText";
 import Dropdown from "@/components/Dropdown";
 import CallAPIBusiness from "@/api/business_api";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Register() {
   const { t } = useTranslation();
@@ -104,9 +104,7 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView
-      className={`flex-1   ${useBackgroundColorClass()}`}
-    >
+    <SafeAreaView className={`flex-1   ${useBackgroundColorClass()}`}>
       <ScrollView>
         <View className=" flex-1 justify-center h-full px-4 py-10">
           <FormField

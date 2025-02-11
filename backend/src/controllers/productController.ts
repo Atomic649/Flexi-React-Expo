@@ -24,11 +24,11 @@ const productSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
     barcode: Joi.string().required(),
-    image: Joi.string().required(),
+    image: Joi.string(),
     stock: Joi.number().required(),
     price: Joi.number().required(),
-    categoryId: Joi.number().required(),
-    statusId: Joi.number().required(),
+    categoryId: Joi.number(),
+    statusId: Joi.number(),
     memberId: Joi.string().required()
 })
 
@@ -158,16 +158,11 @@ const getProductByMemberId = async (req: Request, res: Response) => {
             where: {
                 memberId: memberId
             },
-            select: {
-                name: true
-            }
+            
         })
-        // List of product names
-        const productNames = products.map(product => product.name)
-        res.json({
-            status : "ok",
-            data : productNames
-        })
+        
+       
+        res.json(products)
     } catch (e) {
         console.error(e)
         res.status(500).json({ message: "failed to get products" })

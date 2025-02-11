@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  Alert,
 } from "react-native";
 import { View } from "@/components/Themed";
 import CustomButton from "@/components/CustomButton";
@@ -19,8 +18,7 @@ import { Text } from "@/components/CustomText";
 import CallAPIUser from "@/api/auth_api";
 import images from "@/constants/images";
 import { t } from "i18next";
-import { da } from "date-fns/locale";
-import { saveToken } from "@/utils/utility";
+import { saveMemberId, saveToken, saveUserId } from "@/utils/utility";
 import { useTextColorClass } from "@/utils/themeUtils";
 
 export default function Login() {
@@ -71,7 +69,7 @@ export default function Login() {
       return;
     }
 
-    const { error, token } = await CallAPIUser.loginAPI(form);
+    const { error, token ,user} = await CallAPIUser.loginAPI(form);
 
     // // Handle successful login (e.g., navigate to another screen)
     if (error) {
@@ -92,6 +90,10 @@ export default function Login() {
       saveToken(token);
       // บันทึกสถานะการเข้าสู่ระบบลงใน AsyncStorage
       await AsyncStorage.setItem("isLoggedIn", "true");
+      // save userId ลงใน AsyncStorage
+      saveUserId(user.id);
+      // save memberId ลงใน AsyncStorage
+      saveMemberId(user.memberId);
 
       setAlertConfig({
         visible: true,

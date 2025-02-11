@@ -89,9 +89,13 @@
   },
   "product": {
     "Products": "Products",
+    "productName": "Product Name",
+    "barcode": "Barcode",
+    "stock": "Stock",
     "title": "Shop Name",
     "price": "Price",
     "description": "Description",
+    "button": "Create Product",
     "category": "Category",
     "condition": "Condition",
     "createdAt": "Created At",
@@ -100,10 +104,18 @@
     "uploadImage": "Upload Image",
     "imageLimit": "You can upload up to {{count}} images",
     "alerts": {
+      "error": "Error",
+      "ok": "OK",
+      "success": "Success",
       "imageLimit": {
         "upload": "You can upload up to 5 images"
       }
+    },
+    "validation":{
+      "incomplete": "Incomplete data",
+      "invalidData": "Please enter valid data"
     }
+    
   },
   "profile": {
     "myProfile": "My Profile",

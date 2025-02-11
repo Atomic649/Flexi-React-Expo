@@ -86,6 +86,15 @@ function RootLayoutNav() {
           }}
         />
 
+        // Create Product
+        <Stack.Screen
+          name="createproduct" // file name
+          options={{
+            ...showTopBarAndBackIcon(theme),
+            title: "Create Product", // Tab Name
+          }}
+        />
+
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>

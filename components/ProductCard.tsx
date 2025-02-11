@@ -21,7 +21,7 @@ export default function ProductCard({
 
           <View className="flex justify-center flex-1 ml-3 gap-y-1">
             <Text
-              className="font-psemibold text-lg text-gray-500"
+              className="font-psemibold text-lg text-zinc-500"
               numberOfLines={3}
             >
               {productname}

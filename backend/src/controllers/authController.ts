@@ -111,6 +111,13 @@ const login = async (req: Request, res: Response) => {
     // Generate JWT token
     const token = jwt.sign({ id: user.id }, "secret", tokenConfig);
 
+    // find memberId by userId
+    const memberId = await connection.member.findFirst({
+      where: {
+        userId: user.id,
+      },
+    });
+
     res.json({
       status: "ok",
       message: "login successful",
@@ -124,6 +131,7 @@ const login = async (req: Request, res: Response) => {
         phone: user.phone,
         bio: user.bio,
         username: user.username,
+        memberId: memberId?.uniqueId,        
       },
     });
   } catch (e) {
