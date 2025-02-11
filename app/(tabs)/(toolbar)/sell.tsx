@@ -18,7 +18,7 @@ export default function Sell() {
           position: 'absolute',
           bottom: 65,
           right: 30,
-          backgroundColor: theme === 'dark' ? '#444541' : '#04eccd',
+          backgroundColor: '#04eccd',
           borderRadius: 50,
           padding: 15,
           elevation: 5,

@@ -1,7 +1,6 @@
-import { ScrollView, TouchableOpacity, Image } from "react-native";
+import { ScrollView, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import { View } from "@/components/Themed";
-import FormField from "@/components/FormField";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +8,6 @@ import CustomAlert from "@/components/CustomAlert";
 import { Text } from "@/components/CustomText";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import CallAPIProduct from "@/api/product_api";
-import { SafeAreaView } from "react-native-safe-area-context";
 import FormField2 from "@/components/FormField2";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
@@ -131,7 +129,15 @@ export default function CreateProduct() {
   return (
     <SafeAreaView className={`flex-1   ${useBackgroundColorClass()}`}>
       <ScrollView>
-        <View className=" flex-1 justify-center h-full px-4 py-5">
+        <View className=" flex-1 justify-center h-full px-4 py-5 pb-20">
+
+        {image && (
+            <Image source={{ uri: image }} style={{ width: 350, height: 350 }} className="mt-4 mb-6 self-center rounded-md" />
+          )}
+
+        
+         
+
           <FormField2
             title={t("product.productName")}
             value={name}
@@ -175,24 +181,26 @@ export default function CreateProduct() {
             </View>
           </View>
 
-          <TouchableOpacity onPress={pickImage} className="mt-4 items-center">
+          <TouchableOpacity onPress={pickImage} className="mt-8 mb-2 items-center text">
+           
             <Ionicons name="image" size={54} color="#d6d6dc" />
-            <Text className="text-center text-blue-500">{t("product.uploadImage")}</Text>
+            <Text className="text-center text-zinc-500 mt-1">{t("product.uploadImage")}</Text>
           </TouchableOpacity>
 
-          {image && (
-            <Image source={{ uri: image }} style={{ width: 200, height: 200 }} className="mt-4 self-center" />
-          )}
+          
+
 
           {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
 
           <CustomButton
-            title={t("product.button")}
+            title={t("product.createbutton")}
             handlePress={handleCreateProduct}
             containerStyles="mt-5 "
             textStyles="!text-white"
           />
         </View>
+
+        
       </ScrollView>
 
       <CustomAlert

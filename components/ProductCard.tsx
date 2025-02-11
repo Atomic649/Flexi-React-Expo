@@ -1,44 +1,74 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { icons } from "@/constants";
+import { router } from "expo-router";
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 export default function ProductCard({
+  id,
   productname,
   productprice,
   productimage,
+  productstock,
+  onDelete,
 }: any) {
+  const renderRightActions = () => (
+    <TouchableOpacity
+      onPress={() => {
+        onDelete(id);
+      }}
+      className="bg-red-500 justify-center items-center w-20 rounded-lg"
+    >
+      <Text className="text-white">Delete</Text>
+    </TouchableOpacity>
+  );
+
   return (
-    <View className="flex flex-col items-center px-4 my-2">
-      <View className="flex flex-row gap-3 items-start">
-        <View className="flex justify-center items-center flex-row flex-1">
-          <View className="w-[90px] h-[90px] rounded-lg border border-teal-200 flex justify-center items-center p-0.5">
-            <Image
-              source={{ uri: productimage }}
-              className="w-full h-full rounded-lg"
-              resizeMode="cover"
-            />
+    <Swipeable renderRightActions={renderRightActions}>
+      <View className="flex flex-col items-center px-4 my-2">
+        <View className="flex flex-row gap-3 items-start">
+          <View className="flex justify-center items-center flex-row flex-1">
+            <View className="w-[90px] h-[90px] rounded-lg border border-teal-200 flex justify-center items-center p-0.5">
+              <Image
+                source={{ uri: productimage }}
+                className="w-full h-full rounded-lg"
+                resizeMode="cover"
+              />
+            </View>
+
+            <View className="flex justify-center flex-1 ml-3 gap-y-1">
+              <Text
+                className="font-psemibold text-lg text-zinc-500"
+                numberOfLines={3}
+              >
+                {productname}
+              </Text>
+              <Text
+                className="text-xl text-zinc-500 font-pregular"
+                numberOfLines={1}
+              >
+                {productprice}
+              </Text>
+
+              {/* <Text
+                className="text-base text-teal-300 font-pregular text-right px-5"
+                numberOfLines={1}
+              >
+                {productstock}
+                 pcs
+              </Text> */}
+            </View>
           </View>
 
-          <View className="flex justify-center flex-1 ml-3 gap-y-1">
-            <Text
-              className="font-psemibold text-lg text-zinc-500"
-              numberOfLines={3}
-            >
-              {productname}
-            </Text>
-            <Text
-              className="text-xl text-zinc-500 font-pregular"
-              numberOfLines={1}
-            >
-              {productprice}
-            </Text>
+          <View className="pt-2">
+            <TouchableOpacity onPress={() => {
+              router.push(`editproduct?id=${id}`);
+            }}>
+              <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
+            </TouchableOpacity>
           </View>
-        </View>
-
-        <View className="pt-2">
-          <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
         </View>
       </View>
-    </View>
+    </Swipeable>
   );
 }

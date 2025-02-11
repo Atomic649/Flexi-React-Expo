@@ -89,20 +89,34 @@
   },
   "product": {
     "Products": "สินค้า",
+    "productName": "ชื่อสินค้า",
+    "barcode": "บาร์โค้ด",
+    "stock": "สต็อก",
     "title": "ชื่อร้านค้า",
     "price": "ราคา",
     "description": "รายละเอียด",
+    "createbutton": "สร้างสินค้า",
+    "updatebutton": "อัพเดทสินค้า",
+    "deletebutton": "ลบสินค้า",
     "category": "หมวดหมู่",
     "condition": "สภาพสินค้า",
     "createdAt": "สร้างเมื่อ",
     "location": "สถานที่",
+    "notfound": "ไม่พบสินค้า",
     "createProduct": "สร้างสินค้า",
     "uploadImage": "อัพโหลดรูปภาพ",
     "imageLimit": "สามารถอัพโหลดได้สูงสุด {{count}} รูป",
     "alerts": {
+      "error": "เกิดข้อผิดพลาด",
+      "ok": "ตกลง",
+      "success": "สำเร็จ",
       "imageLimit": {
         "upload": "สามารถอัพโหลดรูปภาพได้สูงสุด 5 รูป"
       }
+    },
+    "validation":{
+      "incomplete": "ข้อมูลไม่ครบ",
+      "invalidData": "กรุณาระบุข้อมูลให้ถูกต้อง"
     }
   },
   "profile": {
