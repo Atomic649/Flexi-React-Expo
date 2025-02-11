@@ -48,7 +48,7 @@ export default function CreateProduct() {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].fileName || null);
+      setImage(result.assets[0].uri);
     }
   };
 
