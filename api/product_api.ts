@@ -31,7 +31,7 @@ class CallAPIProduct {
       stock: number;
       price: number;
       memberId: string;
-      image: string;
+      image?: string;
     }
   ): Promise<any> {
     try {

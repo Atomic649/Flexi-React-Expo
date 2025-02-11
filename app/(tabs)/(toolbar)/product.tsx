@@ -47,13 +47,15 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  
-
   const onRefresh = async () => {
     setRefreshing(true);
     // Fetch Data from API
     console.log("Fetching Data...");
     setRefreshing(false);
+  };
+
+  const getImageUri = (image: string) => {
+    return image.startsWith("file://") ? image : IMAGE_URL + image;
   };
 
   return (
@@ -68,7 +70,7 @@ export default function Home() {
           <ProductCard
             productname={item.name}
             productprice={item.price}
-            productimage={IMAGE_URL + item.image}
+            productimage={getImageUri(item.image)}
           />
         )}
         ListHeaderComponent={() => (
