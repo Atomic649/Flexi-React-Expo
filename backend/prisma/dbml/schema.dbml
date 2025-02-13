@@ -63,6 +63,7 @@ Table BusinessAcc {
   adsCostRecord AdsCost [not null]
   platform Platform [not null]
   storefront Store [not null]
+  product Product [not null]
 }
 
 Table Bill {
@@ -167,6 +168,8 @@ Table Product {
   billRecord Bill [not null]
   adsRecord AdsCost [not null]
   member Member [not null]
+  businessAcc Int [not null]
+  businessId BusinessAcc [not null]
 }
 
 Table Credit {
@@ -347,6 +350,7 @@ Enum SocialMedia {
 }
 
 Enum IncomeChannel {
+  Storefornt
   Facebook
   Line
   Tiktok
@@ -441,6 +445,8 @@ Ref: Platform.businessAcc > BusinessAcc.id
 Ref: Store.businessAcc > BusinessAcc.id
 
 Ref: Product.memberId > Member.uniqueId
+
+Ref: Product.businessAcc > BusinessAcc.id
 
 Ref: Credit.ownerId > User.id
 

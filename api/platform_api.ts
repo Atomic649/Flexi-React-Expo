@@ -3,10 +3,10 @@ import { getAxiosWithAuth } from "@/utils/axiosInstance";
 
 class CallAPIPlatform {
   // Get Platforms
-  async getPlatformsAPI(): Promise<any> {
+  async getPlatformsAPI(memberId: string): Promise<any> {
     try {
       const axiosInstance = await getAxiosWithAuth();
-      const response = await axiosInstance.get(`/platform/`);
+      const response = await axiosInstance.get(`/platform/member/${memberId}`);
 
       console.log("🚀PlatformAPI:", response.data);
 
@@ -22,7 +22,7 @@ class CallAPIPlatform {
   }
 
   // Get a Platform
-  async getAPlatformAPI(id: number): Promise<any> {
+  async getAPIaPlatformAPI(id: number): Promise<any> {
     try {
       const axiosInstance = await getAxiosWithAuth();
       const response = await axiosInstance.get(`/platform/${id}`);

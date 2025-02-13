@@ -181,6 +181,7 @@ model BusinessAcc {
   adsCostRecord    AdsCost[]
   platform         Platform[]
   storefront       Store[]
+  product          Product[]
 }
 
 model Bill {
@@ -293,6 +294,8 @@ model Product {
   billRecord Bill[]
   adsRecord  AdsCost[]
   member     Member    @relation(fields: [memberId], references: [uniqueId])
+  businessAcc Int
+  businessId  BusinessAcc @relation(fields: [businessAcc], references: [id])
 }
 
 model Credit {

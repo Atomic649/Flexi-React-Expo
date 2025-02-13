@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/", authenticateToken, createPlatform);
 
 // Getting all Platforms 
-router.get("/platform/:businessAcc", authenticateToken, getPlatforms);
+router.get("/member/:memberId", authenticateToken, getPlatforms);
 
 // Getting a Platform by ID 
 router.get("/:id", authenticateToken, getPlatformById);

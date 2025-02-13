@@ -17,6 +17,7 @@ interface Product {
     categoryId: number   
     statusId: number
     memberId: string
+   
 }
 
 // Validation schema for request body
@@ -29,7 +30,8 @@ const productSchema = Joi.object({
     price: Joi.number().required(),
     categoryId: Joi.number(),
     statusId: Joi.number(),
-    memberId: Joi.string().required()
+    memberId: Joi.string().required(),
+    
 })
 
 // Create product
@@ -39,6 +41,15 @@ const createProduct = async (req: Request, res: Response) => {
     if (error) {
         return res.status(400).json({ message: error.details[0].message })
     }
+    // find businessid by memberid
+    const businessAcc = await prisma.businessAcc.findFirst({
+        where: {
+            memberId: product.memberId
+        }
+    })
+
+    // console.log(businessAcc)
+
     try {
         const newProduct = await prisma.product.create({
             data: {
@@ -50,7 +61,9 @@ const createProduct = async (req: Request, res: Response) => {
                 price: product.price,
                 categoryId: product.categoryId,
                 statusId: product.statusId,
-                memberId: product.memberId
+                memberId: product.memberId,
+                businessAcc: businessAcc?.id ?? 0
+                
             }
         })
         res.status(201).json(newProduct)

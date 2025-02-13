@@ -67,7 +67,7 @@ const createPlatform = async (req: Request, res: Response) => {
 
 //  get all platforms in only this business account by businessACC - Get
 const getPlatforms = async (req: Request, res: Response) => {
-  const { businessAcc } = req.params;
+  const { memberId } = req.params;
   try {
     const platforms = await prisma.platform.findMany({
       select: {
@@ -77,7 +77,7 @@ const getPlatforms = async (req: Request, res: Response) => {
         accId: true,
       },
       where: {
-        businessAcc: Number(businessAcc),
+        businessAcc: Number(memberId),
       },
     });
 
