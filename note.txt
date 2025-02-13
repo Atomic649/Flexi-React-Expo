@@ -11,6 +11,10 @@ https://dbdiagram.io/d
 ! ------- UPDATE DATABASE ----------
 npx prisma migrate dev --name init
 
+! -------UPDATED EXPO LASTED---------
+npx expo install expo@latest
+npx expo install --fix
+
 
 x start 
 npx expo start
