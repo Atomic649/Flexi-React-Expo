@@ -52,6 +52,24 @@ enum SocialMedia {
   Google
 }
 
+enum IncomeChannel {
+  Storefornt
+  Facebook
+  Line
+  Tiktok
+  Shopee
+  Lazada
+  Instagram
+  X
+  Youtube
+  Google
+  SCB
+  KBANK
+  KTB
+  BBL
+  TMB
+}
+
 enum BusinessType {
   OnlineSale
   Massage
@@ -64,7 +82,7 @@ enum BusinessType {
   Other
 }
 
-enum MediaType {  
+enum MediaType {
   VIDEO
   IMAGE
 }
@@ -132,6 +150,7 @@ model Member {
   permission String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  
 
   // Relation
   userId   Int
@@ -161,6 +180,7 @@ model BusinessAcc {
   expenseRecord    Expense[]
   adsCostRecord    AdsCost[]
   platform         Platform[]
+  storefront       Store[]
 }
 
 model Bill {
@@ -168,20 +188,21 @@ model Bill {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
   cName      String
-  cLastName  String
-  cPhone     String
-  cGender    Gender
-  cAddress   String
-  cProvince  String
-  cPostId    String
+  cLastName  String?
+  cPhone     String?
+  cGender    Gender?
+  cAddress   String?
+  cProvince  String?
+  cPostId    String?
   product    String
   payment    Payment
   amount     Int
   purchaseAt DateTime    @default(now())
-  platform   SocialMedia
+  platform   IncomeChannel
   cashStatus Boolean     @default(false)
   price      Int
   imageBill  String
+  deleted    Boolean?     @default(false)
 
   // Relation 
   productList Product     @relation(fields: [product], references: [name])
@@ -189,6 +210,8 @@ model Bill {
   member      Member      @relation(fields: [memberId], references: [uniqueId])
   businessAcc Int
   businessId  BusinessAcc @relation(fields: [businessAcc], references: [id])
+  storeId     Int
+  store       Store @relation(fields: [storeId], references: [id])
 }
 
 model AdsCost {
@@ -235,6 +258,20 @@ model Platform {
   platformId  AdsCost[]
   businessAcc Int
   businessId  BusinessAcc @relation(fields: [businessAcc], references: [id])
+  deleted     Boolean?     @default(false)
+}
+
+model Store {
+  id          Int           @id @default(autoincrement())
+  platform    IncomeChannel
+  accName     String        @unique
+  accId       String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  storefrontId Bill[]
+  businessAcc Int
+  businessId  BusinessAcc   @relation(fields: [businessAcc], references: [id])
+  deleted     Boolean?      @default(false)
 }
 
 model Product {
@@ -250,6 +287,7 @@ model Product {
   statusId    Int?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  deleted     Boolean?  @default(false)
 
   // relation
   billRecord Bill[]
@@ -259,7 +297,7 @@ model Product {
 
 model Credit {
   id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())  
+  createdAt  DateTime @default(now())
   ownerId    Int
   creditorId Int
 
@@ -281,6 +319,7 @@ model Post {
   author    User       @relation(fields: [authorId], references: [id])
   reactions Reaction[]
   comments  Comment[]
+  deleted   Boolean?    @default(false)
 }
 
 model Reaction {
@@ -297,12 +336,13 @@ model Reaction {
 model Comment {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt  
+  updatedAt DateTime @updatedAt
   content   String
   postId    Int
   post      Post     @relation(fields: [postId], references: [id])
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
+  deleted   Boolean?    @default(false)
 }
 
 model Inbox {
@@ -314,7 +354,7 @@ model Inbox {
   updatedAt  DateTime @updatedAt
   read       Boolean  @default(false)
   unsent     Boolean  @default(false)
-  deleted    Boolean  @default(false)
+  deleted    Boolean?  @default(false)
   sender     User     @relation("SentMessages", fields: [senderId], references: [id])
   receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }
@@ -329,7 +369,7 @@ model Shop {
   category    Category
   sellerId    Int
   buyerId     Int
-  deleted     Boolean     @default(false)
+  deleted     Boolean?     @default(false)
 
   // relation
   seller User @relation("Seller", fields: [sellerId], references: [id])
@@ -348,6 +388,7 @@ model Order {
   shopId    Int      @unique
   buyerId   Int
   sellerId  Int
+  deleted   Boolean?  @default(false)
 
   // relation
   seller Shop    @relation(fields: [shopId], references: [id])
@@ -411,5 +452,3 @@ model Cart {
   // relation
   order Order[]
 }
-
-

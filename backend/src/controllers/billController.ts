@@ -31,6 +31,7 @@ interface billInput {
   purchaseAt: Date;
   businessAcc: number;
   imageBill: string;
+  storeId: number;
 }
 
 // Validate the request body
@@ -65,6 +66,7 @@ const schema = Joi.object({
   memberId: Joi.string().required(),
   businessAcc: Joi.number().required(),
   imageBill: Joi.string(),
+  storeId: Joi.number().required(),
 });
 
 //Create a New Bill - Post
@@ -118,7 +120,9 @@ const createBill = async (req: Request, res: Response) => {
           memberId: billInput.memberId,
           purchaseAt: billInput.purchaseAt,
           businessAcc: billInput.businessAcc,
+          storeId: billInput.storeId,
           imageBill: req.file?.filename ?? "",
+
         },
       });
       //console.log(bill);
@@ -222,6 +226,7 @@ const updateBill = async (req: Request, res: Response) => {
           purchaseAt: billInput.purchaseAt,
           businessAcc: billInput.businessAcc,
           imageBill: req.file?.filename ?? "",
+          
         },
       });
       //console.log(bill);

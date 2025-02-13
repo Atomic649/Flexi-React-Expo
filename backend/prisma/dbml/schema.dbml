@@ -62,6 +62,7 @@ Table BusinessAcc {
   expenseRecord Expense [not null]
   adsCostRecord AdsCost [not null]
   platform Platform [not null]
+  storefront Store [not null]
 }
 
 Table Bill {
@@ -69,25 +70,28 @@ Table Bill {
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   cName String [not null]
-  cLastName String [not null]
-  cPhone String [not null]
-  cGender Gender [not null]
-  cAddress String [not null]
-  cProvince String [not null]
-  cPostId String [not null]
+  cLastName String
+  cPhone String
+  cGender Gender
+  cAddress String
+  cProvince String
+  cPostId String
   product String [not null]
   payment Payment [not null]
   amount Int [not null]
   purchaseAt DateTime [default: `now()`, not null]
-  platform SocialMedia [not null]
+  platform IncomeChannel [not null]
   cashStatus Boolean [not null, default: false]
   price Int [not null]
   imageBill String [not null]
+  deleted Boolean [default: false]
   productList Product [not null]
   memberId String [not null]
   member Member [not null]
   businessAcc Int [not null]
   businessId BusinessAcc [not null]
+  storeId Int [not null]
+  store Store [not null]
 }
 
 Table AdsCost {
@@ -130,6 +134,20 @@ Table Platform {
   platformId AdsCost [not null]
   businessAcc Int [not null]
   businessId BusinessAcc [not null]
+  deleted Boolean [default: false]
+}
+
+Table Store {
+  id Int [pk, increment]
+  platform IncomeChannel [not null]
+  accName String [unique, not null]
+  accId String [unique, not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  storefrontId Bill [not null]
+  businessAcc Int [not null]
+  businessId BusinessAcc [not null]
+  deleted Boolean [default: false]
 }
 
 Table Product {
@@ -145,6 +163,7 @@ Table Product {
   statusId Int
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
+  deleted Boolean [default: false]
   billRecord Bill [not null]
   adsRecord AdsCost [not null]
   member Member [not null]
@@ -172,6 +191,7 @@ Table Post {
   author User [not null]
   reactions Reaction [not null]
   comments Comment [not null]
+  deleted Boolean [default: false]
 }
 
 Table Reaction {
@@ -194,6 +214,7 @@ Table Comment {
   post Post [not null]
   userId Int [not null]
   user User [not null]
+  deleted Boolean [default: false]
 }
 
 Table Inbox {
@@ -205,7 +226,7 @@ Table Inbox {
   updatedAt DateTime [not null]
   read Boolean [not null, default: false]
   unsent Boolean [not null, default: false]
-  deleted Boolean [not null, default: false]
+  deleted Boolean [default: false]
   sender User [not null]
   receiver User [not null]
 }
@@ -220,7 +241,7 @@ Table Shop {
   category Category [not null]
   sellerId Int [not null]
   buyerId Int [not null]
-  deleted Boolean [not null, default: false]
+  deleted Boolean [default: false]
   seller User [not null]
   buyer User [not null]
   orders Order
@@ -236,6 +257,7 @@ Table Order {
   shopId Int [unique, not null]
   buyerId Int [not null]
   sellerId Int [not null]
+  deleted Boolean [default: false]
   seller Shop [not null]
   buyer User [not null]
   review Review
@@ -324,6 +346,23 @@ Enum SocialMedia {
   Google
 }
 
+Enum IncomeChannel {
+  Facebook
+  Line
+  Tiktok
+  Shopee
+  Lazada
+  Instagram
+  X
+  Youtube
+  Google
+  SCB
+  KBANK
+  KTB
+  BBL
+  TMB
+}
+
 Enum BusinessType {
   OnlineSale
   Massage
@@ -383,6 +422,8 @@ Ref: Bill.memberId > Member.uniqueId
 
 Ref: Bill.businessAcc > BusinessAcc.id
 
+Ref: Bill.storeId > Store.id
+
 Ref: AdsCost.memberId > Member.uniqueId
 
 Ref: AdsCost.platformId > Platform.id
@@ -396,6 +437,8 @@ Ref: Expense.businessAcc > BusinessAcc.id
 Ref: Expense.memberId > Member.uniqueId
 
 Ref: Platform.businessAcc > BusinessAcc.id
+
+Ref: Store.businessAcc > BusinessAcc.id
 
 Ref: Product.memberId > Member.uniqueId
 
