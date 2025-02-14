@@ -317,14 +317,14 @@
   },
   "ads": {
     "title": "Ads",
-    "createAd": "Create Ad",
+    "createAd": "Connect Ad Account",
     "edit": "Edit Ad",
     "delete": "Delete Ad",       
     "notfound": "Ad not found", 
     "platform": "Platform",
     "accName": "Account Name",
     "accId": "Account ID",
-    "createbutton": "Create Ad",
+    "createbutton": "Connect",
     "alerts": {
       "error": "Error",
       "ok": "OK",
