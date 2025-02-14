@@ -42,6 +42,8 @@ Table Member {
   adsCost AdsCost [not null]
   expense Expense [not null]
   product Product [not null]
+  platform Platform [not null]
+  store Store [not null]
 }
 
 Table BusinessAcc {
@@ -134,7 +136,9 @@ Table Platform {
   updatedAt DateTime [not null]
   platformId AdsCost [not null]
   businessAcc Int [not null]
+  memberId String [not null]
   businessId BusinessAcc [not null]
+  member Member [not null]
   deleted Boolean [default: false]
 }
 
@@ -148,6 +152,8 @@ Table Store {
   storefrontId Bill [not null]
   businessAcc Int [not null]
   businessId BusinessAcc [not null]
+  memberId String [not null]
+  member Member [not null]
   deleted Boolean [default: false]
 }
 
@@ -442,7 +448,11 @@ Ref: Expense.memberId > Member.uniqueId
 
 Ref: Platform.businessAcc > BusinessAcc.id
 
+Ref: Platform.memberId > Member.uniqueId
+
 Ref: Store.businessAcc > BusinessAcc.id
+
+Ref: Store.memberId > Member.uniqueId
 
 Ref: Product.memberId > Member.uniqueId
 

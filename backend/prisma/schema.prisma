@@ -160,6 +160,8 @@ model Member {
   adsCost  AdsCost[]
   expense  Expense[]
   product  Product[]
+  platform Platform[]
+  store    Store[]
 }
 
 model BusinessAcc {
@@ -258,7 +260,9 @@ model Platform {
   updatedAt   DateTime    @updatedAt
   platformId  AdsCost[]
   businessAcc Int
+  memberId    String
   businessId  BusinessAcc @relation(fields: [businessAcc], references: [id])
+  member    Member      @relation(fields: [memberId], references: [uniqueId])
   deleted     Boolean?     @default(false)
 }
 
@@ -272,6 +276,8 @@ model Store {
   storefrontId Bill[]
   businessAcc Int
   businessId  BusinessAcc   @relation(fields: [businessAcc], references: [id])
+  memberId    String
+  member      Member        @relation(fields: [memberId], references: [uniqueId])
   deleted     Boolean?      @default(false)
 }
 

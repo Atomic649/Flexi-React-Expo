@@ -7,11 +7,12 @@ const prisma = new PrismaClient();
 
 // Interface for request body from client
 interface platformInput {
+
   platform: SocialMedia;
   accName: string;
   accId: string;
-  businessAcc: number;
   adsCost?: number;
+  memberId: string;
 }
 
 // validate the request body
@@ -29,72 +30,58 @@ const schema = Joi.object({
   ),
   accName: Joi.string().required(),
   accId: Joi.string().required(),
-  businessAcc: Joi.number().required(),
+  memberId: Joi.string().required(),
 });
-
 
 //  Create a New platform - Post
 const createPlatform = async (req: Request, res: Response) => {
-  const jsonBody = req.body as Prisma.PlatformCreateInput;
-  const platformInput: platformInput = jsonBody as unknown as platformInput;
-
-  // Validate the request body
+  const platformInput: platformInput = req.body;
   const { error } = schema.validate(platformInput);
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
-  // Convert Form data to Type that is valid with Prisma
-  platformInput.platform = platformInput.platform as SocialMedia;
-  platformInput.businessAcc = Number(platformInput.businessAcc);
-  platformInput.accId = String(platformInput.accId);
-  platformInput.accName = String(platformInput.accName);
+  // find businessid by memberid
+  const businessAcc = await prisma.businessAcc.findFirst({
+    where: {
+      memberId: platformInput.memberId,
+    },
+  });
+
+ console.log(businessAcc)
 
   try {
-    const platform = await prisma.platform.create({
+    const newPlatform = await prisma.platform.create({
       data: {
         platform: platformInput.platform,
         accName: platformInput.accName,
         accId: platformInput.accId,
-        businessAcc: platformInput.businessAcc,
+        businessAcc: businessAcc?.id ?? 0,
+        memberId: platformInput.memberId,
       },
     });
-    res.json(platform);
+    res.status(201).json(newPlatform);
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: "failed to create platform" });
+    res.status(500).json({ message: "Failed to create platform" });
   }
-};
-
-//  get all platforms in only this business account by businessACC - Get
+}
+//  get all Platform list by memberID - Get
 const getPlatforms = async (req: Request, res: Response) => {
   const { memberId } = req.params;
   try {
     const platforms = await prisma.platform.findMany({
-      select: {
-        id: true,
-        platform: true,
-        accName: true,
-        accId: true,
-      },
       where: {
-        businessAcc: Number(memberId),
+        memberId: memberId,
       },
     });
-
-    res.json(
-      platforms.map((platform) => {
-        return {
-          ...platform,
-          adsCost: 0,
-        };
-      })
-    );
+    res.json(platforms);
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "failed to get platforms" });
   }
 };
-// Get a platform by ID - Get
+
+// 🚧  Get a platform by ID - Get
 const getPlatformById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -110,7 +97,7 @@ const getPlatformById = async (req: Request, res: Response) => {
   }
 };
 
-// Delete a platform - Delete
+// 🚧 Delete a platform - Delete
 const deletePlatform = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -126,7 +113,7 @@ const deletePlatform = async (req: Request, res: Response) => {
   }
 };
 
-// Update a platform - Put
+// 🚧 Update a platform - Put
 const updatePlatform = async (req: Request, res: Response) => {
   const { id } = req.params;
   const platformInput: platformInput = req.body;
@@ -148,7 +135,7 @@ const updatePlatform = async (req: Request, res: Response) => {
   }
 };
 
-// Search platforms - Get by enum
+// 🚧 Search platforms - Get by enum
 const searchPlatform = async (req: Request, res: Response) => {
   const { SocialMedia } = req.params;
 
@@ -169,7 +156,7 @@ const searchPlatform = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Failed to get platform" });
   }
 };
-export {  
+export {
   createPlatform,
   getPlatforms,
   getPlatformById,
