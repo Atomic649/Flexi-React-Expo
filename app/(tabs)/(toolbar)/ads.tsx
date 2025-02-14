@@ -66,11 +66,11 @@ export default function ads() {
         )}
         ListHeaderComponent={() => (
           <View className="flex my-6 px-4 space-y-6">
-            <Text className="text-2xl font-semibold text-white">ads</Text>
+            <Text className="text-2xl font-semibold text-white">{t('ads.title')}</Text>
           </View>
         )}
         ListEmptyComponent={() => (
-          <Text className="text-center text-white">No ads acc found</Text>
+          <Text className="text-center text-white">{t('ads.notfound')}</Text>
         )}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -87,7 +87,7 @@ export default function ads() {
           elevation: 5,
         }}
         onPress={() => {
-          router.push("createadsconnection");
+          router.push("/createads");
         }}
       >
         <Ionicons

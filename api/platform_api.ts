@@ -41,8 +41,8 @@ class CallAPIPlatform {
   async createPlatformAPI(data: {
     platform: string;
     accName: string;
-    accId: string;
-    businessAcc: number;
+    accId: string;   
+    memberId: string;
   }): Promise<any> {
     try {
       const axiosInstance = await getAxiosWithAuth();

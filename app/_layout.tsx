@@ -9,9 +9,11 @@ import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 import * as NavigationBar from "expo-navigation-bar";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 function RootLayoutNav() {
   const { theme } = useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function updateNavigationBar() {
@@ -52,28 +54,28 @@ function RootLayoutNav() {
           name="(auth)"
           options={{
             ...HideTopBar(),
-            title: "Authentication",
+            title: t('auth.login.title'),
           }}
         />
         <Stack.Screen
           name="index"
           options={{
             ...HideTopBar(),
-            title: "Home",
+            title: t('tabs.home'),
           }}
         />
         <Stack.Screen
           name="profile" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: "User Profile", // Tab Name
+            title: t('profile.myProfile'), // Tab Name
           }}
         />
         <Stack.Screen
           name="business_info" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: "Business Information", // Tab Name
+            title: t('settings.businessInfo'), // Tab Name
           }}
         />
 
@@ -91,7 +93,7 @@ function RootLayoutNav() {
           name="createproduct" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: "Create Product", // Tab Name
+            title: t('create.title'), // Tab Name
           }}
         />
 
@@ -100,7 +102,16 @@ function RootLayoutNav() {
           name="editproduct" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: "Edit Product", // Tab Name
+            title: t('product.detail'), // Tab Name
+          }}
+        />
+
+        // Create Ads
+        <Stack.Screen
+          name="createads" // file name
+            options={{
+            ...showTopBarAndBackIcon(theme),
+            title: t('ads.createAd'), // Tab Name
           }}
         />
 

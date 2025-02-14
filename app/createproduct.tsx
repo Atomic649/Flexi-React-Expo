@@ -1,4 +1,9 @@
-import { ScrollView, TouchableOpacity, Image, SafeAreaView } from "react-native";
+import {
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+} from "react-native";
 import { View } from "@/components/Themed";
 import { useRouter } from "expo-router";
 import CustomButton from "@/components/CustomButton";
@@ -10,7 +15,7 @@ import { useBackgroundColorClass } from "@/utils/themeUtils";
 import CallAPIProduct from "@/api/product_api";
 import FormField2 from "@/components/FormField2";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { getMemberId } from "@/utils/utility";
 
@@ -88,8 +93,6 @@ export default function CreateProduct() {
       return;
     }
 
-   
-
     try {
       // Call the register API
       const data = await CallAPIProduct.createProductAPI({
@@ -113,14 +116,13 @@ export default function CreateProduct() {
             text: t("product.alerts.ok"),
             onPress: () => {
               setAlertConfig((prev) => ({ ...prev, visible: false }));
-              router.replace("/login");
+              router.replace("(tabs)/product");
             },
           },
         ],
       });
 
-      // go to login page
-      router.replace("(tabs)/product");
+      
     } catch (error: any) {
       setError(error.message);
     }
@@ -130,13 +132,13 @@ export default function CreateProduct() {
     <SafeAreaView className={`flex-1   ${useBackgroundColorClass()}`}>
       <ScrollView>
         <View className=" flex-1 justify-center h-full px-4 py-5 pb-20">
-
-        {image && (
-            <Image source={{ uri: image }} style={{ width: 350, height: 350 }} className="mt-4 mb-6 self-center rounded-md" />
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 350, height: 350 }}
+              className="mt-4 mb-6 self-center rounded-md"
+            />
           )}
-
-        
-         
 
           <FormField2
             title={t("product.productName")}
@@ -181,14 +183,15 @@ export default function CreateProduct() {
             </View>
           </View>
 
-          <TouchableOpacity onPress={pickImage} className="mt-8 mb-2 items-center text">
-           
+          <TouchableOpacity
+            onPress={pickImage}
+            className="mt-8 mb-2 items-center text"
+          >
             <Ionicons name="image" size={54} color="#d6d6dc" />
-            <Text className="text-center text-zinc-500 mt-1">{t("product.uploadImage")}</Text>
+            <Text className="text-center text-zinc-500 mt-1">
+              {t("product.uploadImage")}
+            </Text>
           </TouchableOpacity>
-
-          
-
 
           {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
 
@@ -199,8 +202,6 @@ export default function CreateProduct() {
             textStyles="!text-white"
           />
         </View>
-
-        
       </ScrollView>
 
       <CustomAlert
