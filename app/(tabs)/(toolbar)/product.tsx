@@ -51,9 +51,15 @@ export default function Home() {
   }, []);
 
   const onRefresh = async () => {
-    setRefreshing(true);
-    // Fetch Data from API
-    console.log("Fetching Data...");
+    try {
+      const memberId = await getMemberId();
+      if (memberId) {
+        const response = await CallAPIProduct.getProductsAPI(memberId);
+        setProducts(response);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
     setRefreshing(false);
   };
 

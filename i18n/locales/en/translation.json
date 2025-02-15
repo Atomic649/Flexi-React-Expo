@@ -317,6 +317,8 @@
   },
   "ads": {
     "title": "Ads",
+    "limit": "You can create up to 4 ads connection",
+    "help": "Unlock limit ",
     "createAd": "Connect Ad Account",
     "edit": "Edit Ad",
     "delete": "Delete Ad",       
@@ -347,6 +349,6 @@
       "Shopee": "Shopee",
       "YouTube": "YouTube"
     },
-    "accNameRecommend": "Ad Name/Product Name/001"
+    "accNameRecommend": "Ad Name-Product Name-001"
   }
 }

@@ -32,23 +32,31 @@ export default function ads() {
   const [platforms, setPlatforms] = useState<Platform[]>([]);
 
   useEffect(() => {
-      const fetchPlatform = async () => {
-        try {
-          const memberId = await getMemberId();
-          if (memberId) {
-            const response = await CallAPIPlatform.getPlatformsAPI(memberId);
-            setPlatforms(response);
-          }
-        } catch (error) {
-          console.error("Error fetching platform:", error);
+    const fetchPlatform = async () => {
+      try {
+        const memberId = await getMemberId();
+        if (memberId) {
+          const response = await CallAPIPlatform.getPlatformsAPI(memberId);
+          setPlatforms(response);
         }
-      };
-  
-      fetchPlatform();
-    }, []);
+      } catch (error) {
+        console.error("Error fetching platform:", error);
+      }
+    };
+
+    fetchPlatform();
+  }, []);
+
   const onRefresh = async () => {
-    setRefreshing(true);
-    console.log("Fetching Data...");
+    try {
+      const memberId = await getMemberId();
+      if (memberId) {
+        const response = await CallAPIPlatform.getPlatformsAPI(memberId);
+        setPlatforms(response);
+      }
+    } catch (error) {
+      console.error("Error fetching platform:", error);
+    }
     setRefreshing(false);
   };
 
@@ -65,8 +73,15 @@ export default function ads() {
           />
         )}
         ListHeaderComponent={() => (
-          <View className="flex my-6 px-4 space-y-6">
-            <Text className="text-2xl font-semibold text-white">{t('ads.title')}</Text>
+          <View className="flex my-6 px-4 space-y-6 items-center">
+            <Text className={`text-base font-normal ${theme === "dark" ? "text-white" : "text-[#5d5a54]"}`}>
+              {t('ads.limit')}
+            </Text>
+            <TouchableOpacity onPress={() => router.push("roadmap")}>
+              <Text className={`mt-1 text-base font-bold text-[#FF006E]`}>
+                {t('ads.help')}
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
         ListEmptyComponent={() => (
@@ -76,26 +91,29 @@ export default function ads() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-      <TouchableOpacity
-        style={{
-          position: "absolute",
-          bottom: 65,
-          right: 30,
-          backgroundColor: "#04eccd",
-          borderRadius: 50,
-          padding: 15,
-          elevation: 5,
-        }}
-        onPress={() => {
-          router.push("/createads");
-        }}
-      >
-        <Ionicons
-          name="add"
-          size={24}
-          color={theme === "dark" ? "#ffffff" : "#444541"}
-        />
-      </TouchableOpacity>
+      {/* Setting Limit Ads Connection Acc "4" */}
+      {platforms.length < 4 && (
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            bottom: 65,
+            right: 30,
+            backgroundColor: "#04eccd",
+            borderRadius: 50,
+            padding: 15,
+            elevation: 5,
+          }}
+          onPress={() => {
+            router.push("/createads");
+          }}
+        >
+          <Ionicons
+            name="add"
+            size={24}
+            color={theme === "dark" ? "#ffffff" : "#444541"}
+          />
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }
