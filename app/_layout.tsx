@@ -54,31 +54,30 @@ function RootLayoutNav() {
           name="(auth)"
           options={{
             ...HideTopBar(),
-            title: t('auth.login.title'),
+            title: t("auth.login.title"),
           }}
         />
         <Stack.Screen
           name="index"
           options={{
             ...HideTopBar(),
-            title: t('tabs.home'),
+            title: t("tabs.home"),
           }}
         />
         <Stack.Screen
           name="profile" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: t('profile.myProfile'), // Tab Name
+            title: t("profile.myProfile"), // Tab Name
           }}
         />
         <Stack.Screen
           name="business_info" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: t('settings.businessInfo'), // Tab Name
+            title: t("settings.businessInfo"), // Tab Name
           }}
         />
-
         // Roadmap
         <Stack.Screen
           name="roadmap" // file name
@@ -87,34 +86,38 @@ function RootLayoutNav() {
             title: "Roadmap", // Tab Name
           }}
         />
-
         // Create Product
         <Stack.Screen
           name="createproduct" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: t('create.title'), // Tab Name
+            title: t("create.title"), // Tab Name
           }}
         />
-
-        //  Edit Product
+        // Edit Product
         <Stack.Screen
           name="editproduct" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: t('product.detail'), // Tab Name
+            title: t("product.detail"), // Tab Name
           }}
         />
-
         // Create Ads
         <Stack.Screen
           name="createads" // file name
-            options={{
+          options={{
             ...showTopBarAndBackIcon(theme),
-            title: t('ads.createAd'), // Tab Name
+            title: t("ads.createAd"), // Tab Name
           }}
         />
-
+        // Create Store
+        <Stack.Screen
+          name="createstore" // file name
+          options={{
+            ...showTopBarAndBackIcon(theme),
+            title: t("ads.createStore"), // Tab Name
+          }}
+        />
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>

@@ -40,16 +40,29 @@ const createPlatform = async (req: Request, res: Response) => {
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
-  // find businessid by memberid
-  const businessAcc = await prisma.businessAcc.findFirst({
-    where: {
-      memberId: platformInput.memberId,
-    },
-  });
-
- console.log(businessAcc)
 
   try {
+    // Check if the platform already exists
+    const existingPlatform = await prisma.platform.findFirst({
+      where: {
+        platform: platformInput.platform,
+        accName: platformInput.accName,
+        accId: platformInput.accId,
+        memberId: platformInput.memberId,
+      },
+    });
+
+    if (existingPlatform) {
+      return res.status(400).json({ message: "Platform already exists" });
+    }
+
+    // Find business ID by member ID
+    const businessAcc = await prisma.businessAcc.findFirst({
+      where: {
+        memberId: platformInput.memberId,
+      },
+    });
+
     const newPlatform = await prisma.platform.create({
       data: {
         platform: platformInput.platform,

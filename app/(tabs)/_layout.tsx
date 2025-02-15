@@ -250,7 +250,7 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => router.push("sell")}
+              onPress={() => router.push("store")}
               className="flex items-center mx-2"
             >
               <TabIcon

@@ -70,6 +70,9 @@ import  reportRoutes  from "./src/routes/reportRoute";
 // Import pdf Rou
 import pdfRoutes from "./src/routes/pdfRoute";
 
+// Import Store Routes
+import storeRoutes  from "./src/routes/storeRoute";
+
 // --------------USE ROUTES-----------------
 
 // User Routes
@@ -116,6 +119,9 @@ app.use("/report", reportRoutes);
 
 // Pdf Routes
 app.use("/pdf", pdfRoutes);
+
+// Store Routes
+app.use("/store", storeRoutes);
 
 //---------- Start the server ----------------
 const port = process.env.PORT || 3000;

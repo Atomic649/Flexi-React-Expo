@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
-  SafeAreaView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
@@ -15,6 +14,7 @@ import CallAPIPlatform from "@/api/platform_api";
 import { useTranslation } from "react-i18next";
 import AdsCard from "@/components/adsCard";
 import { getMemberId } from "@/utils/utility";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Platform = {
   id: number;
@@ -73,19 +73,30 @@ export default function ads() {
           />
         )}
         ListHeaderComponent={() => (
-          <View className="flex my-6 px-4 space-y-6 items-center">
-            <Text className={`text-base font-normal ${theme === "dark" ? "text-white" : "text-[#5d5a54]"}`}>
-              {t('ads.limit')}
+          <View className="flex px-4 my-6 space-y-6 items-center">
+            {/* <Text
+              className={`text-xl my-6 font-bold ${
+                theme === "dark" ? "text-white" : "text-[#5d5a54]"
+              }`}
+            >
+              {t("ads.title")}
+            </Text> */}
+            <Text
+              className={`text-base font-normal ${
+                theme === "dark" ? "text-white" : "text-[#5d5a54]"
+              }`}
+            >
+              {t("ads.limit")}
             </Text>
             <TouchableOpacity onPress={() => router.push("roadmap")}>
               <Text className={`mt-1 text-base font-bold text-[#FF006E]`}>
-                {t('ads.help')}
+                {t("ads.help")}
               </Text>
             </TouchableOpacity>
           </View>
         )}
         ListEmptyComponent={() => (
-          <Text className="text-center text-white">{t('ads.notfound')}</Text>
+          <Text className="text-center text-white">{t("ads.notfound")}</Text>
         )}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

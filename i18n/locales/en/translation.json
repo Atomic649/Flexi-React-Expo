@@ -51,8 +51,8 @@
       "phonePlaceholder": "Enter phone number"
     },
     "businessRegister": {
-      "title": "Business Registration",        
-      "button": "Register",     
+      "title": "Business Registration",
+      "button": "Register",
       "loginButton": "Login",
       "validation": {
         "incomplete": "Incomplete data",
@@ -68,20 +68,20 @@
       "vatId": "VAT ID",
       "businessType": "Business Type",
       "taxTypeOption": {
-        "" : "Select Tax Type",
+        "": "Select Tax Type",
         "Individual": "Individual",
         "Juristic": "Juristic"
       },
       "chooseBusinessType": "Select Business Type",
       "businessTypeOption": {
-        ""  : "Select Business Type",
+        "": "Select Business Type",
         "OnlineSale": "Online Sale",
         "Massage": "Massage",
         "Restaurant": "Restaurant",
-        "Bar" : "Bar",
+        "Bar": "Bar",
         "Cafe": "Cafe",
         "Hotel": "Hotel / Resort",
-        "Tutor" : "Tutor / Coach",
+        "Tutor": "Tutor / Coach",
         "Influencer": "Influencer",
         "Other": "Other"
       }
@@ -115,11 +115,10 @@
         "upload": "You can upload up to 5 images"
       }
     },
-    "validation":{
+    "validation": {
       "incomplete": "Incomplete data",
       "invalidData": "Please enter valid data"
     }
-    
   },
   "profile": {
     "myProfile": "My Profile",
@@ -172,7 +171,7 @@
     "userProfile": "User Profile",
     "businessInfo": "Business Info",
     "ads": "Ads",
-    "organic" : "Organic",
+    "organic": "Organic",
     "privacy": {
       "title": "Privacy",
       "settings": "Privacy Settings",
@@ -283,7 +282,7 @@
       "limitReached": "You can add up to {{count}} images"
     }
   },
-  
+
   "tabs": {
     "home": "Home",
     "income": "Income",
@@ -304,8 +303,8 @@
     "description": "Find new creative ideas every day: Start your journey of limitless creativity with Aura",
     "button": "Get Started"
   },
-  
-  "dashboard" : {
+
+  "dashboard": {
     "title": "Dashboard",
     "ads": "ads",
     "selectDate": "Select Date",
@@ -313,16 +312,15 @@
     "profit": "Profit",
     "roi": "ROI",
     "avr": "AVR"
-   
   },
   "ads": {
-    "title": "Ads",
-    "limit": "You can create up to 4 ads connection",
+    "title": "Ads Connections",
+    "limit": "You can connect up to 4 ads connection",
     "help": "Unlock limit ",
     "createAd": "Connect Ad Account",
     "edit": "Edit Ad",
-    "delete": "Delete Ad",       
-    "notfound": "Ad not found", 
+    "delete": "Delete Ad",
+    "notfound": "Ad not found",
     "platform": "Platform",
     "accName": "Account Name",
     "accId": "Account ID",
@@ -331,16 +329,16 @@
       "error": "Error",
       "ok": "OK",
       "success": "success",
-      "successTitle": "Ad created successfully",
+      "successTitle": "Ad connected successfully",
       "successMessage": "Please press OK to proceed"
-    }, 
-    "validation":{
+    },
+    "validation": {
       "incomplete": "Incomplete data",
       "invalidData": "Please enter valid data"
     },
     "choosePlatform": "Select Platform",
     "platformOption": {
-      "" : "Select Platform",
+      "": "Select Platform",
       "Facebook": "Facebook",
       "Instagram": "Instagram",
       "Twitter": "Twitter",
@@ -350,5 +348,42 @@
       "YouTube": "YouTube"
     },
     "accNameRecommend": "Ad Name-Product Name-001"
+  },
+  "store": {
+    "title": "Store Connections",
+    "limit": "You can connect up to 4 store connections",
+    "help": "Unlock limit ",
+    "createStore": "Connect Store Account",
+    "edit": "Edit Store",
+    "delete": "Delete Store",
+    "notfound": "Store not found",
+    "platform": "Platform",
+    "accName": "Account Name",
+    "accId": "Account ID",
+    "createbutton": "Connect",
+    "alerts": {
+      "error": "Error",
+      "ok": "OK",
+      "success": "success",
+      "successTitle": "Store connected successfully",
+      "successMessage": "Please press OK to proceed"
+    },
+    "validation": {
+      "incomplete": "Incomplete data",
+      "invalidData": "Please enter valid data"
+    },
+    "choosePlatform": "Select Platform",
+    "platformOption": {
+      "": "Select Platform",
+      "Facebook": "Facebook",
+      "Instagram": "Instagram",
+      "Twitter": "Twitter",
+      "Line": "Line",
+      "Tiktok": "Tiktok",
+      "Shopee": "Shopee",
+      "YouTube": "YouTube",
+      "SCB" : "SCB Maemanee"
+    },
+    "accNameRecommend": "Store Name-Product Name-001"
   }
 }

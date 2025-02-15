@@ -14,9 +14,9 @@ export default function toolBarLayout() {
         
       }}>
         <Stack.Screen name="ads" options={{ headerShown: false }} />
-        <Stack.Screen name="product" options={{ headerShown: false }} />
-        <Stack.Screen name="sell" options={{ headerShown: false }} />
+        <Stack.Screen name="product" options={{ headerShown: false }} />        
         <Stack.Screen name="settings" options={{ headerShown: false }} />
+        <Stack.Screen name="store" options={{ headerShown: false }} />
         
         
       </Stack>
