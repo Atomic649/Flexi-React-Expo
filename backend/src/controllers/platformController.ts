@@ -85,6 +85,7 @@ const getPlatforms = async (req: Request, res: Response) => {
     const platforms = await prisma.platform.findMany({
       where: {
         memberId: memberId,
+        deleted: false,
       },
     });
     res.json(platforms);
@@ -110,21 +111,28 @@ const getPlatformById = async (req: Request, res: Response) => {
   }
 };
 
-// 🚧 Delete a platform - Delete
+// Delete a platform - Delete by setting deleted status to true
 const deletePlatform = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const platform = await prisma.platform.delete({
+    const platform = await prisma.platform.update({
       where: {
         id: Number(id),
       },
+      data: {
+        deleted: true,
+      },
     });
-    res.json(platform);
+    res.json({
+      message: "deleted",
+      platform: platform.deleted,
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "failed to delete platform" });
   }
 };
+
 
 // 🚧 Update a platform - Put
 const updatePlatform = async (req: Request, res: Response) => {

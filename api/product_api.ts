@@ -91,7 +91,7 @@ class CallAPIProduct {
   async deleteProductAPI(id: number): Promise<any> {
     try {
       const axiosInstance = await getAxiosWithAuth();
-      const response = await axiosInstance.delete(`/product/${id}`);
+      const response = await axiosInstance.post(`/product/delete/${id}`);
       return response.data;
     } catch (error) {
       console.error("🚨 Delete Product API Error:", error);

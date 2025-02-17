@@ -24,6 +24,6 @@ router.get("/:id", authenticateToken, getAStore);
 router.put("/:id", authenticateToken, updateStore);
 
 // Delete store
-router.delete("/:id", authenticateToken, deleteStore);
+router.post("/delete/:id", authenticateToken, deleteStore);
 
 export default router;

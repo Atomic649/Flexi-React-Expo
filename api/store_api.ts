@@ -83,7 +83,7 @@ class CallAPIStore{
     async deleteStoreAPI(id: number): Promise<any> {
         try {
             const axiosInstance = await getAxiosWithAuth();
-            const response = await axiosInstance.delete(`/store/${id}`);
+            const response = await axiosInstance.post(`/store/delete/${id}`);
             return response.data;
         } catch (error) {
             console.error("🚨 Delete Store API Error:", error);

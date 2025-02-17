@@ -70,7 +70,7 @@ export default function Home() {
 
   const handleDeleteProduct = async (id: number) => {
     Alert.alert(
-      "Delete Product",
+      "Delete",
       "Are you sure you want to delete this product?",
       [
         {

@@ -73,17 +73,23 @@ const createProduct = async (req: Request, res: Response) => {
     }
 }
 
-// Get all products
-const getProducts = async (_: Request, res: Response) => {
+
+// get all Product Name list by memberid
+const getProductByMemberId = async (req: Request, res: Response) => {
+    const { memberId } = req.params
     try {
-        const products = await prisma.product.findMany()
+        const products = await prisma.product.findMany({
+            where: {
+                memberId: memberId,
+                deleted: false
+            },
+        })
         res.json(products)
     } catch (e) {
         console.error(e)
         res.status(500).json({ message: "failed to get products" })
     }
 }
-
 // Get product by ID
 const getProductById = async (req: Request, res: Response) => {
     const { id } = req.params
@@ -147,39 +153,27 @@ const updateProduct = async (req: Request, res: Response) => {
     }
 }
 
-// Delete product
+// Delete product by ID set Delete status to true
 const deleteProduct = async (req: Request, res: Response) => {
     const { id } = req.params
     try {
-        const deletedProduct = await prisma.product.delete({
+        const deletedProduct = await prisma.product.update({
             where: {
                 id: Number(id)
+            },
+            data: {
+               deleted: true
             }
         })
-        res.json(deletedProduct)
+        res.json({ message: "success", product: deletedProduct.deleted })
     } catch (e) {
         console.error(e)
         res.status(500).json({ message: "failed to delete product" })
     }
 }
 
-// get all Product Name list by memberid
-const getProductByMemberId = async (req: Request, res: Response) => {
-    const { memberId } = req.params
-    try {
-        const products = await prisma.product.findMany({
-            where: {
-                memberId: memberId
-            },
-            
-        })
-        
-       
-        res.json(products)
-    } catch (e) {
-        console.error(e)
-        res.status(500).json({ message: "failed to get products" })
-    }
-}
 
-export { createProduct, getProducts, getProductById, updateProduct, deleteProduct, getProductByMemberId }
+
+
+
+export { createProduct,  getProductById, updateProduct, deleteProduct, getProductByMemberId }

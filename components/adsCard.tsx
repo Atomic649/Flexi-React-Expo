@@ -1,10 +1,11 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { icons } from "@/constants";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Ionicons } from "@expo/vector-icons";
 
 export default function AdsCard({
+  id,
   platform,
   accName,
   accId,
@@ -25,11 +26,27 @@ export default function AdsCard({
     }
   };
 
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete",
+      "Are you sure you want to delete this ad connection?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => onDelete(id),
+        },
+      ]
+    );
+  };
+
   const renderRightActions = () => (
     <TouchableOpacity
-      onPress={() => {
-        onDelete(accId);
-      }}
+      onPress={handleDelete}
       className="bg-[#ff2a00] justify-center items-center w-20 m-1 rounded-lg"
     >
       <Ionicons name="trash" size={24} color="white" />

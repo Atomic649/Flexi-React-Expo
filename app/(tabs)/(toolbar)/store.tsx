@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList, RefreshControl } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, RefreshControl, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '@/providers/ThemeProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,6 +10,7 @@ import CallAPIStore from '@/api/store_api';
 import StoreCard from '@/components/StoreCard';
 import { router } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import connection from '../../../backend/db';
 
 type Store = {
   id: number,
@@ -53,6 +54,32 @@ export default function Store() {
       }
       setRefreshing(false);
     };
+
+    const handleDeleteStore = async (id: number) => {
+        Alert.alert(
+          "Delete",
+          "Are you sure you want to delete this Store Connection?",
+          [
+            {
+              text: "Cancel",
+              style: "cancel",
+            },
+            {
+              text: "Delete",
+              style: "destructive",
+              onPress: async () => {
+                try {
+                  await CallAPIStore.deleteStoreAPI(id);
+                  setStore(store.filter((item) => item.id !== id));
+                } catch (error) {
+                  console.error("Error deleting  store connection:", error);
+                }
+              },
+            },
+          ]
+        );
+      };
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
@@ -64,6 +91,7 @@ export default function Store() {
                platform={item.platform}
                accName={item.accName}
                accId={item.accId}
+               onDelete={() => handleDeleteStore(item.id)}
              />
            )}
            ListHeaderComponent={() => (

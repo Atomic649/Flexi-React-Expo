@@ -80,6 +80,22 @@ class CallAPIPlatform {
       }
     }
   }
+
+  // Delete a Platform
+  async deletePlatformAPI(id: number): Promise<any> {
+    try {
+      const axiosInstance = await getAxiosWithAuth();
+      const response = await axiosInstance.post(`/platform/delete/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("🚨 Delete Platform API Error:", error);
+      if (axios.isAxiosError(error) && error.response) {
+        throw error.response.data;
+      } else {
+        throw new Error("Network Error");
+      }
+    }
+  }
 }
 
 export default new CallAPIPlatform();

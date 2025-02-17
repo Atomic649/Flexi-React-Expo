@@ -21,7 +21,7 @@ router.get("/member/:memberId", authenticateToken, getPlatforms);
 router.get("/:id", authenticateToken, getPlatformById);
 
 // Deleting a Platform by ID 
-router.delete("/:id", authenticateToken, deletePlatform);
+router.post("/delete/:id", authenticateToken, deletePlatform);
 
 // Updating a Platform by ID
 router.put("/:id", authenticateToken, updatePlatform);

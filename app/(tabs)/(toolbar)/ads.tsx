@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
@@ -15,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import AdsCard from "@/components/adsCard";
 import { getMemberId } from "@/utils/utility";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 type Platform = {
   id: number;
@@ -61,6 +62,31 @@ export default function ads() {
     setRefreshing(false);
   };
 
+  const handleDelete = async (id: number) => {
+    Alert.alert(
+      "Delete Ad Connection",
+      "Are you sure you want to delete this ad Connection?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await CallAPIPlatform.deletePlatformAPI(id);
+              setPlatforms(platforms.filter((platform) => platform.id !== id));
+            } catch (error) {
+              console.error("Error deleting platform:", error);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
@@ -69,9 +95,11 @@ export default function ads() {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <AdsCard
+              id={item.id}
               platform={item.platform}
               accName={item.accName}
               accId={item.accId}
+              onDelete={handleDelete}
             />
           )}
           ListHeaderComponent={() => (

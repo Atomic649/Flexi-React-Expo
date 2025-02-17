@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { icons } from "@/constants";
 import { router } from "expo-router";
@@ -13,11 +13,27 @@ export default function ProductCard({
   productstock,
   onDelete,
 }: any) {
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete Product",
+      "Are you sure you want to delete this product?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => onDelete(id),
+        },
+      ]
+    );
+  };
+
   const renderRightActions = () => (
     <TouchableOpacity
-      onPress={() => {
-        onDelete(id);
-      }}
+      onPress={handleDelete}
       className="bg-[#ff2a00] justify-center items-center w-20 rounded-lg"
     >
       <Ionicons name="trash" size={24} color="white" />
