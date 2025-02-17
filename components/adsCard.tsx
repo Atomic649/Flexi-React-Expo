@@ -1,14 +1,15 @@
 import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import React from "react";
-import { icons } from "@/constants";
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export default function AdsCard({
   id,
   platform,
   accName,
   accId,
+  color,
   onDelete,
 }: any) {
   const getBorderColor = (platform: string) => {
@@ -54,42 +55,53 @@ export default function AdsCard({
   );
 
   return (
-     <View
-         className="flex px-10">
-       <Swipeable renderRightActions={renderRightActions}>
-         <View className={`flex flex-col items-center pt-2 pb-4 px-4  my-1  rounded-se-md 
+    <View className="flex px-10">
+      <Swipeable renderRightActions={renderRightActions}>
+        <View
+          className={`flex flex-col items-center pt-2 pb-4 px-4  my-1  rounded-se-md 
          bg-[#918b8b0d]
          border-s-8 `}
-      style={{ borderColor: getBorderColor(platform) }}>
-        <View className="flex flex-row gap-3 items-start">
-          <View className="flex justify-center items-center flex-row flex-1">
-            <View className="flex justify-center flex-1 ml-3 gap-y-1">
-              <Text
-                className="font-bold text-sm text-zinc-500"
-                numberOfLines={3}
+          style={{ borderColor: getBorderColor(platform) }}
+        >
+          <View className="flex flex-row gap-3 items-start">
+            <View className="flex justify-center items-center flex-row flex-1">
+              <View className="flex justify-center flex-1 ml-3 gap-y-1">
+                <Text
+                  className="font-bold text-sm text-zinc-500"
+                  numberOfLines={3}
+                >
+                  {platform}
+                </Text>
+                <Text
+                  className="text-lg text-zinc-500 font-psemibold"
+                  numberOfLines={1}
+                >
+                  {accName}
+                </Text>
+                <Text
+                  className="text-base text-zinc-500 font-pregular"
+                  numberOfLines={1}
+                >
+                  {accId}
+                </Text>
+              </View>
+            </View>
+            <View className="pt-2">
+              <TouchableOpacity
+                onPress={() => {
+                  router.push(`editads?id=${id}`);
+                }}
               >
-                {platform}
-              </Text>
-              <Text
-                className="text-lg text-zinc-500 font-psemibold"
-                numberOfLines={1}
-              >
-                {accName}
-              </Text>
-              <Text
-                className="text-base text-zinc-500 font-pregular"
-                numberOfLines={1}
-              >
-                {accId}
-              </Text>
+                <Ionicons
+                  name="settings-sharp"
+                  color={color}
+                  size={22}
+                ></Ionicons>
+              </TouchableOpacity>
             </View>
           </View>
-          <View className="pt-2">
-            <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
-          </View>
         </View>
-      </View>
-    </Swipeable>
-  </View>
+      </Swipeable>
+    </View>
   );
 }

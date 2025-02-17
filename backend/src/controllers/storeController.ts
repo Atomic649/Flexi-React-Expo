@@ -38,8 +38,7 @@ const createStore = async (req: Request, res: Response) => {
     const existingStore = await prisma.store.findFirst({
       where: {
         platform: store.platform,
-        accName: store.accName,
-        accId: store.accId,
+        accName: store.accName,      
         memberId: store.memberId,
       },
     });

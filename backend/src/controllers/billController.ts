@@ -89,6 +89,7 @@ const createBill = async (req: Request, res: Response) => {
     billInput.amount = Number(billInput.amount);
     billInput.price = Number(billInput.price);
     billInput.businessAcc = Number(billInput.businessAcc);
+    billInput.storeId = Number(billInput.storeId);
 
     //  convert string to boolean in cashStatus
     billInput.cashStatus = ["true", "1", "yes"].includes(
@@ -137,21 +138,23 @@ const createBill = async (req: Request, res: Response) => {
     }
   });
 };
-// Get All Bills by businessAcc - Get
+// Get All Bills by memberId - Get
 const getBills = async (req: Request, res: Response) => {
-  const { businessAcc } = req.params;
+  const { memberId } = req.params;
   try {
     const bills = await prisma.bill.findMany({
       where: {
-        businessAcc: Number(businessAcc),
+        memberId: memberId,
+        deleted : false,
       },
+      take: 100, // Limit to 100 records
     });
     res.json(bills);
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "failed to get bills" });
   }
-};
+}
 
 // Get a Bill by ID - Get
 const getBillById = async (req: Request, res: Response) => {
@@ -335,6 +338,7 @@ const searchBill = async (req: Request, res: Response) => {
           },
         ],
       },
+      take: 100, // Limit to 100 records
     });
     res.json(bill);
   } catch (e) {

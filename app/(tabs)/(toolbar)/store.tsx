@@ -91,6 +91,7 @@ export default function Store() {
                platform={item.platform}
                accName={item.accName}
                accId={item.accId}
+               color={theme === "dark" ? "#616161" : "#aeadac"}
                onDelete={() => handleDeleteStore(item.id)}
              />
            )}

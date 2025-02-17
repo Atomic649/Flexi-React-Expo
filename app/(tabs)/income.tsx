@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { Dimensions } from "react-native";
-import { useBackgroundColorClass, useTextColorClass } from "@/utils/themeUtils";
+import { useBackgroundColorClass } from "@/utils/themeUtils";
+import ByOrder from "../../components/income/byOrder";
+import Daily from "../../components/income/daily";
+import Monthly from "../../components/income/monthly";
 
 const Income = () => {
   const { theme } = useTheme();
@@ -15,27 +18,13 @@ const Income = () => {
   ]);
 
   const renderScene = SceneMap({
-    byOrder: () => (
-      <View className="flex-1 justify-center items-center">
-        <Text className={useTextColorClass()}>byOrder</Text>
-      </View>
-    ),
-    daily: () => (
-      <View className="flex-1 justify-center items-center">
-      <Text className={useTextColorClass()}>Expense</Text>
-      </View>
-    ),
-    monthly: () => (
-      <View className="flex-1 justify-center items-center">
-      <Text className={useTextColorClass()}>Summary</Text>
-      </View>
-    ),
+    byOrder: ByOrder,
+    daily: Daily,
+    monthly: Monthly,
   });
 
   return (
-    <SafeAreaView
-      className={`h-full ${useBackgroundColorClass()}`}
-    >
+    <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

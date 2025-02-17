@@ -17,7 +17,7 @@ const router = express.Router();
 router.post("/", authenticateToken, createBill);
 
 // Get all Bills by Business ID
-router.get("/business/:businessAcc", authenticateToken, getBills);
+router.get("/member/:memberId", authenticateToken, getBills);
 
 // Get a Bill by ID
 router.get("/:id", authenticateToken, getBillById);

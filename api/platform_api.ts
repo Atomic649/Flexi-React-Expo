@@ -64,7 +64,7 @@ class CallAPIPlatform {
       platform: string;
       accName: string;
       accId: string;
-      businessAcc: number;
+      memberId: string;
     }
   ): Promise<any> {
     try {

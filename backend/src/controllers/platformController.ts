@@ -46,9 +46,8 @@ const createPlatform = async (req: Request, res: Response) => {
     const existingPlatform = await prisma.platform.findFirst({
       where: {
         platform: platformInput.platform,
-        accName: platformInput.accName,
-        accId: platformInput.accId,
-        memberId: platformInput.memberId,
+        accName: platformInput.accName,       
+        memberId: platformInput.memberId, 
       },
     });
 

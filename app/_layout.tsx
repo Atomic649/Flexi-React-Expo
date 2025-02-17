@@ -118,6 +118,26 @@ function RootLayoutNav() {
             title: t("ads.createStore"), // Tab Name
           }}
         />
+
+        // Edit Ads
+        <Stack.Screen
+          name="editads" // file name
+          options={{
+            ...showTopBarAndBackIcon(theme),
+            title: t("ads.editAd"), // Tab Name
+          }}
+        />
+
+
+        // Edit Store
+        <Stack.Screen
+          name="editstore" // file name
+          options={{
+            ...showTopBarAndBackIcon(theme),
+            title: t("store.editStore"), // Tab Name
+          }}
+        />
+        
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>

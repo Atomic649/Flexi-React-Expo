@@ -126,14 +126,12 @@ export default function EditProduct() {
             text: t("product.alerts.ok"),
             onPress: () => {
               setAlertConfig((prev) => ({ ...prev, visible: false }));
-              router.replace("/login");
+              // go to product page
+              router.replace("(tabs)/product");
             },
           },
         ],
       });
-
-      // go to product page
-      router.replace("(tabs)/product");
     } catch (error: any) {
       setError(error.message);
     }
