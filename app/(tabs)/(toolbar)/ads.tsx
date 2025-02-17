@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import AdsCard from "@/components/adsCard";
 import { getMemberId } from "@/utils/utility";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 type Platform = {
   id: number;
@@ -61,70 +62,72 @@ export default function ads() {
   };
 
   return (
-    <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
-      <FlatList
-        data={platforms}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <AdsCard
-            platform={item.platform}
-            accName={item.accName}
-            accId={item.accId}
-          />
-        )}
-        ListHeaderComponent={() => (
-          <View className="flex px-4 my-6 space-y-6 items-center">
-            {/* <Text
-              className={`text-xl my-6 font-bold ${
-                theme === "dark" ? "text-white" : "text-[#5d5a54]"
-              }`}
-            >
-              {t("ads.title")}
-            </Text> */}
-            <Text
-              className={`text-base font-normal ${
-                theme === "dark" ? "text-white" : "text-[#5d5a54]"
-              }`}
-            >
-              {t("ads.limit")}
-            </Text>
-            <TouchableOpacity onPress={() => router.push("roadmap")}>
-              <Text className={`mt-1 text-base font-bold text-[#FF006E]`}>
-                {t("ads.help")}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
+        <FlatList
+          data={platforms}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <AdsCard
+              platform={item.platform}
+              accName={item.accName}
+              accId={item.accId}
+            />
+          )}
+          ListHeaderComponent={() => (
+            <View className="flex px-4 my-6 space-y-6 items-center">
+              {/* <Text
+                className={`text-xl my-6 font-bold ${
+                  theme === "dark" ? "text-white" : "text-[#5d5a54]"
+                }`}
+              >
+                {t("ads.title")}
+              </Text> */}
+              <Text
+                className={`text-base font-normal ${
+                  theme === "dark" ? "text-white" : "text-[#5d5a54]"
+                }`}
+              >
+                {t("ads.limit")}
               </Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity onPress={() => router.push("roadmap")}>
+                <Text className={`mt-1 text-base font-bold text-[#FF006E]`}>
+                  {t("ads.help")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          ListEmptyComponent={() => (
+            <Text className="text-center text-white">{t("ads.notfound")}</Text>
+          )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+        {/* Setting Limit Ads Connection Acc "4" */}
+        {platforms.length < 4 && (
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              bottom: 65,
+              right: 30,
+              backgroundColor: "#04eccd",
+              borderRadius: 50,
+              padding: 15,
+              elevation: 5,
+            }}
+            onPress={() => {
+              router.push("/createads");
+            }}
+          >
+            <Ionicons
+              name="add"
+              size={24}
+              color={theme === "dark" ? "#ffffff" : "#444541"}
+            />
+          </TouchableOpacity>
         )}
-        ListEmptyComponent={() => (
-          <Text className="text-center text-white">{t("ads.notfound")}</Text>
-        )}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
-      {/* Setting Limit Ads Connection Acc "4" */}
-      {platforms.length < 4 && (
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            bottom: 65,
-            right: 30,
-            backgroundColor: "#04eccd",
-            borderRadius: 50,
-            padding: 15,
-            elevation: 5,
-          }}
-          onPress={() => {
-            router.push("/createads");
-          }}
-        >
-          <Ionicons
-            name="add"
-            size={24}
-            color={theme === "dark" ? "#ffffff" : "#444541"}
-          />
-        </TouchableOpacity>
-      )}
-    </SafeAreaView>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }

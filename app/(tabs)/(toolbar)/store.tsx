@@ -9,6 +9,7 @@ import { getMemberId } from '@/utils/utility';
 import CallAPIStore from '@/api/store_api';
 import StoreCard from '@/components/StoreCard';
 import { router } from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 type Store = {
   id: number,
@@ -53,7 +54,8 @@ export default function Store() {
       setRefreshing(false);
     };
   return (
-    <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
          <FlatList
            data={store}
            keyExtractor={(item) => item.id.toString()}
@@ -110,6 +112,6 @@ export default function Store() {
            </TouchableOpacity>
          )}
        </SafeAreaView>
+    </GestureHandlerRootView>
      );
    }
-   

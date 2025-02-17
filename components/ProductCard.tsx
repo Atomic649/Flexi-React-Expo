@@ -1,8 +1,9 @@
-import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { icons } from "@/constants";
 import { router } from "expo-router";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ProductCard({
   id,
@@ -17,9 +18,9 @@ export default function ProductCard({
       onPress={() => {
         onDelete(id);
       }}
-      className="bg-red-500 justify-center items-center w-20 rounded-lg"
+      className="bg-[#ff2a00] justify-center items-center w-20 rounded-lg"
     >
-      <Text className="text-white">Delete</Text>
+      <Ionicons name="trash" size={24} color="white" />
     </TouchableOpacity>
   );
 
