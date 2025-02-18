@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   return (
     <LinearGradient
-      colors={theme === "dark" ? ["#18181b", "#18181b"] : ["#dcfffa", "#ffffff"]}
+      colors={theme === "dark" ? ["#18181b", "#18181b"] : ["#a6efe4", "#ffffff"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView className="h-full">

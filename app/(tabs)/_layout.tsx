@@ -213,7 +213,7 @@ const Toolbar = ({ visible, onClose }: ToolbarProps) => {
             className="flex-row rounded-t-full items-center justify-evenly"
             style={{
               backgroundColor: theme === "dark" ? "#18181b" : "#4e4b47",  
-              borderColor: theme === "dark" ? "#2c3030" : "#ffffff",
+              borderColor: theme === "dark" ? "#2c3030" : "#4e4b47",
               borderStyle: "solid",
               //shadowColor: "#baf0ff",
               // shadowOffset: {

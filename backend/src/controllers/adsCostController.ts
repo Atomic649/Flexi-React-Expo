@@ -18,7 +18,8 @@ interface adsCostInput {
   platformId: number;
   businessAcc: number;
   platform?: JSON;
-  product: string; // Add the 'product' property
+  product: string;
+   // Add the 'product' property
 }
 
 
@@ -81,6 +82,7 @@ const createAdsCost = async (req: Request, res: Response) => {
       adsCostInput.businessAcc = Number(adsCostInput.businessAcc);
       adsCostInput.date = new Date(adsCostInput.date);
 
+
       // Further processing with Prisma
       try {
         const adsCost = await prisma.adsCost.create({
@@ -91,6 +93,7 @@ const createAdsCost = async (req: Request, res: Response) => {
             businessAcc: adsCostInput.businessAcc,
             platformId: adsCostInput.platformId,
             product: adsCostInput.product, // Add the 'product' property
+            
           },
         });
         res.json({

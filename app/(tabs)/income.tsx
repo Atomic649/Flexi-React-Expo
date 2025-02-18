@@ -40,13 +40,13 @@ const Income = () => {
                     margin: 5,
                     borderRadius: 10,
                   }
-                : { backgroundColor: "#00d2b6", borderColor: "gray" }
+                : { backgroundColor: "#4e4b47", margin: 5, borderRadius: 10 }
             }
             indicatorStyle={{ backgroundColor: "#1afee0" }}
             style={
               theme === "dark"
                 ? { backgroundColor: "#18181b" }
-                : { backgroundColor: "#fff" }
+                : { backgroundColor: "#4e4b47" }
             }
           />
         )}

@@ -47,7 +47,7 @@ const PlatformCard = ({
         <View
           className={`
             w-12 h-12
-            ${theme === "dark" ? "bg-[#8d8c8b]" : "bg-[#3c22ff]"}
+            ${theme === "dark" ? "bg-[#8d8c8b]" : "bg-[#48453e]"}
             rounded-full 
             items-center 
             justify-center 
@@ -107,7 +107,7 @@ const PlatformCard = ({
                   parseFloat(profit) >= 0
                     ? theme === "dark"
                       ? "text-[#00fad9]"
-                      : "text-[#5500ff]"
+                      : "text-[#4400ff]"
                     : "text-[#FF006E] "
                 }`}
                 numberOfLines={1}

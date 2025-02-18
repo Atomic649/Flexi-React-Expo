@@ -4,8 +4,19 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
+const formatDate = (dateString: string) => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+  return new Date(dateString).toLocaleDateString("en-US", options); // Change 'en-US' to desired locale
+};
+
 export default function BillCard({
-  id,  
+  id,
   cName,
   cLastName,
   cPhone,
@@ -24,7 +35,8 @@ export default function BillCard({
   businessAcc,
   imageBill,
   storeId,
-  color,
+  CardColor,
+  PriceColor,
   onDelete,
 }: any) {
   const getBorderColor = (platform: string) => {
@@ -73,14 +85,23 @@ export default function BillCard({
     <View className="flex ">
       <Swipeable renderRightActions={renderRightActions}>
         <View
-          className={`flex flex-col items-center pt-2 pb-4 px-4  my-1  rounded-se-md 
-         bg-[#918b8b0d]
-         border-r-8 `}
-          style={{ borderColor: getBorderColor(platform) }}
+          className={`flex flex-col items-center pt-3 pb-4 px-4 pe-12  my-1 rounded-se-md          
+         border-r-4 `}
+          style={{
+            borderColor: getBorderColor(platform),
+            backgroundColor: CardColor,
+          }}
         >
           <View className="flex flex-row gap-3 items-start">
             <View className="flex justify-center items-center flex-row flex-1">
               <View className="flex justify-center flex-1 ml-3 gap-y-1">
+                <Text
+                  className="text-sm text-zinc-500 font-normal"
+                  numberOfLines={1}
+                >
+                  {formatDate(purchaseAt)}
+                </Text>
+
                 <Text
                   className="text-lg text-zinc-500 font-psemibold"
                   numberOfLines={1}
@@ -96,22 +117,23 @@ export default function BillCard({
               </View>
             </View>
             <View className="pt-2">
-              <Text
-                className="text-xl text-teal-300 font-bold justify-end"
+                <Text
+                className="text-xl font-bold justify-end"
+                style={{ color: PriceColor }}
                 numberOfLines={1}
-              >
-                + {price}  
-              </Text>
+                >
+                + {price}
+                </Text>
               {/* <TouchableOpacity
-                onPress={() => {
-                  router.push(`editads?id=${id}`);
-                }}
+          onPress={() => {
+            router.push(`editads?id=${id}`);
+          }}
               >
-                <Ionicons
-                  name="options"
-                  color={color}
-                  size={22}
-                ></Ionicons>
+          <Ionicons
+            name="options"
+            color={color}
+            size={22}
+          ></Ionicons>
               </TouchableOpacity> */}
             </View>
           </View>

@@ -123,7 +123,6 @@ const createBill = async (req: Request, res: Response) => {
           businessAcc: billInput.businessAcc,
           storeId: billInput.storeId,
           imageBill: req.file?.filename ?? "",
-
         },
       });
       //console.log(bill);
@@ -145,7 +144,7 @@ const getBills = async (req: Request, res: Response) => {
     const bills = await prisma.bill.findMany({
       where: {
         memberId: memberId,
-        deleted : false,
+        deleted: false,
       },
       take: 100, // Limit to 100 records
     });
@@ -154,7 +153,7 @@ const getBills = async (req: Request, res: Response) => {
     console.error(e);
     res.status(500).json({ message: "failed to get bills" });
   }
-}
+};
 
 // Get a Bill by ID - Get
 const getBillById = async (req: Request, res: Response) => {
@@ -185,7 +184,7 @@ const updateBill = async (req: Request, res: Response) => {
       return res.status(500).json({ message: err.message });
     }
     const billInput: billInput = req.body;
-    
+
     // Validate the request body
     const { error } = schema.validate(billInput);
     if (error) {
@@ -229,7 +228,6 @@ const updateBill = async (req: Request, res: Response) => {
           purchaseAt: billInput.purchaseAt,
           businessAcc: billInput.businessAcc,
           imageBill: req.file?.filename ?? "",
-          
         },
       });
       //console.log(bill);
@@ -346,6 +344,10 @@ const searchBill = async (req: Request, res: Response) => {
     res.status(500).json({ message: "failed to search bill" });
   }
 };
+
+
+
+
 export {
   createBill,
   getBills,
@@ -354,4 +356,5 @@ export {
   updateBill,
   searchBill,
   updateCashStatusById,
+  
 };

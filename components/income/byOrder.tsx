@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, SafeAreaView, FlatList, TouchableOpacity, RefreshControl } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 import { useBackgroundColorClass, useTextColorClass } from "@/utils/themeUtils";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/providers/ThemeProvider";
@@ -33,22 +40,35 @@ type Bill = {
   storeId: number;
 };
 
+// Group bills by date
+const groupByDate = (items: Bill[]): { [key: string]: Bill[] } => {
+  return items.reduce((groups, item) => {
+    const date = new Date(item.purchaseAt).toISOString().split("T")[0];
+    if (!groups[date]) {
+      groups[date] = [];
+    }
+    groups[date].push(item);
+    return groups;
+  }, {} as { [key: string]: Bill[] });
+};
+
 const ByOrder = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
   const [bills, setBills] = useState<Bill[]>([]);
 
+  // Call API to get bills
   useEffect(() => {
     const fetchBills = async () => {
       try {
         const memberId = await getMemberId();
-      if (memberId) {
-        const response = await CallAPIBill.getBillsAPI(memberId);
-        setBills(response);
-      } else {
-        console.error("Member ID is null");
-      }
+        if (memberId) {
+          const response = await CallAPIBill.getBillsAPI(memberId);
+          setBills(response);
+        } else {
+          console.error("Member ID is null");
+        }
       } catch (error) {
         console.error("Error fetching bills:", error);
       }
@@ -57,8 +77,10 @@ const ByOrder = () => {
     fetchBills();
   }, []);
 
+  // Refresh bills
   const onRefresh = async () => {
     try {
+      setRefreshing(true);
       const memberId = await getMemberId();
       if (memberId) {
         const response = await CallAPIBill.getBillsAPI(memberId);
@@ -72,42 +94,53 @@ const ByOrder = () => {
     setRefreshing(false);
   };
 
-  const handleDelete = async (id: number) => {}
+  const handleDelete = async (id: number) => {};
 
+  const groupedBills = groupByDate(bills);
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-    <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
-      <FlatList
-        data={bills}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <BillCard
-            id={item.id}
-            platform={item.platform}
-            product={item.product}
-            cName={`${item.cName} ${item.cLastName}`}
-            price={item.price}
-            purchaseAt={item.purchaseAt}
-            color={theme === "dark" ? "#616161" : "#aeadac"}
-            onDelete={handleDelete}
-          />
-        )}
-      
-        ListEmptyComponent={() => (
-          <Text className="text-center text-white">{t("ads.notfound")}</Text>
-        )}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
-      
-    
-      
-    </SafeAreaView>
-  </GestureHandlerRootView>
-);
-}
+      <SafeAreaView className={`h-full ${theme === "dark" ? "bg-black" : "bg-white"}`}>
+        <FlatList
+          data={Object.keys(groupedBills)}
+          keyExtractor={(date) => date}
+          renderItem={({ item: date }) => (
+            <View>
+              <Text
+                className={`text-base font-bold ${
+                  theme === "dark" ? "text-white" : "text-zinc-600"
+                } p-4`}
+              >
+                {date === today ? "Today" : date}
+              </Text>
 
+              {groupedBills[date].map((bill) => (
+                <BillCard
+                  key={bill.id}
+                  id={bill.id}
+                  platform={bill.platform}
+                  product={bill.product}
+                  cName={`${bill.cName} ${bill.cLastName}`}
+                  price={bill.price}
+                  purchaseAt={bill.purchaseAt}
+                  CardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}
+                  onDelete={handleDelete}
+                  PriceColor={theme === "dark" ? "#04ecd5" : "#01e0c6"}
+                />
+              ))}
+            </View>
+          )}
+          ListEmptyComponent={() => (
+            <Text className="text-center text-white">{t("ads.notfound")}</Text>
+          )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+      </SafeAreaView>
+    </GestureHandlerRootView>
+  );
+};
 
 export default ByOrder;
