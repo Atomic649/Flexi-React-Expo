@@ -1,7 +1,8 @@
 // Button.tsx
 import { useTextColorClass } from '@/utils/themeUtils'
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity } from 'react-native'
+import { CustomText } from './CustomText'
 
 interface ButtonProps {
   title: string
@@ -11,7 +12,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ title, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Text className={`${useTextColorClass()}`}>{title}</Text>
+      <CustomText className={`${useTextColorClass()}`}>{title}</CustomText>
     </TouchableOpacity>
   )
 }

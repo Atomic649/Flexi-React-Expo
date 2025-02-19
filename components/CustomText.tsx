@@ -6,7 +6,7 @@ interface CustomTextProps extends TextProps {
   weight?: 'thin' | 'extralight' | 'light' | 'regular' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black';
 }
 
-export function Text({ children, weight = 'regular', style, ...props }: CustomTextProps) {
+export function CustomText({ children, weight = 'regular', style, ...props }: CustomTextProps) {
   const { i18n } = useTranslation();
   const { theme } = useTheme();
   const isThaiLanguage = i18n.language === 'th';
@@ -22,7 +22,7 @@ export function Text({ children, weight = 'regular', style, ...props }: CustomTe
       style={[
         { 
           fontFamily: getFontFamily(),
-          color: theme === 'dark' ? '#fff' : '#2a2a2a'
+          color: theme === 'dark' ? '#b4b3b3' : '#2a2a2a'
         }, 
         style
       ]}

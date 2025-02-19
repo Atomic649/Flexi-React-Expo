@@ -4,6 +4,7 @@ import { useTheme } from "@/providers/ThemeProvider";
 import { useTextColorClass } from "@/utils/themeUtils";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
+import {CustomText} from "@/components/CustomText"; // Assuming you have a CustomText component
 
 const PlatformCard = ({
   sale,
@@ -76,18 +77,20 @@ const PlatformCard = ({
           {/* Sales */}
           <View className="flex-row justify-center w-full  ps-6">
             <Text
-              className={`text-lg ${useTextColorClass()} font-bold`}
+              className={`text-lg ${
+                theme === "dark" ? "text-[#ffffff]" : "text-[#3c3c3c]"
+              } font-bold`}
               numberOfLines={1}
               adjustsFontSizeToFit
             >
               {sale}
             </Text>
-            <Text className={titleStyle}>{t("dashboard.sale")}</Text>
+            <CustomText className={titleStyle}>{t("dashboard.sale")}</CustomText>
           </View>
           <View className="flex-row justify-around w-full mt-1 px-0 ps-4">
             {/* ADS */}
             <View className="flex-col">
-              <Text className={titleStyle}>{t("dashboard.ads")}</Text>
+              <CustomText className={titleStyle}>{t("dashboard.ads")}</CustomText>
               <Text
                 className={`text-base ${
                   theme === "dark" ? "text-[#dddddd]" : "text-stone-500"
@@ -101,7 +104,7 @@ const PlatformCard = ({
 
             {/* Profit */}
             <View className="flex-col selection:items-center justify-items-center ">
-              <Text className={titleStyle}>{t("dashboard.profit")}</Text>
+              <CustomText className={titleStyle}>{t("dashboard.profit")}</CustomText>
               <Text
                 className={`text-base font-bold text-center ${
                   parseFloat(profit) >= 0
@@ -122,7 +125,7 @@ const PlatformCard = ({
           <View className="flex-row justify-around w-full mt-1 mb-1 px-0 ps-4">
             {/* %ADS */}
             <View className="flex-col">
-              <Text className={titleStyle}>{t("dashboard.roi")}</Text>
+              <CustomText className={titleStyle}>{t("dashboard.roi")}</CustomText>
               <Text
                 className={percentadsarv}
                 numberOfLines={1}
@@ -134,7 +137,7 @@ const PlatformCard = ({
 
             {/* Average */}
             <View className="flex-colum items-center justify-between ">
-              <Text className={titleStyle}>{t("dashboard.avr")}</Text>
+              <CustomText className={titleStyle}>{t("dashboard.avr")}</CustomText>
               <Text
                 className={percentadsarv}
                 numberOfLines={1}

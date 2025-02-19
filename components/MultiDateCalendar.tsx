@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Calendar, DateData } from "react-native-calendars";
 import { useTheme } from "@/providers/ThemeProvider";
 
@@ -33,7 +33,6 @@ const MultiDateCalendar: React.FC<MultiDateCalendarProps> = ({
     onDatesChange(Object.keys(newSelectedDates)); // Pass the selected dates to the parent
   };
 
-  const textColor = theme === "dark" ? "#ffffff" : "#000000";
 
   const calendarTheme =
     theme === "dark"

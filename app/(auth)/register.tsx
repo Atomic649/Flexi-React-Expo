@@ -15,7 +15,7 @@ import { images } from "@/constants";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
-import { Text } from "@/components/CustomText";
+import { CustomText } from "@/components/CustomText";
 import CallAPIUser from "@/api/auth_api";
 import CallMemberAPI from "@/api/member_api";
 import { useTextColorClass } from "@/utils/themeUtils";
@@ -126,9 +126,9 @@ export default function Register() {
               minHeight: Dimensions.get("window").height,
             }}
           >
-            <Text className={`text-2xl font-bold mt-4 justify-center ${useTextColorClass()}`}>
+            <CustomText className={`text-2xl font-bold mt-4 justify-center ${useTextColorClass()}`}>
               {t("auth.register.title")}
-            </Text>
+            </CustomText>
 
             <FormField
               title={t("auth.register.firstName")}
@@ -173,7 +173,7 @@ export default function Register() {
               secureTextEntry
             />
 
-            {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
+            {error ? <CustomText className="text-red-500 mt-4">{error}</CustomText> : null}
 
             <CustomButton
               title={t("auth.register.button")}
@@ -183,9 +183,9 @@ export default function Register() {
             />
 
             <View className="flex justify-center pt-5 flex-row gap-2">
-              <Text weight="regular" className="text-lg text-gray-100">
+              <CustomText weight="regular" className="text-lg text-gray-100">
                 {t("auth.register.hasAccount")}
-              </Text>
+              </CustomText>
               <Button
                 title={t("auth.register.loginButton")}
                 onPress={() => router.replace("/login")}

@@ -11,6 +11,7 @@ import { router } from "expo-router";
 import { getMemberId } from "@/utils/utility";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useTranslation } from "react-i18next";
+import { CustomText } from "@/components/CustomText";
 
 type Product = {
   id: number;
@@ -114,9 +115,9 @@ export default function Home() {
           )}
           ListHeaderComponent={() => (
             <View className="my-6 px-4">
-                <Text className={`text-xl font-semibold ${textColorClass}`}>
+                <CustomText className={`text-xl font-semibold ${textColorClass}`}>
                 {t("product.Products")}
-                </Text>
+                </CustomText>
             </View>
           )}
           ListEmptyComponent={() => (

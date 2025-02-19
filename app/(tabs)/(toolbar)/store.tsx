@@ -11,6 +11,7 @@ import StoreCard from '@/components/StoreCard';
 import { router } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import connection from '../../../backend/db';
+import { CustomText } from '@/components/CustomText';
 
 type Store = {
   id: number,
@@ -100,9 +101,9 @@ export default function Store() {
               {/* <Text className={`text-xl my-6 font-bold ${theme === "dark" ? "text-white" : "text-[#5d5a54]"}`}>
                  {t('store.title')}
                </Text> */}
-               <Text className={`text-base font-normal ${theme === "dark" ? "text-white" : "text-[#5d5a54]"}`}>
+               <CustomText className={`text-sm font-normal ${theme === "dark" ? "text-white" : "text-[#5d5a54]"}`}>
                  {t('store.limit')}
-               </Text>
+               </CustomText>
                <TouchableOpacity onPress={() => router.push("roadmap")}>
                  <Text className={`mt-1 text-base font-bold text-[#FF006E]`}>
                    {t('store.help')}

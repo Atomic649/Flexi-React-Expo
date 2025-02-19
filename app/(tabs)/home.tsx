@@ -18,6 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import DashboardAds from "@/components/home/DashboardAds";
 import { LinearGradient } from 'expo-linear-gradient';
+import { CustomText } from "@/components/CustomText";
 
 const Dashboard = () => {
   const { theme } = useTheme();
@@ -38,15 +39,15 @@ const Dashboard = () => {
       <SafeAreaView className="h-full">
         <ScrollView>
           <View className="flex-row items-center justify-end mt-2 px-3 font-bold">
-            <Text
+            <CustomText
               className={`text-sm mx-2 ${
                 theme === "dark" ? "text-[#c9c9c9]" : "text-[#48453e]"
               }`}
             >
               {selectedDates.length > 0
-                ? selectedDates.join(" to ")
-                : t("dashboard.selectDate")}
-            </Text>
+              ? selectedDates.join(" to ")
+              : t("dashboard.selectDate")}
+            </CustomText>
             {/* icon Calendar */}
             <Ionicons
               name="calendar"

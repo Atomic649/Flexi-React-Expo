@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, View, TouchableOpacity, Pressable, Platform } from 'react-native';
-import { Text } from './CustomText';
+import { CustomText } from './CustomText';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useTranslation } from 'react-i18next';
 
@@ -51,7 +51,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
         >
           {/* Title */}
           <View className="px-4 pt-4 pb-2">
-            <Text 
+            <CustomText 
               weight="medium"
               className="text-lg text-center"
               style={{ 
@@ -59,12 +59,12 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
               }}
             >
               {title}
-            </Text>
+            </CustomText>
           </View>
 
           {/* Message */}
           <View className="px-4 pb-4">
-            <Text 
+            <CustomText 
               weight="regular"
               className={`text-center ${
                 theme === 'dark' ? 'text-zinc-300' : 'text-zinc-600'
@@ -74,7 +74,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
               }}
             >
               {message}
-            </Text>
+            </CustomText>
           </View>
 
           {/* Buttons */}
@@ -96,7 +96,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
                       color: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
                     }}
                   >
-                    <Text 
+                    <CustomText 
                       weight={button.style === 'cancel' ? 'regular' : 'medium'}
                       className={`text-center ${getButtonStyle(button.style)}`}
                       style={{ 
@@ -106,7 +106,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
                       }}
                     >
                       {button.text}
-                    </Text>
+                    </CustomText>
                   </Pressable>
                 ) : (
                   <TouchableOpacity
@@ -114,7 +114,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
                     className="p-4 active:bg-zinc-600 dark:active:bg-zinc-700"
                     activeOpacity={0.7}
                   >
-                    <Text 
+                    <CustomText 
                       weight={button.style === 'cancel' ? 'regular' : 'medium'}
                       className={`text-center ${getButtonStyle(button.style)}`}
                       style={{ 
@@ -124,7 +124,7 @@ const CustomAlert = ({ visible, title, message, buttons, onClose }: CustomAlertP
                       }}
                     >
                       {button.text}
-                    </Text>
+                    </CustomText>
                   </TouchableOpacity>
                 )}
               </React.Fragment>

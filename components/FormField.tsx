@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import { View, TextInput, TouchableOpacity, Image } from "react-native";
 import { icons } from "../constants";
+import { CustomText } from "./CustomText";
 
 const FormField = ({
     title,
@@ -15,7 +16,7 @@ const FormField = ({
 
     return (
         <View className={`space-y-2 ${otherStyles}`}>
-            <Text className="text-base text-zinc-500 font-pmedium mb-4">{title}</Text>
+            <CustomText className="text-base text-zinc-500 font-pmedium mb-4">{title}</CustomText>
             <View className="w-full h-16 px-4 bg-[#423f39] rounded-2xl border-2 border-[#423f39] focus:border-secondary flex flex-row items-center">
                 <TextInput
                     className="flex-1 text-white font-psemibold text-base"

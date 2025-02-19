@@ -15,9 +15,10 @@ import { Text } from "@/components/CustomText";
 import Dropdown from "@/components/Dropdown";
 import CallAPIBusiness from "@/api/business_api";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 
 export default function Register() {
+  const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
   const { userId, uniqueId } = useLocalSearchParams();

@@ -14,7 +14,7 @@ import Button from "@/components/Button";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomAlert from "@/components/CustomAlert";
-import { Text } from "@/components/CustomText";
+import { CustomText } from "@/components/CustomText";
 import CallAPIUser from "@/api/auth_api";
 import images from "@/constants/images";
 import { t } from "i18next";
@@ -135,9 +135,9 @@ export default function Login() {
               />
             </View>
 
-            <Text className={`text-2xl font-bold mt-4 ${useTextColorClass()}`}>
+            <CustomText className={`text-2xl font-bold mt-4 ${useTextColorClass()}`}>
               {t("auth.login.title")}
-            </Text>
+            </CustomText>
 
             <FormField
               title={t("auth.login.emailPlaceholder")}
@@ -166,9 +166,9 @@ export default function Login() {
             />
 
             <View className="flex justify-center pt-5 flex-row gap-2">
-              <Text weight="regular" className="text-lg">
+              <CustomText weight="regular" className="text-lg">
                 {t("auth.login.noAccount")}
-              </Text>
+              </CustomText>
               <Button
                 title={t("auth.login.registerButton")}
                 onPress={() => router.replace("/register")}

@@ -17,6 +17,7 @@ import AdsCard from "@/components/adsCard";
 import { getMemberId } from "@/utils/utility";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { CustomText } from "@/components/CustomText";
 
 type Platform = {
   id: number;
@@ -112,13 +113,13 @@ export default function ads() {
               >
                 {t("ads.title")}
               </Text> */}
-              <Text
-                className={`text-base font-normal ${
+              <CustomText
+                className={`text-sm font-normal ${
                   theme === "dark" ? "text-white" : "text-[#5d5a54]"
                 }`}
               >
                 {t("ads.limit")}
-              </Text>
+              </CustomText>
               <TouchableOpacity onPress={() => router.push("roadmap")}>
                 <Text className={`mt-1 text-base font-bold text-[#FF006E]`}>
                   {t("ads.help")}

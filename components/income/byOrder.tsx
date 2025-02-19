@@ -127,6 +127,7 @@ const ByOrder = () => {
                   CardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}
                   onDelete={handleDelete}
                   PriceColor={theme === "dark" ? "#04ecd5" : "#01e0c6"}
+                  cNameColor={theme === "dark" ? "#b6b5b2" : "#565451"}
                 />
               ))}
             </View>

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, TouchableOpacity, FlatList } from "react-native";
+import { CustomText } from "./CustomText";
 
 const Dropdown = ({
     title,
@@ -14,17 +15,17 @@ const Dropdown = ({
 
     return (
         <View className={`space-y-2 ${otherStyles}`}>
-             <Text className="text-base text-zinc-500 font-pmedium mb-4">{title}</Text>
+             <CustomText className="text-base text-zinc-500 font-pmedium mb-4">{title}</CustomText>
             <TouchableOpacity
                 className="w-full h-16 px-4 bg-[#423f39]  rounded-2xl border-2 border-[#423f39] flex flex-row items-center justify-between"
                 onPress={() => setIsOpen(!isOpen)}
             >
-                <Text className="text-white font-psemibold text-base">
+                <CustomText className="text-white font-psemibold text-base">
                     {selectedValue || placeholder}
-                </Text>
-                <Text className="text-zinc-300 font-psemibold text-base">
+                </CustomText>
+                <CustomText className="text-zinc-300 font-psemibold text-base">
                     {isOpen ? "▲" : "▼"}
-                </Text>
+                </CustomText>
             </TouchableOpacity>
 
             {isOpen && (
@@ -39,9 +40,9 @@ const Dropdown = ({
                                 setIsOpen(false);
                             }}
                         >
-                            <Text className="text-zinc-100 font-psemibold text-base">
+                            <CustomText className="text-zinc-100 font-psemibold text-base">
                                 {item.label}
-                            </Text>
+                            </CustomText>
                         </TouchableOpacity>
                     )}
                     {...props}

@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@/providers/ThemeProvider";
 import Animated from "react-native-reanimated";
 import CustomAlert from "@/components/CustomAlert";
-import { Text } from "@/components/CustomText";
+import { CustomText } from "@/components/CustomText";
 import CallAPIUser from "@/api/auth_api";
 import { removeToken } from "@/utils/utility";
 import { useTextColorClass, useBackgroundColorClass } from "@/utils/themeUtils";
@@ -232,7 +232,7 @@ export default function Setting() {
                 color={theme === "dark" ? "#fff" : "#75726a"}
                 style={{ marginRight: 16 }}
                 />
-                <Text className="text-base">{t("settings.socialMedia.facebook")}</Text>
+                <CustomText className="text-base">{t("settings.socialMedia.facebook")}</CustomText>
               </View>
               <View
                 className={`w-14 h-8 rounded-full p-1 ${
@@ -257,7 +257,7 @@ export default function Setting() {
                 color={theme === "dark" ? "#fff" : "#75726a"}
                 style={{ marginRight: 16 }}
                 />
-                <Text className="text-base">{t("settings.socialMedia.tiktok")}</Text>
+                <CustomText className="text-base">{t("settings.socialMedia.tiktok")}</CustomText>
               </View>
               <View
                 className={`w-14 h-8 rounded-full p-1 ${
@@ -282,7 +282,7 @@ export default function Setting() {
                 color={theme === "dark" ? "#fff" : "#75726a"}
                 style={{ marginRight: 16 }}
                 />
-                <Text className="text-base">{t("settings.socialMedia.shopee")}</Text>
+                <CustomText className="text-base">{t("settings.socialMedia.shopee")}</CustomText>
               </View>
               <View
                 className={`w-14 h-8 rounded-full p-1 ${
@@ -307,7 +307,7 @@ export default function Setting() {
                 color={theme === "dark" ? "#fff" : "#75726a"}
                 style={{ marginRight: 16 }}
                 />
-                <Text className="text-base">{t("settings.socialMedia.line")}</Text>
+                <CustomText className="text-base">{t("settings.socialMedia.line")}</CustomText>
               </View>
               <View
                 className={`w-14 h-8 rounded-full p-1 ${
@@ -334,11 +334,11 @@ export default function Setting() {
                 color={theme === "dark" ? "#fff" : "#75726a"}
                 style={{ marginRight: 16 }}
                 />
-                <Text className="text-base">
+                <CustomText className="text-base">
                 {Marketing === "ads"
                   ? t("settings.marketing.ads")
                   : t("settings.marketing.organic")}
-                </Text>
+                </CustomText>
               </View>
               <View
                 className={`w-14 h-8 rounded-full p-1 ${
@@ -397,11 +397,11 @@ export default function Setting() {
                     color={theme === "dark" ? "#fff" : "#75726a"}
                     style={{ marginRight: 16 }}
                   />
-                  <Text className="text-base">
+                  <CustomText className="text-base">
                     {theme === "dark"
                       ? t("settings.appearance.dark")
                       : t("settings.appearance.light")}
-                  </Text>
+                  </CustomText>
                 </View>
                 <View
                   className={`w-14 h-8 rounded-full p-1 ${
@@ -467,9 +467,9 @@ const Section = ({
 
   return (
     <View className="my-4">
-      <Text weight="medium" className={`text-lg mb-2 ${textColorClass}`}>
+      <CustomText weight="medium" className={`text-lg mb-2 ${textColorClass}`}>
         {title}
-      </Text>
+      </CustomText>
       <View
         className={`rounded-xl overflow-hidden border ${
           theme === "dark" ? "border-zinc-500" : "border-zinc-200"
@@ -509,9 +509,9 @@ const SectionItem = ({
           color={theme === "dark" ? "#fff" : "#75726a"}
           style={{ marginRight: 16 }}
         />
-        <Text weight="regular" className={`text-base flex-1 ${textColorClass}`}>
+        <CustomText weight="regular" className={`text-base flex-1 ${textColorClass}`}>
           {text}
-        </Text>
+        </CustomText>
         {onPress && (
           <FontAwesome
             name="chevron-right"

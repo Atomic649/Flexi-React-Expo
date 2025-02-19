@@ -4,11 +4,11 @@ import { useTheme } from "@/providers/ThemeProvider";
 import CircularChart from "@/components/CircularChart";
 import { useTextColorClass } from "@/utils/themeUtils";
 import { useTranslation } from "react-i18next";
-
+import { CustomText } from "@/components/CustomText"; // Assuming you have a CustomText component
 
 const TotalSale = () => {
   const { theme } = useTheme();
-  const { t } = useTranslation(); // กำหนดตัวแปรใช้งานภาษา
+  const { t, i18n } = useTranslation(); // กำหนดตัวแปรใช้งานภาษา
   const titleStyle = `text-sm ${
     theme === "dark" ? "text-[#ababab]" : "text-[#48453e]"
   } text-center font-normal`;
@@ -35,20 +35,26 @@ const TotalSale = () => {
         <View className="bg-transparent items-center ps-6 justify-center w-52 h-60 rounded-2xl">
           <View className="flex-row justify-center w-full">
             <Text
-              className={`text-xl font-bold ${useTextColorClass()}`}
+              className={`text-xl font-bold ${
+                theme === "dark" ? "text-[#ffffff]" : "text-[#3c3c3c]"
+              }`}
               numberOfLines={1}
               adjustsFontSizeToFit
             >
               1,999,999
             </Text>
 
-            <Text className={titleStyle}>{t("dashboard.sale")}</Text>
+            <CustomText className={titleStyle}>
+              {t("dashboard.sale")}
+            </CustomText>
           </View>
           {/* row Ads and Profit */}
           <View className="flex-row justify-around  mt-2 px-6 ps-3">
             {/* ADS */}
             <View className="flex-colum ">
-              <Text className={titleStyle}>{t("dashboard.ads")}</Text>
+              <CustomText className={titleStyle}>
+                {t("dashboard.ads")}
+              </CustomText>
               <Text
                 className={`text-lg ${
                   theme === "dark" ? "text-[#ffb700] " : "text-orange-400 "
@@ -62,7 +68,9 @@ const TotalSale = () => {
 
             {/* Profit */}
             <View className="flex-colum items-center justify-between w-full">
-              <Text className={titleStyle}>{t("dashboard.profit")}</Text>
+              <CustomText className={titleStyle}>
+                {t("dashboard.profit")}
+              </CustomText>
               <Text
                 className={`text-lg font-bold ${
                   parseFloat("-999.99") >= 0
@@ -82,7 +90,9 @@ const TotalSale = () => {
           <View className="flex-row justify-around mt-3 px-0 ps-4">
             {/* %ADS */}
             <View className="flex-colum">
-              <Text className={titleStyle}>{t("dashboard.roi")}</Text>
+              <CustomText className={titleStyle}>
+                {t("dashboard.roi")}
+              </CustomText>
               <Text
                 className={percentadsarv}
                 numberOfLines={1}
@@ -94,7 +104,9 @@ const TotalSale = () => {
 
             {/* Average */}
             <View className="flex-colum items-center justify-between w-full">
-              <Text className={titleStyle}>{t("dashboard.avr")}</Text>
+              <CustomText className={titleStyle}>
+                {t("dashboard.avr")}
+              </CustomText>
               <Text
                 className={percentadsarv}
                 numberOfLines={1}
