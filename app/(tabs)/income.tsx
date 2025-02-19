@@ -36,7 +36,7 @@ const Income = () => {
             tabStyle={
               theme === "dark"
                 ? {
-                    backgroundColor: "#18181b",
+                    backgroundColor: "#1d1d1d",
                     margin: 5,
                     borderRadius: 10,
                   }
@@ -45,7 +45,7 @@ const Income = () => {
             indicatorStyle={{ backgroundColor: "#1afee0" }}
             style={
               theme === "dark"
-                ? { backgroundColor: "#18181b" }
+                ? { backgroundColor: "#1d1d1d" }
                 : { backgroundColor: "#4e4b47" }
             }
           />

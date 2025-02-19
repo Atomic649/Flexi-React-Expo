@@ -172,8 +172,28 @@ const deleteProduct = async (req: Request, res: Response) => {
     }
 }
 
+// Get Product Name by Member ID
+const getProductChoice = async (req: Request, res: Response) => {
+    const { memberId } = req.params
+    try {
+        const products = await prisma.product.findMany({
+            where: {
+                memberId: memberId,
+                deleted: false
+            },
+            select:{               
+                name: true
+            }
+        })
+        res.json(products)
+    } catch (e) {
+        console.error(e)
+        res.status(500).json({ message: "failed to get products" })
+    }
+}
 
 
 
 
-export { createProduct,  getProductById, updateProduct, deleteProduct, getProductByMemberId }
+
+export { createProduct,  getProductById, updateProduct, deleteProduct, getProductByMemberId,getProductChoice  }

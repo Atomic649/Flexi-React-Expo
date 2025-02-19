@@ -14,7 +14,7 @@ const DashboardAds = () => {
   }, []);
 
   return (
-    <View className="flex flex-col pt-3  items-center justify-center">
+    <View className="flex flex-col pt-2  items-center justify-center">
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

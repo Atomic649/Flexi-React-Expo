@@ -16,7 +16,7 @@ const TotalSale = () => {
     theme === "dark" ? "text-[#c6c7c7]" : "text-[#7f7765]"
   } text-center font-bold`;
   return (
-    <View className="flex flex-col pt-3 pb-2 px-2 items-center justify-center">
+    <View className="flex flex-col pt-2 pb-2 px-2 items-center justify-center">
       <View
         className={`flex-row ${
           theme === "dark" ? "bg-zinc-800" : "bg-white"

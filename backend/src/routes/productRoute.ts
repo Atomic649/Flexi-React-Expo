@@ -5,6 +5,7 @@ import {
   updateProduct,
   deleteProduct,
   getProductByMemberId,
+  getProductChoice,
 } from "../controllers/productController";
 import authenticateToken from "../middleware/authMiddleware";
 // create express router
@@ -25,6 +26,9 @@ router.post("/delete/:id", authenticateToken, deleteProduct);
 
 // Update product
 router.put("/:id", authenticateToken, updateProduct);
+
+//get product choice by member ID
+router.get("/choice/:memberId", authenticateToken, getProductChoice);
 
 
 export default router;

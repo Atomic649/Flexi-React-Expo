@@ -224,7 +224,7 @@ const mainTopBar = (theme: string) => ({
           />
         </View>
       </TouchableOpacity>
-      <CustomText className="text-base font-bold text-zinc-500">Atomic Intergroup</CustomText>
+      <CustomText className="text-base font-bold text-zinc-500">Flexi Business Hub</CustomText>
 
     </View>
   ),

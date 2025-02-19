@@ -14,7 +14,7 @@ interface CircularChartProps {
 
 const CircularChart = ({ 
   percentage, 
-  size = 144,
+  size = 136,
   strokeWidth = 28
 }: CircularChartProps) => {
   const { theme } = useTheme();

@@ -118,7 +118,8 @@
     "validation": {
       "incomplete": "Incomplete data",
       "invalidData": "Please enter valid data"
-    }
+    },
+    "chooseProduct": "Product ▼"
   },
   "profile": {
     "myProfile": "My Profile",
