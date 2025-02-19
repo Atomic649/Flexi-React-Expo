@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, TouchableOpacity, FlatList } from "react-native";
+import { View, TouchableOpacity, FlatList,Text } from "react-native";
 import {CustomText} from './CustomText'; // Make sure to import CustomText
 
 const Dropdown = ({
@@ -9,6 +9,9 @@ const Dropdown = ({
     onValueChange,
     placeholder,
     otherStyles,
+    bgColor,
+    bgChoiceColor,
+    textcolor,
     ...props
 }: any) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,15 +20,19 @@ const Dropdown = ({
         <View className={`space-y-2 ${otherStyles}`}>
              <CustomText className="text-base text-zinc-500 font-pmedium mb-3">{title}</CustomText>
             <TouchableOpacity
-                className="w-full h-16 px-4 bg-[#e4e4e7] rounded-2xl border-2 border-transparent flex flex-row items-center justify-between"
+                className="w-full h-16 px-4  rounded-2xl border-2 border-transparent flex flex-row items-center justify-between"
                 onPress={() => setIsOpen(!isOpen)}
+                style={{ backgroundColor: bgColor }}
             >
-                <CustomText className="text-[#747068] font-psemibold text-base">
+                <Text className="text-[#b1b1b1] font-psemibold text-base"
+                style={{ color: textcolor }}>
                     {selectedValue || placeholder}
-                </CustomText>
-                <CustomText className="text-zinc-300 font-psemibold text-base">
+                    
+
+                </Text>
+                <Text className="text-zinc-300 font-psemibold text-base">
                     {isOpen ? "▲" : "▼"}
-                </CustomText>
+                </Text>
             </TouchableOpacity>
 
             {isOpen && (
@@ -34,15 +41,17 @@ const Dropdown = ({
                     keyExtractor={(item) => item.value}
                     renderItem={({ item }) => (
                         <TouchableOpacity
-                            className="w-full h-16 px-4 bg-[#dbdbdc]  rounded-2xl border-1 border-transparent  flex flex-row items-center"
+                            className="w-full h-16 px-4  rounded-2xl border-1 border-transparent  flex flex-row items-center"
                             onPress={() => {
                                 onValueChange(item.value);
                                 setIsOpen(false);
                             }}
+                            style={{ backgroundColor: bgChoiceColor }}
                         >
-                            <CustomText className="text-[#747068] font-psemibold text-base">
+                            <Text className="font-psemibold text-base"
+                            style={{ color: textcolor }}>
                                 {item.label}
-                            </CustomText>
+                            </Text>
                         </TouchableOpacity>
                     )}
                     {...props}

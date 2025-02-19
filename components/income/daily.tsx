@@ -11,7 +11,6 @@ import { getMemberId } from "@/utils/utility";
 import CallAPIReport from "@/api/report_api";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useTranslation } from "react-i18next";
-import dailyReport from "../../backend/src/controllers/reportController";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import DailyCard from "../DailyCard";
 
@@ -65,7 +64,7 @@ const Daily = () => {
     }
     setRefreshing(false);
   };
-// Adjust fornt size and color of Title Table
+// Adjust front size and color of Title Table
   const textStyle = "text-sm text-zinc-600 font-bold";
 
   return (

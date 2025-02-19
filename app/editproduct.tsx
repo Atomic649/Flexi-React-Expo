@@ -5,7 +5,7 @@ import CustomButton from "@/components/CustomButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
-import { Text } from "@/components/CustomText";
+import { CustomText } from "@/components/CustomText";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import CallAPIProduct from "@/api/product_api";
 import { SafeAreaView } from "react-native";
@@ -13,9 +13,11 @@ import FormField2 from "@/components/FormField2";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@/providers/ThemeProvider";
 
 export default function EditProduct() {
   const { t } = useTranslation();
+  const { theme } = useTheme();
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const [memberId, setMemberId] = useState<string | null>(null);
@@ -152,6 +154,8 @@ export default function EditProduct() {
             title={t("product.productName")}
             value={name}
             handleChangeText={setproductname}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles="mt-0 mb-2"
           />
 
@@ -159,6 +163,8 @@ export default function EditProduct() {
             title={t("product.barcode")}
             value={description}
             handleChangeText={setdescription}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles={fieldStyles}
             keyboardType="number-pad"
           />
@@ -167,6 +173,8 @@ export default function EditProduct() {
             title={t("product.description")}
             value={barcode}
             handleChangeText={setbarcode}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles={fieldStyles}
             placeholder={t("product.description")}
           />
@@ -177,6 +185,8 @@ export default function EditProduct() {
                 title={t("product.stock")}
                 value={stock}
                 handleChangeText={setstock}
+                bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+                textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
                 otherStyles={fieldStyles}
                 keyboardType="number-pad"
               />
@@ -186,6 +196,8 @@ export default function EditProduct() {
                 title={t("product.price")}
                 value={price}
                 handleChangeText={setprice}
+                bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+                textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
                 otherStyles={fieldStyles}
                 keyboardType="number-pad"
               />
@@ -197,12 +209,12 @@ export default function EditProduct() {
             className="mt-8 mb-2 items-center text"
           >
             <Ionicons name="image" size={54} color="#d6d6dc" />
-            <Text className="text-center text-blue-500">
+            <CustomText className="text-center text-blue-500">
               {t("product.uploadImage")}
-            </Text>
+            </CustomText>
           </TouchableOpacity>
 
-          {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
+          {error ? <CustomText className="text-red-500 mt-4">{error}</CustomText> : null}
 
           <CustomButton
             title={t("product.updatebutton")}

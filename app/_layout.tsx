@@ -4,12 +4,20 @@ import "@/i18n";
 import React, { useEffect } from "react";
 import { router, Stack } from "expo-router";
 import { useFonts } from "expo-font";
-import { SafeAreaView, StatusBar, TouchableOpacity, Text } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  TouchableOpacity,
+  Text,
+  View,
+  Image,
+} from "react-native";
 import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 import * as NavigationBar from "expo-navigation-bar";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
+import { CustomText } from "@/components/CustomText";
 
 function RootLayoutNav() {
   const { theme } = useTheme();
@@ -118,7 +126,6 @@ function RootLayoutNav() {
             title: t("ads.createStore"), // Tab Name
           }}
         />
-
         // Edit Ads
         <Stack.Screen
           name="editads" // file name
@@ -127,8 +134,6 @@ function RootLayoutNav() {
             title: t("ads.editAd"), // Tab Name
           }}
         />
-
-
         // Edit Store
         <Stack.Screen
           name="editstore" // file name
@@ -137,7 +142,6 @@ function RootLayoutNav() {
             title: t("store.editStore"), // Tab Name
           }}
         />
-        
         {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
         <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>
@@ -210,16 +214,35 @@ const mainTopBar = (theme: string) => ({
     backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", //
   },
   headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
+  headerLeft: () => (
+    <View className="flex-row items-center justify-between gap-4 ">
+      <TouchableOpacity onPress={() => router.push("profile")} className="mr-2">
+        <View className="w-9 h-9 rounded-full bg-teal-300 overflow-hidden">
+          <Image
+            source={{ uri: "https://example.com/profile.jpg" }} // Replace with actual profile image URL
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
+      </TouchableOpacity>
+      <CustomText className="text-base font-bold text-zinc-500">Atomic Intergroup</CustomText>
+
+    </View>
+  ),
+
+  
+
   headerRight: () => (
-    <TouchableOpacity onPress={() => router.push("roadmap")} className="mr-2">
-      <Ionicons
-        name="people"
-        size={24}
-        color={theme === "dark" ? "#ffffff" : "#75726a"}
-      />
-      <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
-        2
-      </Text>
-    </TouchableOpacity>
+    <View className="flex-row items-center">
+      <TouchableOpacity onPress={() => router.push("roadmap")} className="mr-2">
+        <Ionicons
+          name="people"
+          size={24}
+          color={theme === "dark" ? "#ffffff" : "#75726a"}
+        />
+        <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
+          2
+        </Text>
+      </TouchableOpacity>
+    </View>
   ),
 });

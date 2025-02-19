@@ -4,10 +4,9 @@ import {
   Text,
   SafeAreaView,
   FlatList,
-  TouchableOpacity,
   RefreshControl,
 } from "react-native";
-import { useBackgroundColorClass, useTextColorClass } from "@/utils/themeUtils";
+
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/providers/ThemeProvider";
 import CallAPIBill from "@/api/bill_api";
@@ -15,6 +14,7 @@ import { getMemberId } from "@/utils/utility";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { router } from "expo-router";
 import BillCard from "../billCard";
+import { useBackgroundColorClass } from "@/utils/themeUtils";
 
 type Bill = {
   id: number;
@@ -101,7 +101,9 @@ const ByOrder = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView className={`h-full ${theme === "dark" ? "bg-black" : "bg-white"}`}>
+      <SafeAreaView
+       className={`h-full ${useBackgroundColorClass()}`}>
+      
         <FlatList
           data={Object.keys(groupedBills)}
           keyExtractor={(date) => date}
@@ -127,7 +129,7 @@ const ByOrder = () => {
                   CardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}
                   onDelete={handleDelete}
                   PriceColor={theme === "dark" ? "#04ecd5" : "#01e0c6"}
-                  cNameColor={theme === "dark" ? "#b6b5b2" : "#565451"}
+                  cNameColor={theme === "dark" ? "#868686" : "#656360"}
                 />
               ))}
             </View>

@@ -10,7 +10,7 @@ import CustomButton from "@/components/CustomButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
-import { Text } from "@/components/CustomText";
+import { CustomText } from "@/components/CustomText";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import CallAPIProduct from "@/api/product_api";
 import FormField2 from "@/components/FormField2";
@@ -18,9 +18,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { getMemberId } from "@/utils/utility";
+import { useTheme } from "@/providers/ThemeProvider";
 
 export default function CreateProduct() {
   const { t } = useTranslation();
+  const { theme } = useTheme();
   const router = useRouter();
   const [memberId, setMemberId] = useState<string | null>(null);
   const [name, setproductname] = useState("");
@@ -140,60 +142,70 @@ export default function CreateProduct() {
             />
           )}
 
-          <FormField2
+            <FormField2
             title={t("product.productName")}
             value={name}
             handleChangeText={setproductname}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles="mt-0 mb-2"
-          />
+            />
 
-          <FormField2
+            <FormField2
             title={t("product.barcode")}
             value={description}
             handleChangeText={setdescription}
             otherStyles={fieldStyles}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             keyboardType="number-pad"
-          />
+            />
 
-          <FormField2
+            <FormField2
             title={t("product.description")}
             value={barcode}
             handleChangeText={setbarcode}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles={fieldStyles}
-          />
+            />
 
-          <View className="flex flex-row justify-between">
+            <View className="flex flex-row justify-between">
             <View className="w-1/2 pr-2">
               <FormField2
-                title={t("product.stock")}
-                value={stock}
-                handleChangeText={setstock}
-                otherStyles={fieldStyles}
-                keyboardType="number-pad"
+              title={t("product.stock")}
+              value={stock}
+              handleChangeText={setstock}
+              otherStyles={fieldStyles}
+              bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+              textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
+              keyboardType="number-pad"
               />
             </View>
             <View className="w-1/2 pl-2">
               <FormField2
-                title={t("product.price")}
-                value={price}
-                handleChangeText={setprice}
-                otherStyles={fieldStyles}
-                keyboardType="number-pad"
+              title={t("product.price")}
+              value={price}
+              handleChangeText={setprice}
+              otherStyles={fieldStyles}
+              bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+              textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
+              keyboardType="number-pad"
               />
             </View>
-          </View>
+            </View>
 
           <TouchableOpacity
             onPress={pickImage}
             className="mt-8 mb-2 items-center text"
           >
-            <Ionicons name="image" size={54} color="#d6d6dc" />
-            <Text className="text-center text-zinc-500 mt-1">
+            <Ionicons name="image" size={54} color="#cac9c8" />
+            <CustomText className="text-center text-zinc-500 mt-1">
               {t("product.uploadImage")}
-            </Text>
+            </CustomText>
           </TouchableOpacity>
 
-          {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
+          {error ? <CustomText className="text-red-500 mt-4">{error}</CustomText> : null}
 
           <CustomButton
             title={t("product.createbutton")}

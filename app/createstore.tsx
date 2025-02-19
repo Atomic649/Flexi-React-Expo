@@ -4,7 +4,7 @@ import CustomButton from "@/components/CustomButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
-import { Text } from "@/components/CustomText";
+import { CustomText } from "@/components/CustomText";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import FormField2 from "@/components/FormField2";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,9 +12,11 @@ import { getMemberId } from "@/utils/utility";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Dropdown2 from "@/components/Dropdown2";
 import CallAPIStore from "@/api/store_api";
+import { useTheme } from "@/providers/ThemeProvider";
 
 export default function CreateStore() {
   const { t } = useTranslation();
+  const { theme } = useTheme();
   const [memberId, setMemberId] = useState<string | null>(null);
   const [platform, setPlatform] = useState("");
   const [accName, setAccName] = useState("");
@@ -126,6 +128,10 @@ export default function CreateStore() {
             placeholder={t("store.choosePlatform")}
             selectedValue={t(`store.platformOption.${platform}`)}
             onValueChange={setPlatform}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            bgChoiceColor={theme === "dark" ? "#212121" : "#e7e7e7"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
+
             otherStyles="mt-0 mb-2"
           />
           <FormField2
@@ -133,6 +139,9 @@ export default function CreateStore() {
             value={accName}
             handleChangeText={setAccName}
             placeholder={t("store.accNameRecommend")}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            placeholderTextColor = {theme === "dark" ? "#606060" : "#b1b1b1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles={fieldStyles}
           />
           <FormField2
@@ -141,10 +150,13 @@ export default function CreateStore() {
             handleChangeText={setAccId}
             otherStyles={fieldStyles}
             placeholder="00000000000000"
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            placeholderTextColor = {theme === "dark" ? "#606060" : "#b1b1b1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             keyboardType="numeric"
           />
 
-          {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
+          {error ? <CustomText className="text-red-500 mt-4">{error}</CustomText> : null}
 
           <CustomButton
             title={t("store.createbutton")}

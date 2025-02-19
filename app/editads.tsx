@@ -10,9 +10,11 @@ import CustomButton from "@/components/CustomButton";
 import CustomAlert from "@/components/CustomAlert";
 import FormField2 from "@/components/FormField2";
 import Dropdown2 from "@/components/Dropdown2";
+import { useTheme } from "@/providers/ThemeProvider";
 
 export default function EditAds() {
   const { t } = useTranslation();
+  const { theme } = useTheme();
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const [memberId, setMemberId] = useState<string | null>(null);
@@ -140,6 +142,9 @@ export default function EditAds() {
             placeholder={t("ads.choosePlatform")}
             selectedValue={t(`ads.platformOption.${platform}`)}
             onValueChange= {setPlatform}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            bgChoiceColor={theme === "dark" ? "#212121" : "#e7e7e7"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles="mt-0 mb-2"
           />
           <FormField2
@@ -147,6 +152,9 @@ export default function EditAds() {
             value={accName}
             handleChangeText={setAccName}
             placeholder={t("ads.accNameRecommend")}
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            placeholderTextColor = {theme === "dark" ? "#606060" : "#b1b1b1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles={fieldStyles}
           />
           <FormField2
@@ -155,6 +163,9 @@ export default function EditAds() {
             handleChangeText={setAccId}
             otherStyles={fieldStyles}
             placeholder= "00000000000000"
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            placeholderTextColor = {theme === "dark" ? "#606060" : "#b1b1b1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             keyboardType="numeric"
           />
 

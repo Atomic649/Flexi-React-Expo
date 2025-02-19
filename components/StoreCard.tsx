@@ -10,6 +10,7 @@ export default function StoreCard({
   accName,
   accId,
   onDelete,
+  cardColor,
   color,
 }: any) {
   const getBorderColor = (platform: string) => {
@@ -47,7 +48,7 @@ export default function StoreCard({
           className={`flex flex-col items-center pt-2 pb-4 px-4  my-1  rounded-se-md 
       bg-[#918b8b0d]
       border-s-8 `}
-          style={{ borderColor: getBorderColor(platform) }}
+          style={{ borderColor: getBorderColor(platform),backgroundColor: cardColor  }}
         >
           <View className="flex flex-row gap-3 items-start">
             <View className="flex justify-center items-center flex-row flex-1">

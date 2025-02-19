@@ -9,6 +9,8 @@ const Dropdown = ({
     onValueChange,
     placeholder,
     otherStyles,
+    bgColor,
+    bgChoiceColor,
     ...props
 }: any) => {
     const [isOpen, setIsOpen] = useState(false);
