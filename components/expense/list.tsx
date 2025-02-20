@@ -8,53 +8,39 @@ import {
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/providers/ThemeProvider";
-import CallAPIBill from "@/api/bill_api";
+import CallAPIReport from "@/api/report_api";
 import { getMemberId } from "@/utils/utility";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BillCard from "../billCard";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
+import ExpenseCard from "../ExpenseCard";
 
-type Bill = {
+
+type Expense = {
   id: number;
-  createdAt: Date;
-  updatedAt?: Date;
-  cName: string;
-  cLastName: string;
-  cPhone: string;
-  cGender: string;
-  cAddress: string;
-  cPostId: string;
-  cProvince: string;
-  product: string;
-  payment: string;
-  amount: number;
-  platform: string;
-  cashStatus: boolean;
-  price: number;
-  memberId: string;
-  purchaseAt: Date;
-  businessAcc: number;
-  imageBill: string;
-  storeId: number;
+  date: Date;
+  expenses: number;
+  type: string;
+  note: string;
 };
 
 // Group bills by date
-const groupByDate = (items: Bill[]): { [key: string]: Bill[] } => {
+const groupByDate = (items: Expense[]): { [key: string]: Expense[] } => {
   return items.reduce((groups, item) => {
-    const date = new Date(item.purchaseAt).toISOString().split("T")[0];
+    const date = new Date(item.date).toISOString().split("T")[0];
     if (!groups[date]) {
       groups[date] = [];
     }
     groups[date].push(item);
     return groups;
-  }, {} as { [key: string]: Bill[] });
+  }, {} as { [key: string]: Expense[] });
 };
 
-const ByOrder = () => {
+const list = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
-  const [bills, setBills] = useState<Bill[]>([]);
+  const [expense, setExpense] = useState<Expense[]>([]);
 
   // Call API to get bills
   useEffect(() => {
@@ -62,8 +48,8 @@ const ByOrder = () => {
       try {
         const memberId = await getMemberId();
         if (memberId) {
-          const response = await CallAPIBill.getBillsAPI(memberId);
-          setBills(response);
+          const response = await CallAPIReport.getAdsExpenseReportsAPI(memberId);
+          setExpense(response);
         } else {
           console.error("Member ID is null");
         }
@@ -81,8 +67,8 @@ const ByOrder = () => {
       setRefreshing(true);
       const memberId = await getMemberId();
       if (memberId) {
-        const response = await CallAPIBill.getBillsAPI(memberId);
-        setBills(response);
+        const response = await CallAPIReport.getAdsExpenseReportsAPI(memberId);
+        setExpense(response);
       } else {
         console.error("Member ID is null");
       }
@@ -94,7 +80,7 @@ const ByOrder = () => {
 
   const handleDelete = async (id: number) => {};
 
-  const groupedBills = groupByDate(bills);
+  const groupedBills = groupByDate(expense);
   const today = new Date().toISOString().split("T")[0];
 
   return (
@@ -116,18 +102,19 @@ const ByOrder = () => {
               </Text>
 
               {groupedBills[date].map((bill) => (
-                <BillCard
+                <ExpenseCard
                   key={bill.id}
                   id={bill.id}
-                  platform={bill.platform}
-                  product={bill.product}
-                  cName={`${bill.cName} ${bill.cLastName}`}
-                  price={bill.price}
-                  purchaseAt={bill.purchaseAt}
-                  CardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}
+                  date={bill.date}
+                  type={bill.type}
+                  expenses={bill.expenses}
+                  note={bill.note}
+                  AdsCardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}  
+                  ExCardColor={theme === "dark" ? "#151515" : "#24232110"}     
+                            
+                  ExpenseColor={theme === "dark" ? "#ffaa00" : "#ffaa00"}
+                  NoteColor={theme === "dark" ? "#868686" : "#656360"}
                   onDelete={handleDelete}
-                  PriceColor={theme === "dark" ? "#04ecd5" : "#01e0c6"}
-                  cNameColor={theme === "dark" ? "#868686" : "#656360"}
                 />
               ))}
             </View>
@@ -144,4 +131,4 @@ const ByOrder = () => {
   );
 };
 
-export default ByOrder;
+export default list;

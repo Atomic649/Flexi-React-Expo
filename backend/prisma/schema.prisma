@@ -70,6 +70,14 @@ enum IncomeChannel {
   TMB
 }
 
+enum Bank {
+  SCB
+  KBANK
+  KTB
+  BBL
+  TMB
+}
+
 enum BusinessType {
   OnlineSale
   Massage
@@ -241,8 +249,11 @@ model Expense {
   updatedAt DateTime @updatedAt
   id        Int      @id @default(autoincrement())
   amount    Int
-  group     String
-  image     String
+  group     String?
+  image     String?
+  note      String?
+  deleted   Boolean?  @default(false)
+  channel   Bank?
 
   // Relation
   businessAcc Int

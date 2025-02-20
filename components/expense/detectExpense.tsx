@@ -13,7 +13,7 @@ import * as FileSystem from "expo-file-system";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 
-export default function Expense() {
+export default function DetectExpense() {
   const { theme } = useTheme();
   const [pdfUri, setPdfUri] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);

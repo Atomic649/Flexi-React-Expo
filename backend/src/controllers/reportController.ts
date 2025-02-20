@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { Platform } from 'react-native';
 
 //Create  instance of PrismaClient
 const prisma = new PrismaClient();
@@ -172,4 +173,71 @@ const monthlyReport = async (req: Request, res: Response) => {
     res.status(500).json({ message: "failed to get bills" });
   }
 };
-export { dailyReport, monthlyReport }; 
+// get all adsCost and Expenses list
+const getListofAdsandExpenses = async (req: Request, res: Response) => {
+  const { memberId } = req.params;
+
+  try {
+    const adsCost = await prisma.adsCost.findMany({
+      where: {
+        memberId: memberId,
+      },
+      select: {
+        id: true,
+        date: true,
+        adsCost: true,
+        platform: {
+          select: {
+            platform: true,
+            accName: true,
+          },
+        },
+      },
+      take: 100, // Limit to 100 records
+    });
+
+    const expenses = await prisma.expense.findMany({
+      where: {
+        memberId: memberId,
+      },
+      select: {
+        id : true,
+        date: true,
+        amount: true,
+        note: true,
+      },
+      take: 100, // Limit to 100 records
+    });
+
+    // Change both name adscost and amount to expenses and merge them
+    const result = adsCost
+      .map((adsCost) => {
+        return {
+          id: adsCost.id,
+          date: adsCost.date,
+          expenses: adsCost.adsCost,
+          type: "ads",
+          note: `${adsCost.platform.platform} ${adsCost.platform.accName}`,
+        };
+      })
+      .concat(
+        expenses.map((expense) => {
+          return {
+            id: expense.id,
+            date: expense.date,
+            expenses: expense.amount,
+            type: "expense",
+            note: expense.note || "",
+          };
+        })
+      )
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    res.json(result);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "failed to get ads and expenses" });
+  }
+};
+
+export { dailyReport, monthlyReport , getListofAdsandExpenses};

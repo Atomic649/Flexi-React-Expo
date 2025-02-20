@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { Bank, PrismaClient } from "@prisma/client";
 import Joi from "joi";
 
 //Create  instance of PrismaClient
@@ -13,16 +13,20 @@ interface userInput {
     image : string
     memberId : string
     businessAcc : number
+    note : string
+    channel : Bank
 }
 
 // Validate the request body
 const schema = Joi.object({
     date: Joi.date().required(),
     amount: Joi.number().required(),
-    group : Joi.string().required(),
-    image : Joi.string().required(),
+    group : Joi.string(),
+    image : Joi.string(),
     memberId : Joi.string().required(),
-    businessAcc : Joi.number().required()
+    businessAcc : Joi.number().required(),
+    note : Joi.string(),
+    channel : Joi.string()
 })
 
 //  create a new expense - Post
@@ -44,7 +48,9 @@ const createExpense = async (req: Request, res: Response) => {
                 group : expenseInput.group,
                 image : expenseInput.image,
                 memberId : expenseInput.memberId,
-                businessAcc : expenseInput.businessAcc
+                businessAcc : expenseInput.businessAcc,
+                note : expenseInput.note,
+                channel : expenseInput.channel
 
                 
             }

@@ -119,8 +119,11 @@ Table Expense {
   updatedAt DateTime [not null]
   id Int [pk, increment]
   amount Int [not null]
-  group String [not null]
-  image String [not null]
+  group String
+  image String
+  note String
+  deleted Boolean [default: false]
+  channel Bank
   businessAcc Int [not null]
   businessId BusinessAcc [not null]
   memberId String [not null]
@@ -366,6 +369,14 @@ Enum IncomeChannel {
   X
   Youtube
   Google
+  SCB
+  KBANK
+  KTB
+  BBL
+  TMB
+}
+
+Enum Bank {
   SCB
   KBANK
   KTB
