@@ -15,7 +15,7 @@ import * as FileSystem from "expo-file-system";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import ExpenseTable from './ExpenseTable';
+import ExpenseTable from "./ExpenseTable";
 
 export default function DetectExpense() {
   const { theme } = useTheme();
@@ -25,8 +25,18 @@ export default function DetectExpense() {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const expenses = [
-    { date: '2023-10-01', note: 'Facebook ADS', amount: '$100', file: 'receipt1.pdf' },
-    { date: '2023-10-02', note: 'Kerry Express', amount: '$20', file: 'receipt2.pdf' },
+    {
+      date: "2023-10-01",
+      note: "Facebook ADS",
+      amount: "$100",
+      file: "receipt1.pdf",
+    },
+    {
+      date: "2023-10-02",
+      note: "Kerry Express",
+      amount: "$20",
+      file: "receipt2.pdf",
+    },
     // Add more expenses as needed
   ];
 
@@ -60,21 +70,31 @@ export default function DetectExpense() {
   return (
     <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
       <TouchableOpacity
-        className="flex-1 p-4 items-center justify-start"
+        className="items-center justify-start"
+        style = {{backgroundColor: "transparent",
+          width: "50%",         
+          alignSelf: "center",         
+          
+        }}
         onPress={pickAndProcessPdf}
       >
-        <FontAwesome name="file-pdf-o" size={80} color="#0feac2" />
+        <FontAwesome name="file-pdf-o" size={60} color="#0feac2" />
         <View className=" flex-col ">
-          <Text className="text-center text-xl font-bold p-3"
-            style={{ color: theme === "dark" ? "#ffffff" : "#6c6f6f" }}>
+          <Text
+            className="text-center text-xl font-bold pt-2"
+            style={{ color: theme === "dark" ? "#ffffff" : "#6c6f6f" }}
+          >
             Upload a PDF
-          </Text>
-          <Text className="text-white text-center text-lg "
-           style={{ color: theme === "dark" ? "#ffffff" : "#424140" }}>
-            Detect expenses automatically
           </Text>
         </View>
       </TouchableOpacity>
+
+      <Text
+        className="text-white text-center text-base pb-10"
+        style={{ color: theme === "dark" ? "#ffffff" : "#424140" }}
+      >
+        Detect expenses automatically
+      </Text>
 
       <ExpenseTable expenses={expenses} />
 
@@ -84,11 +104,18 @@ export default function DetectExpense() {
         animationType="slide"
         onRequestClose={() => setModalVisible(false)}
       >
-        <View className="flex-1 justify-center items-center "
-        style={{backgroundColor: theme === "dark" ? "#000000aa" : "#ffffffaa"}}>
-          <View className="bg-white p-4 rounded-lg "
-          style={{width: '90%', height: '62%'}}>
-            {loading && <ActivityIndicator size="large" />}            
+        <View
+          className="flex-1 justify-center items-center "
+          style={{
+            backgroundColor: theme === "dark" ? "#000000aa" : "#ffffffaa",
+            
+          }}
+        >
+          <View
+            className="bg-white p-4 rounded-lg "
+            style={{ width: "90%", height: "62%" }}
+          >
+            {loading && <ActivityIndicator size="large" />}
             {pdfUri && (
               <WebView
                 className="flex-1 w-full h-full"
@@ -110,8 +137,7 @@ export default function DetectExpense() {
                   setTimeout(() => {
                     setLoading(false);
                     setError("Failed to process PDF");
-                  }
-                  , 3000);
+                  }, 3000);
                 }}
                 color="#ff1713"
               />

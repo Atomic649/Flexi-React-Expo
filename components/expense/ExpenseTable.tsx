@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
+import { Ionicons } from '@expo/vector-icons';
 
 interface Expense {
   date: string;
@@ -15,35 +16,49 @@ interface ExpenseTableProps {
 
 const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
   const { theme } = useTheme();
-  const headerClass = "text-center font-bold p-6 ${theme === 'dark' ? 'text-white' : 'text-black'}";
-  const cellClass = "flex-1 text-center p-2 ${theme === 'dark' ? 'text-white' : 'text-black'}";
+  const headerClass = `text-center font-bold p-2 ${theme === 'dark' ? 'text-white' : 'text-[#ffffff]'}`;
+  const cellClass = `flex-1 text-center p-3 ${theme === 'dark' ? 'text-white' : 'text-black'}`;
+
+  const handleFilePress = (file: string) => {
+    // Handle file press logic here
+    console.log(`File pressed: ${file}`);
+  };
+
+  const renderItem = ({ item }: { item: Expense }) => (
+    <View
+      className={`flex-row border-b ${
+        theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
+      }`}
+    >
+      <Text className={cellClass}>{item.date}</Text>
+      <Text className={`flex-2 text-end pt-3 pl-4 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{item.note}</Text>
+      <Text className={cellClass}>{item.amount}</Text>
+      <TouchableOpacity 
+      onPress={() => handleFilePress(item.file)} className= 'flex-1 pt-2 '>
+        <Ionicons 
+        className='text-center'
+        name="document-text-outline" 
+        size={24} color={theme === 'dark' ? 'white' : '#676767'}
+         />
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
-    <ScrollView 
-    
-    horizontal>
-      <View className="flex-1 w-full p-6 items-center"> 
-        <View className="flex-row w-full">
-          <Text className={headerClass}>Date</Text>
-          <Text className={headerClass}>Note</Text>
-          <Text className={headerClass}>Amount</Text>
-          <Text className={headerClass}>File</Text>
-        </View>
-        {expenses.map((expense, index) => (
-          <View
-            key={index}
-            className={`flex-row border-b ${
-              theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
-            }`}
-          >
-            <Text className={cellClass}>{expense.date}</Text>
-            <Text className={cellClass}>{expense.note}</Text>
-            <Text className={cellClass}>{expense.amount}</Text>
-            <Text className={cellClass}>{expense.file}</Text>
-          </View>
-        ))}
+    <View className="flex-1 w-full ">
+      <View className="flex-row w-full justify-between p-1 px-4 "
+      style={{ backgroundColor: theme === 'dark' ? '#1f2937' : '#777471' }}>
+        <Text className={`${headerClass} w-1/6`}>Date</Text>
+        <Text className={`${headerClass} w-2/6`}>Note</Text>
+        <Text className={`${headerClass} w-1/7`}>Amount</Text>
+        <Text className={`${headerClass} w-1/6`}>File</Text>
       </View>
-    </ScrollView>
+      <FlatList
+        data={expenses}
+        renderItem={renderItem}
+        keyExtractor={(_item, index) => index.toString()}
+      />
+    </View>
   );
 };
 
