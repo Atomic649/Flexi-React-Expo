@@ -80,7 +80,7 @@ const list = () => {
 
   const handleDelete = async (id: number) => {};
 
-  const groupedBills = groupByDate(expense);
+  const groupedExpense= groupByDate(expense);
   const today = new Date().toISOString().split("T")[0];
 
   return (
@@ -89,7 +89,7 @@ const list = () => {
        className={`h-full ${useBackgroundColorClass()}`}>
       
         <FlatList
-          data={Object.keys(groupedBills)}
+          data={Object.keys(groupedExpense)}
           keyExtractor={(date) => date}
           renderItem={({ item: date }) => (
             <View>
@@ -101,17 +101,16 @@ const list = () => {
                 {date === today ? "Today" : date}
               </Text>
 
-              {groupedBills[date].map((bill) => (
+              {groupedExpense[date].map((expense) => (
                 <ExpenseCard
-                  key={bill.id}
-                  id={bill.id}
-                  date={bill.date}
-                  type={bill.type}
-                  expenses={bill.expenses}
-                  note={bill.note}
+                  key={expense.id}
+                  id={expense.id}
+                  date={expense.date}
+                  type={expense.type}
+                  expenses={expense.expenses}
+                  note={expense.note}
                   AdsCardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}  
-                  ExCardColor={theme === "dark" ? "#151515" : "#24232110"}     
-                            
+                  ExCardColor={theme === "dark" ? "#151515" : "#24232110"}                                 
                   ExpenseColor={theme === "dark" ? "#ffaa00" : "#ffaa00"}
                   NoteColor={theme === "dark" ? "#868686" : "#656360"}
                   onDelete={handleDelete}

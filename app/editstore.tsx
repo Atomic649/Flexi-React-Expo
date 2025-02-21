@@ -26,73 +26,95 @@ export default function EditStore() {
 
   const fieldStyles = "mt-2 mb-2";
 
-  type AlertButton = {
-    text: string;
-    onPress: () => void;
-  };
+  useEffect(() => {
+      const fetchMemberId = async () => {
+        const uniqueId = await getMemberId();
+        setMemberId(uniqueId);
+      };
   
-  const [alertConfig, setAlertConfig] = useState<{
-    visible: boolean;
-    title: string;
-    message: string;
-    buttons: AlertButton[];
-  }>({
-    visible: false,
-    title: "",
-    message: "",
-    buttons: [],
-  });
-
-
-// Handle update ads
-  const handleUpdateStore = async () => {
-    setError("");
-
-    // Check if all fields are filled
-    if (!platform || !accName || !accId) {
-      setAlertConfig({
-        visible: true,
-        title: t("product.validation.incomplete"),
-        message: t("product.validation.invalidData"),
-        buttons: [
-          {
-            text: t("common.ok"),
-            onPress: () =>
-              setAlertConfig((prev) => ({ ...prev, visible: false })),
-          },
-        ],
-      });
-      return;
-    }
-
-    try {
-      const data = await CallAPIStore.updateStoreAPI(Number(id), {
-        platform,
-        accName,
-        accId,
-        memberId: memberId!,
-      });
-      if (data.error) throw new Error(data.error);
-
-      setAlertConfig({
-        visible: true,
-        title: t("store.alerts.successTitle"),
-        message: t("store.alerts.successMessage"),
-        buttons: [
-          {
-        text: t("store.alerts.ok"),
-        onPress: () => {
-          setAlertConfig((prev) => ({ ...prev, visible: false }));
-          // go to store page
-          router.replace("(tabs)/store");
-        },
-          },
-        ],
-      });
-    } catch (error: any) {
-      setError(error.message);
-    }
-  };
+      const fetchAds = async () => {
+        try {
+          const ads = await CallAPIStore.getAStoreAPI(Number(id));
+          setPlatform(ads.platform);
+          setAccName(ads.accName);
+          setAccId(ads.accId);
+        } catch (error) {
+          console.error("Error fetching ads:", error);
+        }
+      };
+  
+      fetchMemberId();
+      fetchAds();
+    }, [id]);
+  
+    // Add alert config state
+    const [alertConfig, setAlertConfig] = useState<{
+      visible: boolean;
+      title: string;
+      message: string;
+      buttons: Array<{
+        text: string;
+        onPress: () => void;
+        style?: "default" | "cancel" | "destructive";
+      }>;
+    }>({
+      visible: false,
+      title: "",
+      message: "",
+      buttons: [],
+    });
+  
+    // Handle update ads
+    const handleUpdateStore = async () => {
+      setError("");
+  
+      // Check if all fields are filled
+      if (!platform || !accName || !accId) {
+        setAlertConfig({
+          visible: true,
+          title: t("product.validation.incomplete"),
+          message: t("product.validation.invalidData"),
+          buttons: [
+            {
+              text: t("common.ok"),
+              onPress: () =>
+                setAlertConfig((prev) => ({ ...prev, visible: false })),
+            },
+          ],
+        });
+        return;
+      }
+  
+      try {
+        // Call the update API
+        const data = await CallAPIStore.updateStoreAPI(Number(id), {
+          platform,
+          accName,
+          accId,
+          memberId: memberId || "",
+        });
+  
+        if (data.error) throw new Error(data.error);
+  
+        setAlertConfig({
+          visible: true,
+          title: t("product.alerts.successTitle"),
+          message: t("product.alerts.successMessage"),
+          buttons: [
+            {
+              text: t("product.alerts.ok"),
+              onPress: () => {
+                setAlertConfig((prev) => ({ ...prev, visible: false }));
+                // go to product page
+                router.replace("(tabs)/store");
+              },
+            },
+          ],
+        });
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
 
   return (
     <SafeAreaView className={`flex-1  ${useBackgroundColorClass()}`}>

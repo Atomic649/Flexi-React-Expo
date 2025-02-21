@@ -59,7 +59,9 @@ class CallAPIStore{
     }
 
     // Update Store
-    async updateStoreAPI(id: number, data: {
+    async updateStoreAPI(
+        id: number, 
+        data: {
         platform: string;
         accName: string;
         accId: string;

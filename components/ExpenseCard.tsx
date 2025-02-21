@@ -27,7 +27,20 @@ export default function ExpenseCard({
   NoteColor,
   onDelete,
 }: any) {
-  const getCardColor = (platform: string) => {
+  
+  const getExpenseTextColor = (type: string) => {
+    switch (type) {
+      case "ads":
+        return "#ffab02";
+      case "expense":
+        return "#ff2a00";
+      default:
+        return "#61fff2"; // Default color
+    }
+  };
+
+
+  const getCardColor = (type: string) => {
     switch (type) {
       case "ads":
         return AdsCardColor;
@@ -65,7 +78,7 @@ export default function ExpenseCard({
     <View className="flex ">
       <Swipeable renderRightActions={renderRightActions}>
         <View
-          className={`flex flex-col items-center pt-3 pb-4 px-4 pe-12  my-1 rounded-se-md          
+          className={`flex flex-col items-center pt-3 pb-4 px-4 pe-16  my-1 rounded-se-md          
         `}
           style={{            
             backgroundColor: getCardColor(type),
@@ -93,7 +106,7 @@ export default function ExpenseCard({
             <View className="pt-2">
               <Text
                 className="text-xl font-bold justify-end"
-                style={{ color: ExpenseColor }}
+                style= {{ color: getExpenseTextColor(type) }}
                 numberOfLines={1}
               >
                 -{expenses}

@@ -183,7 +183,6 @@ const getListofAdsandExpenses = async (req: Request, res: Response) => {
         memberId: memberId,
       },
       select: {
-        id: true,
         date: true,
         adsCost: true,
         platform: {
@@ -201,7 +200,6 @@ const getListofAdsandExpenses = async (req: Request, res: Response) => {
         memberId: memberId,
       },
       select: {
-        id : true,
         date: true,
         amount: true,
         note: true,
@@ -213,7 +211,6 @@ const getListofAdsandExpenses = async (req: Request, res: Response) => {
     const result = adsCost
       .map((adsCost) => {
         return {
-          id: adsCost.id,
           date: adsCost.date,
           expenses: adsCost.adsCost,
           type: "ads",
@@ -223,7 +220,6 @@ const getListofAdsandExpenses = async (req: Request, res: Response) => {
       .concat(
         expenses.map((expense) => {
           return {
-            id: expense.id,
             date: expense.date,
             expenses: expense.amount,
             type: "expense",
@@ -240,4 +236,4 @@ const getListofAdsandExpenses = async (req: Request, res: Response) => {
   }
 };
 
-export { dailyReport, monthlyReport , getListofAdsandExpenses};
+export { dailyReport, monthlyReport, getListofAdsandExpenses };

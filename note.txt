@@ -122,3 +122,8 @@ utils/themeUtils.ts
 _layout(tabs) > tabBarBackgroundColor
 
 
+
+
+ AdsCardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}
+                  ExCardColor={theme === "dark" ? "#151515" : "#24232110"}
+                  NoteColor={theme === "dark" ? "#868686" : "#716b62"}

@@ -109,7 +109,7 @@ const ByOrder = () => {
             <View>
               <Text
                 className={`text-base font-bold ${
-                  theme === "dark" ? "text-white" : "text-zinc-600"
+                  theme === "dark" ? "text-zinc-400" : "text-zinc-600"
                 } p-4`}
               >
                 {date === today ? "Today" : date}
@@ -121,13 +121,15 @@ const ByOrder = () => {
                   id={bill.id}
                   platform={bill.platform}
                   product={bill.product}
+                  amount={bill.amount}
                   cName={`${bill.cName} ${bill.cLastName}`}
+                  ProductNameColor = {theme === "dark" ? "#e98103" : "#ffa718"}
                   price={bill.price}
                   purchaseAt={bill.purchaseAt}
                   CardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}
                   onDelete={handleDelete}
                   PriceColor={theme === "dark" ? "#04ecd5" : "#01e0c6"}
-                  cNameColor={theme === "dark" ? "#868686" : "#656360"}
+                  cNameColor={theme === "dark" ? "#8c8c8c" : "#746f67"}
                 />
               ))}
             </View>

@@ -70,13 +70,14 @@ export default function StoreCard({
                   numberOfLines={1}
                 >
                   {accId}
-                </Text>
+                </Text>               
               </View>
             </View>
             <View className="pt-2">
               <TouchableOpacity
                 onPress={() => {
                   router.push(`editstore?id=${id}`);
+                  console.log("id", id);
                 }}
               >
                 <Ionicons

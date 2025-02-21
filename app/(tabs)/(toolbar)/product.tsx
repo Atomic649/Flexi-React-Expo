@@ -129,6 +129,8 @@ export default function Home() {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         />
+        {/* Setting Limit Product "3" */}
+        {products.length < 3 && (
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -145,6 +147,7 @@ export default function Home() {
         >
           <Ionicons name="add" size={24} color={theme === 'dark' ? '#444541' : '#444541'} />
         </TouchableOpacity>
+      )}
       </SafeAreaView>
     </GestureHandlerRootView>
   );

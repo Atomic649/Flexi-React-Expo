@@ -14,13 +14,13 @@ import play from "../assets/icons/play.png"
 import setting from "../assets/icons/setting.png"
 import flagth from "../assets/icons/thailand.png"
 import flagen from "../assets/icons/united-kingdom.png"
-import tools from "../assets/icons/tool-box.png"
 import product from "../assets/icons/product.png"
 import ads from "../assets/icons/ads.png"
 import sell from "../assets/icons/sell.png"
 import income from "../assets/icons/income.png"
 import shop from "../assets/icons/shop.png"
 import flexi from "../assets/icons/flexi.png"
+import paid from "../assets/icons/paid.png"
 export default {
   expense,
   home,
@@ -38,11 +38,11 @@ export default {
   setting,
   flagth,
   flagen,
-  tools,
   product,
   ads,
   sell,
   income,  
   shop,  
   flexi,
+  paid,
 }

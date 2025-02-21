@@ -38,6 +38,7 @@ export default function BillCard({
   CardColor,
   PriceColor,
   cNameColor,
+  ProductNameColor ,
   onDelete,
 }: any) {
   const getBorderColor = (platform: string) => {
@@ -111,10 +112,11 @@ export default function BillCard({
                   {cName} {cLastName}
                 </Text>
                 <Text
-                  className="font-bold text-sm text-zinc-500"
+                  className="font-bold text-sm text-zinc-400"
                   numberOfLines={3}
+                  style={{ color: ProductNameColor }}
                 >
-                  {product}
+                  {product} {amount} pcs 
                 </Text>
               </View>
             </View>
