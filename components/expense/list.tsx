@@ -109,6 +109,7 @@ const list = () => {
                   type={expense.type}
                   expenses={expense.expenses}
                   note={expense.note}
+                  Opacity= {theme === "dark" ? 0.4 : 0.2}
                   AdsCardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}  
                   ExCardColor={theme === "dark" ? "#151515" : "#24232110"}                                 
                   ExpenseColor={theme === "dark" ? "#ffaa00" : "#ffaa00"}

@@ -92,6 +92,8 @@
     "productName": "Product Name",
     "barcode": "Barcode",
     "stock": "Stock",
+    "limit": "Limit 3 Products",
+    "help": "Unlock limit ",
     "title": "Shop Name",
     "price": "Price",
     "detail": "Product Detail",
@@ -316,7 +318,7 @@
   },
   "ads": {
     "title": "Ads Connections",
-    "limit": "You can connect up to 4 ad connections",
+    "limit": "Limit 4 ad connections",
     "help": "Unlock limit ",
     "createAd": "Connect Ad Account",
     "editAd": "Edit Ad Connections",
@@ -352,7 +354,7 @@
   },
   "store": {
     "title": "Store Connections",
-    "limit": "You can connect up to 4 store connections",
+    "limit": "Limit 4 store connections",
     "help": "Unlock limit ",
     "createStore": "Connect Store Account",
     "editStore": "Edit Store Connections",

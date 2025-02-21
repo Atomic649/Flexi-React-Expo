@@ -3,6 +3,7 @@ import React from "react";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/providers/ThemeProvider";
+import icons from "@/constants/icons";
 
 const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -23,7 +24,7 @@ export default function ExpenseCard({
   note,
   AdsCardColor,
   ExCardColor,
-  ExpenseColor,
+  Opacity,
   NoteColor,
   onDelete,
 }: any) {
@@ -99,29 +100,26 @@ export default function ExpenseCard({
                   style={{ color: NoteColor }}
                   numberOfLines={1}
                 >
-                  {note}
+                  {note} 
                 </Text>
               </View>
             </View>
-            <View className="pt-2">
-              <Text
+            <View className="pt-2 flex-row items-center ">
+                <Text
                 className="text-xl font-bold justify-end"
-                style= {{ color: getExpenseTextColor(type) }}
+                style={{ color: getExpenseTextColor(type) }}
                 numberOfLines={1}
-              >
+                >
                 -{expenses}
-              </Text>
-              {/* <TouchableOpacity
-          onPress={() => {
-            router.push(`editads?id=${id}`);
-          }}
-              >
-          <Ionicons
-            name="options"
-            color={color}
-            size={22}
-          ></Ionicons>
-              </TouchableOpacity> */}
+                </Text>
+                {type === "expense" && (
+                <Image
+                  className="absolute top-1 left-14 opacity-20"
+                  resizeMode="contain"
+                  source={icons.paid}
+                  style={{ width: 50, height: 50, marginLeft: -10, opacity: Opacity }}
+                />
+                )}
             </View>
           </View>
         </View>

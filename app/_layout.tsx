@@ -1,7 +1,7 @@
 // Import your global CSS file
 import "../global.css";
 import "@/i18n";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { router, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import {
@@ -11,6 +11,7 @@ import {
   Text,
   View,
   Image,
+  Animated,
 } from "react-native";
 import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 import * as NavigationBar from "expo-navigation-bar";
@@ -18,10 +19,33 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { CustomText } from "@/components/CustomText";
+import CallAPIUser from "@/api/user_api";
 
 function RootLayoutNav() {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const [registeredUsers, setRegisteredUsers] = useState<number | null>(null);
+  
+
+   useEffect(() => {
+       const fetchRegisteredUsers = async () => {
+         try {
+           const response = await CallAPIUser.getRegisteredUsersAPI();
+           setRegisteredUsers(response);
+          
+         } catch (error) {
+           console.error("Error fetching registered users:", error);
+         }
+       };
+   
+       fetchRegisteredUsers();
+      const interval = setInterval(fetchRegisteredUsers, 15 * 60 * 1000); // Refresh every 15 minutes
+   
+       return () => clearInterval(interval); // Cleanup interval on component unmount
+     }, []);
+   
+   
+
 
   useEffect(() => {
     async function updateNavigationBar() {
@@ -53,7 +77,7 @@ function RootLayoutNav() {
         <Stack.Screen
           name="(tabs)"
           options={{
-            ...mainTopBar(theme),
+            ...mainTopBar(theme, registeredUsers),
             title: "",
             //TODO : 🚧 add business name here
           }}
@@ -123,7 +147,7 @@ function RootLayoutNav() {
           name="createstore" // file name
           options={{
             ...showTopBarAndBackIcon(theme),
-            title: t("ads.createStore"), // Tab Name
+            title: t("store.createStore"), // Tab Name
           }}
         />
         // Edit Ads
@@ -208,7 +232,7 @@ const HideTopBar = () => ({
 });
 
 // Reuseable functions for Main Top bar
-const mainTopBar = (theme: string) => ({
+const mainTopBar = (theme: string, registeredUsers: number | null) => ({
   headerShown: true,
   headerStyle: {
     backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", //
@@ -240,7 +264,7 @@ const mainTopBar = (theme: string) => ({
           color={theme === "dark" ? "#ffffff" : "#75726a"}
         />
         <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
-          2
+        {registeredUsers || 0}
         </Text>
       </TouchableOpacity>
     </View>
