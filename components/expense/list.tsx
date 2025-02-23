@@ -14,6 +14,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BillCard from "../billCard";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import ExpenseCard from "../ExpenseCard";
+import { CustomText } from "../CustomText";
 
 
 type Expense = {
@@ -120,7 +121,7 @@ const list = () => {
             </View>
           )}
           ListEmptyComponent={() => (
-            <Text className="text-center text-white">{t("ads.notfound")}</Text>
+            <CustomText className="pt-10 text-center text-white">{t("common.notfound")}</CustomText>
           )}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

@@ -13,6 +13,7 @@ import CallAPIPlatform from "@/api/platform_api";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Dropdown2 from "@/components/Dropdown2";
 import { useTheme } from "@/providers/ThemeProvider";
+import { router } from "expo-router";
 
 export default function CreateAds() {
   const { theme } = useTheme();
@@ -87,8 +88,9 @@ export default function CreateAds() {
         buttons: [
           {
             text: t("common.ok"),
-            onPress: () =>
-              setAlertConfig((prev) => ({ ...prev, visible: false })),
+            onPress: () =>{
+              setAlertConfig((prev) => ({ ...prev, visible: false }));
+            router.replace("/ads")}
           },
         ],
       });

@@ -136,9 +136,7 @@ export default function Home() {
             </View>
           )}
           ListEmptyComponent={() => (
-            <Text className={`text-center ${textColorClass}`}>
-              {t("product.notfound")}
-            </Text>
+            <CustomText className="pt-10 text-center text-white">{t("common.notfound")}</CustomText>
           )}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

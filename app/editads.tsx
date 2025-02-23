@@ -76,8 +76,9 @@ export default function EditAds() {
         buttons: [
           {
             text: t("common.ok"),
-            onPress: () =>
-              setAlertConfig((prev) => ({ ...prev, visible: false })),
+            onPress: () =>{
+              setAlertConfig((prev) => ({ ...prev, visible: false }))
+            router.replace("/ads")}
           },
         ],
       });

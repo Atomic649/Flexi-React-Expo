@@ -13,6 +13,7 @@ import { useTheme } from "@/providers/ThemeProvider";
 import { useTranslation } from "react-i18next";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import DailyCard from "../DailyCard";
+import { CustomText } from "../CustomText";
 
 type DailyCardProps = {
   date: string;
@@ -133,9 +134,7 @@ const Daily = () => {
             />
           )}
           ListEmptyComponent={() => (
-            <Text className={`text-center text-lg ${useTextColorClass()}`}>
-              {t("product.notfound")}
-            </Text>
+          <CustomText className="pt-10 text-center text-white">{t("common.notfound")}</CustomText>
           )}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

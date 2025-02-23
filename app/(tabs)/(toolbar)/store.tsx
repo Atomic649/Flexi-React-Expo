@@ -114,7 +114,7 @@ export default function Store() {
              </View>
            )}
            ListEmptyComponent={() => (
-             <Text className="text-center text-white">{t('store.notfound')}</Text>
+             <CustomText className="pt-10 text-center text-white">{t("common.notfound")}</CustomText>
            )}
            refreshControl={
              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

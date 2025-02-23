@@ -13,6 +13,7 @@ import { getMemberId } from "@/utils/utility";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BillCard from "../billCard";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
+import { CustomText } from "../CustomText";
 
 type Bill = {
   id: number;
@@ -135,7 +136,7 @@ const ByOrder = () => {
             </View>
           )}
           ListEmptyComponent={() => (
-            <Text className="text-center text-white">{t("ads.notfound")}</Text>
+            <CustomText className="pt-10 text-center text-white">{t("common.notfound")}</CustomText>
           )}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

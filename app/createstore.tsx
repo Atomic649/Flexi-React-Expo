@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Dropdown2 from "@/components/Dropdown2";
 import CallAPIStore from "@/api/store_api";
 import { useTheme } from "@/providers/ThemeProvider";
+import { router } from "expo-router";
 
 export default function CreateStore() {
   const { t } = useTranslation();
@@ -63,8 +64,9 @@ export default function CreateStore() {
         buttons: [
           {
             text: t("common.ok"),
-            onPress: () =>
-              setAlertConfig((prev) => ({ ...prev, visible: false })),
+            onPress: () =>{
+              setAlertConfig((prev) => ({ ...prev, visible: false }))
+            router.replace("/store")}
           },
         ],
       });

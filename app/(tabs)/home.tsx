@@ -37,10 +37,11 @@ const Dashboard = () => {
         const memberId = await getMemberId();
         if (memberId) {
           const response = await CallAPIProduct.getProductChoiceAPI(memberId);
-          setProductChoice(response);
+          setProductChoice(response || []);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
+        setProductChoice([]);
       }
     };
 
@@ -177,7 +178,7 @@ const Dashboard = () => {
               }}
             >
               <ScrollView>
-                {productChoice.map((product, index) => (
+                {Array.isArray(productChoice) && productChoice.map((product, index) => (
                   <TouchableOpacity
                     key={index}
                     onPress={() => {

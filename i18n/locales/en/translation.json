@@ -7,7 +7,8 @@
     "error": "Error",
     "success": "success",
     "clear": "Clear",
-    "ok": "OK"
+    "ok": "OK",
+    "notfound": "Not found"
   },
   "auth": {
     "login": {
@@ -323,7 +324,7 @@
     "createAd": "Connect Ad Account",
     "editAd": "Edit Ad Connections",
     "delete": "Delete Ad",
-    "notfound": "Ad not found",
+    "notfound": "Not found",
     "platform": "Platform",
     "accName": "Account Name",
     "accId": "Account ID",

@@ -14,7 +14,7 @@ import { router } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useTranslation } from 'react-i18next'
 import { icons } from '@/constants'
-import { Text } from "@/components/CustomText"
+import { CustomText } from "@/components/CustomText"
 
 export default function Index() {
   // Hooks สำหรับ theme และการแปลภาษา
@@ -74,9 +74,9 @@ export default function Index() {
                   className="w-6 h-6"
                   resizeMode="contain"
                 />
-                <Text className="!text-white text-sm">
+                <CustomText className="!text-white text-sm">
                   {i18n.language === 'th' ? 'EN' : 'ไทย'}
-                </Text>
+                </CustomText>
               </View>
             </TouchableOpacity>
 
@@ -97,11 +97,11 @@ export default function Index() {
 
               {/* Slogan */}
               <View className="relative mt-5">
-                <Text weight="bold" className="text-3xl text-center dark:text-white leading-10">
+                <CustomText weight="bold" className="text-3xl text-center dark:text-white leading-10">
                   {t('landing.slogan.line1')}{"\n"}
                   {t('landing.slogan.line2')}{" "}
-                  <Text weight="bold" className="text-secondary-200">AuraShop</Text>
-                </Text>
+                  <CustomText weight="bold" className="text-secondary-200">AuraShop</CustomText>
+                </CustomText>
                 <Image
                   source={images.path}
                   className="w-[120px] h-[15px] absolute -bottom-4 -right-8"
@@ -110,9 +110,9 @@ export default function Index() {
               </View>
 
               {/* คำอธิบาย */}
-              <Text weight="regular" className="text-md mt-7 text-center dark:text-white">
+              <CustomText weight="regular" className="text-md mt-7 text-center dark:text-white">
                 {t('landing.description')}
-              </Text>
+              </CustomText>
 
               {/* ปุ่มไปหน้า Login */}
               <CustomButton

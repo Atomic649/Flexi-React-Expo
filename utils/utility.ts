@@ -90,3 +90,13 @@ export const getMemberId = async (): Promise<string | null> => {
     return null;
   }
 }
+
+// Function to remove memberId from AsyncStorage
+export const removeMemberId = async () => {
+  try {
+    await AsyncStorage.removeItem('memberId');
+    console.log('🗑️ memberId removed');
+  } catch (error) {
+    console.error('Error removing memberId:', error);
+  }
+}

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import CallAPIUser from '@/api/auth_api';
-import { saveToken,  removeToken } from '@/utils/utility';
+import { saveToken,  removeToken, removeMemberId } from '@/utils/utility';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 
@@ -32,8 +32,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const data = await CallAPIUser.getSessionAPI(); 
         setSession(data.session);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        await AsyncStorage.setItem('isLoggedIn', 'false'); // Save logout status
+        await removeToken(); // Remove the token
+        await removeMemberId(); // Remove the memberId        
         router.navigate('login'); // Redirect to login page
       } finally {
         setLoading(false);
@@ -72,6 +76,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setSession(null);
     await removeToken(); // Remove the token
     await AsyncStorage.setItem('isLoggedIn', 'false'); // Save logout status
+    
+
   };
 
   return (

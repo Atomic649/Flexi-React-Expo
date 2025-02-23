@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  Text
 } from "react-native";
 import { View } from "@/components/Themed";
 import FormField from "@/components/FormField";
@@ -14,7 +15,7 @@ import { images } from "@/constants";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
-import { Text } from "@/components/CustomText";
+
 import Dropdown from "@/components/Dropdown";
 import CallAPIBusiness from "@/api/business_api";
 import { useTextColorClass } from "@/utils/themeUtils";
