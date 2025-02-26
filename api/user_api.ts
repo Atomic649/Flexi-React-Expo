@@ -25,7 +25,7 @@ class CallAPIUser{
         try {
             const axiosInstance = await getAxiosWithAuth();
             const response = await axiosInstance.get(`/user/users`);
-            console.log("🚀RegisteredUsersAPI:", response.data);
+            // console.log("🚀RegisteredUsersAPI:", response.data);
             return response.data;
         } catch (error) {
             console.error("🚨 Get Registered Users API Error:", error);

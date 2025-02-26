@@ -158,12 +158,12 @@ model Member {
   permission String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  
 
   // Relation
   userId   Int
   user     User          @relation(fields: [userId], references: [id])
-  business BusinessAcc[]
+  businessId Int?
+  business BusinessAcc?  @relation(fields: [businessId], references: [id])
   bill     Bill[]
   adsCost  AdsCost[]
   expense  Expense[]
@@ -184,9 +184,9 @@ model BusinessAcc {
   businessType     BusinessType @default(OnlineSale)
   taxType          taxType      @default(Individual)
   userId           Int
-  memberId         String       @unique
-  user             User         @relation(fields: [userId], references: [id])
-  bills            Member       @relation(fields: [memberId], references: [uniqueId])
+  memberId         String? 
+  user             User         @relation(fields: [userId], references: [id]) 
+  AllMember       Member[]
   billRecord       Bill[]
   expenseRecord    Expense[]
   adsCostRecord    AdsCost[]

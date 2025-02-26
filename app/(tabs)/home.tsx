@@ -56,7 +56,7 @@ const Dashboard = () => {
   return (
     <LinearGradient
       colors={
-        theme === "dark" ? ["#18181b", "#18181b"] : ["#a6efe4", "#ffffff"]
+        theme === "dark" ? ["#18181b", "#18181b"] : ["#f7f7f7","#a6efe4", "#ffffff"]
       }
       style={{ flex: 1 }}
     >

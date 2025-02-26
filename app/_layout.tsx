@@ -10,8 +10,8 @@ import {
   TouchableOpacity,
   Text,
   View,
-  Image,
-  Animated,
+  Image
+ 
 } from "react-native";
 import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 import * as NavigationBar from "expo-navigation-bar";
@@ -20,32 +20,27 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { CustomText } from "@/components/CustomText";
 import CallAPIUser from "@/api/user_api";
+import { BusinessProvider, useBusiness } from "@/providers/BusinessProvider";
 
 function RootLayoutNav() {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const { businessAvatar, businessName, fetchBusinessData } = useBusiness();
   const [registeredUsers, setRegisteredUsers] = useState<number | null>(null);
-  
 
-   useEffect(() => {
-       const fetchRegisteredUsers = async () => {
-         try {
-           const response = await CallAPIUser.getRegisteredUsersAPI();
-           setRegisteredUsers(response);
-          
-         } catch (error) {
-           console.error("Error fetching registered users:", error);
-         }
-       };
-   
-       fetchRegisteredUsers();
-      const interval = setInterval(fetchRegisteredUsers, 15 * 60 * 1000); // Refresh every 15 minutes
-   
-       return () => clearInterval(interval); // Cleanup interval on component unmount
-     }, []);
-   
-   
+  useEffect(() => {
+    const fetchRegisteredUsers = async () => {
+      try {
+        const response = await CallAPIUser.getRegisteredUsersAPI();
+        setRegisteredUsers(response);
+      } catch (error) {
+        console.error("Error fetching registered users:", error);
+      }
+    };
 
+    fetchRegisteredUsers();
+ 
+  }, []);
 
   useEffect(() => {
     async function updateNavigationBar() {
@@ -77,7 +72,7 @@ function RootLayoutNav() {
         <Stack.Screen
           name="(tabs)"
           options={{
-            ...mainTopBar(theme, registeredUsers),
+            ...mainTopBar(theme, registeredUsers, businessAvatar, businessName),
             title: "",
             //TODO : 🚧 add business name here
           }}
@@ -202,7 +197,9 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <RootLayoutNav />
+        <BusinessProvider>
+          <RootLayoutNav />
+        </BusinessProvider>
       </ThemeProvider>
     </AuthProvider>
   );
@@ -232,7 +229,7 @@ const HideTopBar = () => ({
 });
 
 // Reuseable functions for Main Top bar
-const mainTopBar = (theme: string, registeredUsers: number | null) => ({
+const mainTopBar = (theme: string, registeredUsers: number | null, businessAvatar: string | null, businessName: string | null) => ({
   headerShown: true,
   headerStyle: {
     backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", //
@@ -241,19 +238,22 @@ const mainTopBar = (theme: string, registeredUsers: number | null) => ({
   headerLeft: () => (
     <View className="flex-row items-center justify-between gap-4 ">
       <TouchableOpacity onPress={() => router.push("profile")} className="mr-2">
-        <View className="w-9 h-9 rounded-full bg-teal-300 overflow-hidden">
+        <View className="w-9 h-9 rounded-full overflow-hidden">
           <Image
-            source={{ uri: "https://example.com/profile.jpg" }} // Replace with actual profile image URL
-            style={{ width: "100%", height: "100%" }}
+            source={{
+              uri: businessAvatar || "",
+            }}
+            className="w-full h-full"
+            resizeMode="contain"
+
           />
         </View>
       </TouchableOpacity>
-      <CustomText className="text-base font-bold text-zinc-500">Flexi Business Hub</CustomText>
-
+      <CustomText className="text-base font-bold text-zinc-500">
+     {businessName || ""}
+      </CustomText>
     </View>
   ),
-
-  
 
   headerRight: () => (
     <View className="flex-row items-center">
@@ -264,7 +264,7 @@ const mainTopBar = (theme: string, registeredUsers: number | null) => ({
           color={theme === "dark" ? "#ffffff" : "#75726a"}
         />
         <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
-        {registeredUsers || 0}
+          {registeredUsers || 0}
         </Text>
       </TouchableOpacity>
     </View>

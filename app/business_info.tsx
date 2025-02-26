@@ -16,12 +16,12 @@ import Dropdown from "@/components/Dropdown";
 import CallAPIBusiness from "@/api/business_api";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
+import { getUserId } from "@/utils/utility";
 
 export default function Register() {
   const { theme } = useTheme();
   const { t } = useTranslation();
-  const router = useRouter();
-  const { userId, uniqueId } = useLocalSearchParams();
+  const router = useRouter();  
   const [businessName, setbusinessName] = useState("");
   const [taxType, settaxType] = useState("");
   const [vatId, setvatId] = useState("");
@@ -66,18 +66,21 @@ export default function Register() {
       return;
     }
 
-    console.log("userId", userId);
-    console.log("uniqueId", uniqueId);
 
     try {
       // Call the register API
-      const data = await CallAPIBusiness.RegisterAPI({
+      const userId = await getUserId();
+      if (userId === null) {
+        setError(t("auth.register.validation.invalidUserId"));
+        return;
+      }
+
+      const data = await CallAPIBusiness.CreateMoreBusinessAPI({
         businessName,
         vatId,
         businessType,
         taxType,
-        userId: Number(userId),
-        memberId: uniqueId,
+        userId
       });
 
       if (data.error) throw new Error(data.error);
@@ -98,7 +101,7 @@ export default function Register() {
       });
 
       // go to login page
-      router.replace("/login");
+      router.back();
     } catch (error: any) {
       setError(error.message);
     }

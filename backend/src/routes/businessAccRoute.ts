@@ -9,6 +9,9 @@ import {
   getBusinessDetail,
   AddMoreBusinessAcc,
   updateBusinessAvatar,
+  getBusinessAvatar,
+
+ 
   
 } from "../controllers/businessAccController";
 import authenticateToken from "../middleware/authMiddleware";
@@ -40,7 +43,10 @@ router.delete("/:id", authenticateToken, deleteBusinessAcc);
 // Searching Business Account by keyword 
 router.get("/search/:keyword", authenticateToken, searchBusinessAcc);
 
-//Update Business Avatar by memberId
-router.put("/avatar2", authenticateToken,updateBusinessAvatar);
+// Update Business Avatar by id
+ router.put("/avatar/:id", authenticateToken, updateBusinessAvatar);
+
+ // get business Avatar by memberId
+ router.get("/avatar/:memberId", getBusinessAvatar);
 
 export default router;

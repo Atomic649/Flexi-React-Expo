@@ -37,7 +37,8 @@ Table Member {
   updatedAt DateTime [not null]
   userId Int [not null]
   user User [not null]
-  business BusinessAcc [not null]
+  businessId Int
+  business BusinessAcc
   bill Bill [not null]
   adsCost AdsCost [not null]
   expense Expense [not null]
@@ -58,9 +59,9 @@ Table BusinessAcc {
   businessType BusinessType [not null, default: 'OnlineSale']
   taxType taxType [not null, default: 'Individual']
   userId Int [not null]
-  memberId String [unique, not null]
+  memberId String
   user User [not null]
-  bills Member [not null]
+  AllMember Member [not null]
   billRecord Bill [not null]
   expenseRecord Expense [not null]
   adsCostRecord AdsCost [not null]
@@ -434,9 +435,9 @@ Enum OptionName {
 
 Ref: Member.userId > User.id
 
-Ref: BusinessAcc.userId > User.id
+Ref: Member.businessId > BusinessAcc.id
 
-Ref: BusinessAcc.memberId > Member.uniqueId
+Ref: BusinessAcc.userId > User.id
 
 Ref: Bill.product > Product.name
 

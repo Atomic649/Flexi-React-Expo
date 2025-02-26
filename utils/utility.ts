@@ -2,6 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Network from 'expo-network';
 import jwtDecode from 'jwt-decode';
 
+// Function to trigger a fetch operation
+const triggerFetch = () => {
+  console.log('Fetch operation triggered');
+};
+
 
 
 // Function to check the network status
@@ -98,5 +103,16 @@ export const removeMemberId = async () => {
     console.log('🗑️ memberId removed');
   } catch (error) {
     console.error('Error removing memberId:', error);
+  }
+}
+
+// Function to replace memberId from AsyncStorage
+export const replaceMemberId = async (memberId: string) => {
+  try {
+    await AsyncStorage.removeItem('memberId');
+    await AsyncStorage.setItem('memberId', memberId);       
+    console.log('🔄 memberId replaced:', memberId);
+  } catch (error) {
+    console.error('Error replacing memberId:', error);
   }
 }

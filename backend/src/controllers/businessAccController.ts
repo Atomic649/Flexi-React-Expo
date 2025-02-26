@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { BusinessType, PrismaClient, taxType } from "@prisma/client";
 import Joi from "joi";
 
-// Create  instance of PrismaClient
+// Create instance of PrismaClient
 const prisma = new PrismaClient();
 
 // Interface for request body from client
@@ -16,8 +16,6 @@ interface businessAccInput {
   businessAddress: string;
   businessAvatar: string;
   membebId: string;
-
-
 }
 
 // validate the request body
@@ -27,7 +25,7 @@ const schema = Joi.object({
   businessType: Joi.string().required(),
   taxType: Joi.string().valid("Juristic", "Individual").required(),
   userId: Joi.number().required(),
-  memberId: Joi.string().required(),
+  memberId: Joi.string(),
   businessAddress: Joi.string(),
   businessAvatar: Joi.string(),
   
@@ -171,17 +169,12 @@ const getBusinessAccByUserId = async (req: Request, res: Response) => {
       where: {
         userId : Number(userId),
       },
+      select: {
+        businessName: true,
+        memberId: true,
+      }
     });
-    res.json({
-      status : "ok",
-      message : "already sign in with business account ", 
-      businessAcc : {
-        id : businessAcc[0].id,
-        businessName: businessAcc[0].businessName,
-        vatId : businessAcc[0].vatId,
-        businessAddress : businessAcc[0].businessAddress,
-        
-      }});
+    res.json(businessAcc);
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "failed to get business account" });
@@ -205,7 +198,8 @@ const getBusinessDetail = async (req: Request, res: Response) => {
       where: {
         memberId : memberId,
       },
-      select: {        
+      select: { 
+        id: true,       
         businessName: true,
         vatId: true,
         taxType: true,                
@@ -218,6 +212,7 @@ const getBusinessDetail = async (req: Request, res: Response) => {
     });
     res.json({
       ...businessAcc[0],
+    
       role: role?.role
     });
   } catch (e) {
@@ -294,16 +289,17 @@ const searchBusinessAcc = async (req: Request, res: Response) => {
   }
 };
 
-const updateBusinessAvatar2 = async (req: Request, res: Response) => {
-  const { memberId , businessAvatar } = req.body;
-  
+//Update Business Avatar by id - Put
+const updateBusinessAvatar = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { businessAvatar } = req.body;
   try {
     const businessAcc = await prisma.businessAcc.update({
       where: {
-        memberId: memberId,
+        id: Number(id),
       },
       data: {
-        businessAvatar: businessAvatar,
+        businessAvatar,
       },
     });
     res.json(businessAcc);
@@ -311,25 +307,31 @@ const updateBusinessAvatar2 = async (req: Request, res: Response) => {
     console.error(e);
     res.status(500).json({ message: "failed to update business avatar" });
   }
-};
+}
 
-// Update business Avatar by memberId - Put
-const updateBusinessAvatar = async (req: Request, res: Response) => {
-  const { memberId , businessAvatar } = req.body;
-  
-  try {
-    const businessAcc = await prisma.businessAcc.update({
+// get business Avatar by memberId - Get
+const getBusinessAvatar = async (req: Request, res: Response) => {
+  const { memberId} = req.params;
+
+    try {
+    const businessAcc = await prisma.businessAcc.findMany({
       where: {
-        memberId: memberId,
+        memberId : memberId,
       },
-      data: {
-        businessAvatar: businessAvatar,
+      select: {         
+        businessAvatar: true,
+        businessName: true,
+
+
       },
     });
-    res.json(businessAcc);
+    res.json({
+      ...businessAcc[0],
+    
+    });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: "failed to update business avatar" });
+    res.status(500).json({ message: "failed to get business account" });
   }
 };
 // Export the functions
@@ -343,6 +345,10 @@ export {
   deleteBusinessAcc,
   searchBusinessAcc,
   updateBusinessAvatar,
+  getBusinessAvatar
+  
+ ,
+
   
  
 };
