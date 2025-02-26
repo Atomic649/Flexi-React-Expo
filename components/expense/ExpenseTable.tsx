@@ -27,7 +27,7 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
   const renderItem = ({ item }: { item: Expense }) => (
     <View
       className={`flex-row border-b ${
-        theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
+        theme === 'dark' ? 'border-zinc-700' : 'border-gray-300'
       }`}
     >
       <Text className={cellClass}>{item.date}</Text>
@@ -47,7 +47,7 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
   return (
     <View className="flex-1 w-full ">
       <View className="flex-row w-full justify-between p-1 px-4 "
-      style={{ backgroundColor: theme === 'dark' ? '#7a7a7b' : '#777471' }}>
+      style={{ backgroundColor: theme === 'dark' ? '#3f3e3b' : '#777471' }}>
         <Text className={`${headerClass} w-1/6`}>Date</Text>
         <Text className={`${headerClass} w-2/6`}>Note</Text>
         <Text className={`${headerClass} w-1/7`}>Amount</Text>

@@ -52,12 +52,13 @@ Table BusinessAcc {
   updatedAt DateTime
   businessName String [unique, not null]
   businessUserName String [unique]
+  businessAvatar String
   businessAddress String
   vatId String [unique, not null]
   businessType BusinessType [not null, default: 'OnlineSale']
   taxType taxType [not null, default: 'Individual']
   userId Int [not null]
-  memberId String [not null]
+  memberId String [unique, not null]
   user User [not null]
   bills Member [not null]
   billRecord Bill [not null]
@@ -89,7 +90,7 @@ Table Bill {
   imageBill String [not null]
   deleted Boolean [default: false]
   productList Product [not null]
-  memberId String [not null]
+  memberId String [unique, not null]
   member Member [not null]
   businessAcc Int [not null]
   businessId BusinessAcc [not null]

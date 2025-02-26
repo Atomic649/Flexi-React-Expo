@@ -7,6 +7,7 @@ class CallAPIUser{
         try {
             const axiosInstance = await getAxiosWithAuth();
             const response = await axiosInstance.get(`/user/profile/${id}`);
+            
             console.log("🚀UserAPI:", response.data);
             return response.data;
         } catch (error) {

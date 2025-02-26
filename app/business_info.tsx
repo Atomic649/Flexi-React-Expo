@@ -11,7 +11,7 @@ import CustomButton from "@/components/CustomButton";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
-import { Text } from "@/components/CustomText";
+import { CustomText } from "@/components/CustomText";
 import Dropdown from "@/components/Dropdown";
 import CallAPIBusiness from "@/api/business_api";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
@@ -191,7 +191,7 @@ export default function Register() {
             otherStyles="mt-7"
           />
 
-          {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
+          {error ? <CustomText className="text-red-500 mt-4">{error}</CustomText> : null}
 
           <CustomButton
             title={t("auth.register.button")}

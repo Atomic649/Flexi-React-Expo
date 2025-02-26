@@ -178,12 +178,13 @@ model BusinessAcc {
   updatedAt        DateTime?    @updatedAt
   businessName     String       @unique
   businessUserName String?      @unique
+  businessAvatar   String?
   businessAddress  String?
   vatId            String       @unique
   businessType     BusinessType @default(OnlineSale)
   taxType          taxType      @default(Individual)
   userId           Int
-  memberId         String       @default(uuid())
+  memberId         String       @unique
   user             User         @relation(fields: [userId], references: [id])
   bills            Member       @relation(fields: [memberId], references: [uniqueId])
   billRecord       Bill[]
@@ -217,7 +218,7 @@ model Bill {
 
   // Relation 
   productList Product     @relation(fields: [product], references: [name])
-  memberId    String
+  memberId    String      @unique
   member      Member      @relation(fields: [memberId], references: [uniqueId])
   businessAcc Int
   businessId  BusinessAcc @relation(fields: [businessAcc], references: [id])

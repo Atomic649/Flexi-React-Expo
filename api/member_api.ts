@@ -1,6 +1,7 @@
 import { getAxios } from "@/utils/axiosInstance";
 import { checkNetwork } from "@/utils/utility";
 import axios from "axios";
+import { getAxiosWithAuth } from '@/utils/axiosInstance';
 
 class CallAPIMember {
   // Register Member API

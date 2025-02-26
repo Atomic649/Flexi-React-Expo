@@ -114,6 +114,8 @@
       "error": "Error",
       "ok": "OK",
       "success": "success",
+      "successTitle": "Product created successfully",
+      "successMessage": "Please press OK to proceed",
       "imageLimit": {
         "upload": "You can upload up to 5 images"
       }

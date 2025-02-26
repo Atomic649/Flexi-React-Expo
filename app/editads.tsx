@@ -98,14 +98,14 @@ export default function EditAds() {
 
       setAlertConfig({
         visible: true,
-        title: t("product.alerts.successTitle"),
-        message: t("product.alerts.successMessage"),
+        title: t("ads.alerts.successTitle"),
+        message: t("ads.alerts.successMessage"),
         buttons: [
           {
-            text: t("product.alerts.ok"),
+            text: t("ads.alerts.ok"),
             onPress: () => {
               setAlertConfig((prev) => ({ ...prev, visible: false }));
-              // go to product page
+              // go to ads page
               router.replace("(tabs)/ads");
             },
           },

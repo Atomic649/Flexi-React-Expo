@@ -98,14 +98,14 @@ export default function EditStore() {
   
         setAlertConfig({
           visible: true,
-          title: t("product.alerts.successTitle"),
-          message: t("product.alerts.successMessage"),
+          title: t("store.alerts.successTitle"),
+          message: t("store.alerts.successMessage"),
           buttons: [
             {
-              text: t("product.alerts.ok"),
+              text: t("store.alerts.ok"),
               onPress: () => {
                 setAlertConfig((prev) => ({ ...prev, visible: false }));
-                // go to product page
+                // go to store page
                 router.replace("(tabs)/store");
               },
             },
