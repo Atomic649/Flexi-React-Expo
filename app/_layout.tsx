@@ -10,8 +10,7 @@ import {
   TouchableOpacity,
   Text,
   View,
-  Image
- 
+  Image,
 } from "react-native";
 import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
 import * as NavigationBar from "expo-navigation-bar";
@@ -21,6 +20,8 @@ import { useTranslation } from "react-i18next";
 import { CustomText } from "@/components/CustomText";
 import CallAPIUser from "@/api/user_api";
 import { BusinessProvider, useBusiness } from "@/providers/BusinessProvider";
+import { icons } from "@/constants";
+import i18n from "@/i18n";
 
 function RootLayoutNav() {
   const { theme } = useTheme();
@@ -39,7 +40,6 @@ function RootLayoutNav() {
     };
 
     fetchRegisteredUsers();
- 
   }, []);
 
   useEffect(() => {
@@ -67,102 +67,104 @@ function RootLayoutNav() {
         barStyle={theme === "dark" ? "light-content" : "dark-content"}
         backgroundColor={theme === "dark" ? "#18181b" : "#ffffff"}
         animated={true}
+        
       />
       <Stack>
         <Stack.Screen
           name="(tabs)"
           options={{
-            ...mainTopBar(theme, registeredUsers, businessAvatar, businessName),
-            title: "",
-            //TODO : 🚧 add business name here
+        ...mainTopBar(theme, registeredUsers, businessAvatar, businessName),
+        title: "",
           }}
         />
         <Stack.Screen
           name="(auth)"
           options={{
-            ...HideTopBar(),
-            title: t("auth.login.title"),
+        ...HideTopBar(),
+        title: t("auth.login.title"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
         <Stack.Screen
           name="index"
           options={{
-            ...HideTopBar(),
-            title: t("tabs.home"),
+        ...HideTopBar(),
+        title: t("tabs.home"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
         <Stack.Screen
-          name="profile" // file name
+          name="profile"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: t("profile.myProfile"), // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: t("profile.Profile"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
         <Stack.Screen
-          name="business_info" // file name
+          name="business_info"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: t("settings.businessInfo"), // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: t("settings.businessInfo"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
-        // Roadmap
         <Stack.Screen
-          name="roadmap" // file name
+          name="roadmap"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: "Roadmap", // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: "Roadmap",
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
-        // Create Product
         <Stack.Screen
-          name="createproduct" // file name
+          name="createproduct"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: t("create.title"), // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: t("create.title"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
-        // Edit Product
         <Stack.Screen
-          name="editproduct" // file name
+          name="editproduct"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: t("product.detail"), // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: t("product.detail"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
-        // Create Ads
         <Stack.Screen
-          name="createads" // file name
+          name="createads"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: t("ads.createAd"), // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: t("ads.createAd"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
-        // Create Store
         <Stack.Screen
-          name="createstore" // file name
+          name="createstore"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: t("store.createStore"), // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: t("store.createStore"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
-        // Edit Ads
         <Stack.Screen
-          name="editads" // file name
+          name="editads"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: t("ads.editAd"), // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: t("ads.editAd"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
-        // Edit Store
         <Stack.Screen
-          name="editstore" // file name
+          name="editstore"
           options={{
-            ...showTopBarAndBackIcon(theme),
-            title: t("store.editStore"), // Tab Name
+        ...showTopBarAndBackIcon(theme),
+        title: t("store.editStore"),
+        headerTitleStyle: getHeaderTitleStyle(),
           }}
         />
-        {/* <Stack.Screen name="productdetail" options={{ headerShown: true }} />
-        <Stack.Screen name="editproduct" options={{ headerShown: true }} /> */}
       </Stack>
     </SafeAreaView>
   );
@@ -229,10 +231,15 @@ const HideTopBar = () => ({
 });
 
 // Reuseable functions for Main Top bar
-const mainTopBar = (theme: string, registeredUsers: number | null, businessAvatar: string | null, businessName: string | null) => ({
+const mainTopBar = (
+  theme: string,
+  registeredUsers: number | null,
+  businessAvatar: string | null,
+  businessName: string | null
+) => ({
   headerShown: true,
   headerStyle: {
-    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff", //
+    backgroundColor: theme === "dark" ? "#18181b" : "#ffffff",
   },
   headerTintColor: theme === "dark" ? "#ffffff" : "#18181b",
   headerLeft: () => (
@@ -245,28 +252,58 @@ const mainTopBar = (theme: string, registeredUsers: number | null, businessAvata
             }}
             className="w-full h-full"
             resizeMode="contain"
-
           />
         </View>
       </TouchableOpacity>
       <CustomText className="text-base font-bold text-zinc-500">
-     {businessName || ""}
+        {businessName || ""}
       </CustomText>
     </View>
   ),
 
   headerRight: () => (
     <View className="flex-row items-center">
-      <TouchableOpacity onPress={() => router.push("roadmap")} className="mr-2">
-        <Ionicons
-          name="people"
-          size={24}
-          color={theme === "dark" ? "#ffffff" : "#75726a"}
+      <TouchableOpacity onPress={() => router.push("roadmap")} className="mr-5">
+        <Image
+          source={icons.businessman}
+          resizeMode="stretch"
+          style={{
+            width: 23,
+            height: 20,
+            tintColor: theme === "dark" ? "#ffffff" : "#4e4b47",
+          }}
         />
-        <Text className="text-xs font-bold text-white bg-teal-400 rounded-full px-1 absolute -top-1 -right-3">
-          {registeredUsers || 0}
-        </Text>
+        <View
+          style={{
+            position: "absolute",
+            top: -6,
+            right: -13,
+            height: 18,
+            width: 18,
+            borderRadius: 10,
+            backgroundColor: "#07e5c0",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            className={`text-xs font-bold ${
+              theme === "dark" ? "text-[#18181b]" : "text-white"
+            }`}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+          >
+            {registeredUsers && registeredUsers > 1000
+              ? `${(registeredUsers / 1000).toFixed(1)}k`
+              : registeredUsers || 0}
+          </Text>
+        </View>
       </TouchableOpacity>
     </View>
   ),
+});
+
+const getHeaderTitleStyle = () => ({
+  fontSize: 15, 
+  fontFamily: i18n.language === "th" ? "NotoSansThai-Regular" : "Poppins-Regular",
 });

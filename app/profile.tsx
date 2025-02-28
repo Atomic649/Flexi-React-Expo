@@ -5,7 +5,7 @@ import CallAPIUser from "@/api/user_api";
 import CallAPIBusiness from "@/api/business_api";
 import { IMAGE_URL } from "@/utils/config";
 import { getMemberId, getUserId, replaceMemberId } from "@/utils/utility";
-import { SafeAreaView, ScrollView, View, Image } from "react-native";
+import {  ScrollView, View, Image } from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import { useBackgroundColorClass } from "@/utils/themeUtils";
 import { CustomText } from "@/components/CustomText";
 import { useBusiness } from "@/providers/BusinessProvider";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function Profile() {
@@ -150,7 +151,7 @@ export default function Profile() {
             <FontAwesome
               name="camera"
               size={20}
-              color={theme === "dark" ? "white" : "[#000000]"}
+              color={theme === "dark" ? "#c9c9c9" : "#48453e" }
             />
           </TouchableOpacity>
         </View>
@@ -227,7 +228,7 @@ export default function Profile() {
            <Ionicons
               name="add-circle"
               size={48}
-              color={theme === "dark" ? "white" : "[#000000]"}
+              color={theme === "dark" ? "#c9c9c9" : "#48453e" }
             />
           </TouchableOpacity>
 

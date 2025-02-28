@@ -21,6 +21,7 @@ import income from "../assets/icons/income.png"
 import shop from "../assets/icons/shop.png"
 import flexi from "../assets/icons/flexi.png"
 import paid from "../assets/icons/paid.png"
+import businessman from "../assets/icons/businessman.png"
 export default {
   expense,
   home,
@@ -45,4 +46,5 @@ export default {
   shop,  
   flexi,
   paid,
+  businessman,
 }

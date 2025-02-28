@@ -1,22 +1,20 @@
 import {
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
+  ScrollView
 } from "react-native";
 import { View } from "@/components/Themed";
-import FormField from "@/components/FormField";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
 import { CustomText } from "@/components/CustomText";
-import Dropdown from "@/components/Dropdown";
 import CallAPIBusiness from "@/api/business_api";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
-import { ThemeProvider, useTheme } from "@/providers/ThemeProvider";
+import { useTheme } from "@/providers/ThemeProvider";
 import { getUserId } from "@/utils/utility";
+import Dropdown2 from "@/components/Dropdown2";
+import FormField2 from "@/components/FormField2";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Register() {
   const { theme } = useTheme();
@@ -111,15 +109,18 @@ export default function Register() {
     <SafeAreaView className={`flex-1   ${useBackgroundColorClass()}`}>
       <ScrollView>
         <View className=" flex-1 justify-center h-full px-4 py-10">
-          <FormField
+          <FormField2
             title={t("auth.businessRegister.businessName")}
             placeholder={t("auth.businessRegister.businessName")}
             value={businessName}
             handleChangeText={setbusinessName}
             otherStyles="mt-0"
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            placeholderTextColor = {theme === "dark" ? "#606060" : "#b1b1b1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
           />
 
-          <Dropdown
+          <Dropdown2
             title={t("auth.businessRegister.taxType")}
             options={[
               {
@@ -135,18 +136,24 @@ export default function Register() {
             onValueChange={settaxType}
             selectedValue={t(`auth.businessRegister.taxTypeOption.${taxType}`)}
             otherStyles="mt-7"
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            bgChoiceColor={theme === "dark" ? "#212121" : "#e7e7e7"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
           />
 
-          <FormField
+          <FormField2
             title={t("auth.businessRegister.vatId")}
             placeholder={t("0000000000000")}
             value={vatId}
             handleChangeText={setvatId}
             otherStyles="mt-7"
             keyboardType="number-pad"
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            placeholderTextColor = {theme === "dark" ? "#606060" : "#b1b1b1"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
           />
 
-          <Dropdown
+          <Dropdown2
             title={t("auth.businessRegister.businessType")}
             options={[
               {
@@ -192,6 +199,9 @@ export default function Register() {
             )}
             onValueChange={setbusinessType}
             otherStyles="mt-7"
+            bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+            bgChoiceColor={theme === "dark" ? "#212121" : "#e7e7e7"}
+            textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
           />
 
           {error ? <CustomText className="text-red-500 mt-4">{error}</CustomText> : null}
