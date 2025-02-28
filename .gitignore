@@ -54,6 +54,9 @@ coverage/
 .expo/
 .expo-shared/
 
+#python
+python/env
+
 # macOS
 *.DS_Store
 
