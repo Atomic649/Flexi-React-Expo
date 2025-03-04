@@ -124,12 +124,23 @@ Table Expense {
   group String
   image String
   note String
+  desc String
   deleted Boolean [default: false]
   channel Bank
+  code String
   businessAcc Int [not null]
   businessId BusinessAcc [not null]
   memberId String [not null]
   member Member [not null]
+}
+
+Table DetectPDF {
+  id Int [pk, increment]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  pdf String [not null]
+  bankNo String [not null]
+  deleted Boolean [default: false]
 }
 
 Table Platform {

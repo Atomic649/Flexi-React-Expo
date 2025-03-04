@@ -253,14 +253,25 @@ model Expense {
   group     String?
   image     String?
   note      String?
+  desc      String?
   deleted   Boolean?  @default(false)
   channel   Bank?
+  code     String?
 
   // Relation
   businessAcc Int
   businessId  BusinessAcc @relation(fields: [businessAcc], references: [id])
   memberId    String
   member      Member      @relation(fields: [memberId], references: [uniqueId])
+}
+
+model DetectPDF{
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  pdf     String
+  bankNo     String
+  deleted   Boolean?  @default(false)
 }
 
 model Platform {
