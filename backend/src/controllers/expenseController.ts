@@ -14,6 +14,7 @@ interface userInput {
     memberId : string
     businessAcc : number
     note : string
+    desc : string
     channel : Bank
 }
 

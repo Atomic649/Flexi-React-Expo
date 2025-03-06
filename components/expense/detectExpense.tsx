@@ -16,6 +16,7 @@ import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import ExpenseTable from "./ExpenseTable";
+import { sendPdfPath } from "@/api/pdf_api";
 
 export default function DetectExpense() {
   const { theme } = useTheme();
@@ -55,6 +56,11 @@ export default function DetectExpense() {
     }
     console.log("🔥uri", uri);
 
+    // send pdf path to server by calling sendPdfPath
+    
+    const response = await sendPdfPath({ pdfPath: uri });
+    console.log("🔥response", response)
+   
     try {
       const fileInfo = await FileSystem.getInfoAsync(uri);
       console.log("🔥fileInfo", fileInfo);
