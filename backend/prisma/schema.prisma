@@ -170,6 +170,7 @@ model Member {
   product  Product[]
   platform Platform[]
   store    Store[]
+  detectPDF DetectPDF[]
 }
 
 model BusinessAcc {
@@ -193,6 +194,7 @@ model BusinessAcc {
   platform         Platform[]
   storefront       Store[]
   product          Product[]
+  detectPDF        DetectPDF[]
 }
 
 model Bill {
@@ -269,9 +271,14 @@ model DetectPDF{
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  pdf     String
-  bankNo     String
+  filePath   String
+  bankNo     String?
+  fileName  String
   deleted   Boolean?  @default(false)
+  businessAcc Int
+  businessId  BusinessAcc @relation(fields: [businessAcc], references: [id])
+  memberId    String
+  member      Member      @relation(fields: [memberId], references: [uniqueId])
 }
 
 model Platform {

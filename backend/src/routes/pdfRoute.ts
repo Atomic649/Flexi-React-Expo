@@ -5,7 +5,7 @@ import { pdfExtract} from '../controllers/expensePDFController';
 const router = express.Router();
 
 
-router.get("/pdfExtract", authenticateToken,pdfExtract)
+router.post("/pdfExtract", authenticateToken,pdfExtract)
 
 
 

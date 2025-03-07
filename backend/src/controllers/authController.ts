@@ -195,7 +195,7 @@ const updateUser = async (req: Request, res: Response) => {
         password: hashedPassword,
         firstName: userInput.firstName,
         lastName: userInput.lastName,
-        avatar: userInput.avatar,
+        avatar: userInput.avatar, 
         phone: userInput.phone,
       },
     });
