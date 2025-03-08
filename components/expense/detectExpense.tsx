@@ -67,8 +67,10 @@ export default function DetectExpense() {
       const filePath = pdfUri;
       if (memberId && filePath) {
         const response = await CallAPIExpense.extractPDFExpenseAPI(memberId, filePath);
-        if (response) {
-          setExpenses(response);
+        if (response.message === "Expenses created successfully") {
+          setError(null);
+          setExpenses(response.expenses);
+          console.log("🔥response", response);
         } else {
           console.error("No expenses found in the PDF.");
         }
@@ -98,7 +100,7 @@ export default function DetectExpense() {
         }}
         onPress={pickAndProcessPdf}
       >
-        <FontAwesome name="file-pdf-o" size={60} color="#0feac2" />
+        <FontAwesome name="file-pdf-o" size={36} color="#0feac2" />
         <View className=" flex-col ">
           <Text
             className="text-center text-xl font-bold pt-2"

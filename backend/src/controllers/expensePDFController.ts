@@ -116,9 +116,24 @@ export const pdfExtract = async (req: Request, res: Response): Promise<void> => 
     }
   };
 
+  // get the data from the database just created with id
+  const getExpenses = async () => {
+    const expense: Expense = req.body;
+    const expenses = await prisma.expense.findMany({
+      where: {
+        memberId: expense.memberId,
+      },
+    });
+    return expenses;
+  };
+
+
+
   try {
     await createExpenses();
-    res.status(201).json({ message: "Expenses created successfully" });
+    res.status(201).json({ message: "Expenses created successfully", expenses: await getExpenses()
+      
+     });
   } catch (e: any) {
     console.error(e);
     res.status(500).json({ message: e.message });
