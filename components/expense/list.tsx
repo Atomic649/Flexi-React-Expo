@@ -11,41 +11,40 @@ import { useTheme } from "@/providers/ThemeProvider";
 import CallAPIReport from "@/api/report_api";
 import { getMemberId } from "@/utils/utility";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import BillCard from "../billCard";
-import { useBackgroundColorClass } from "@/utils/themeUtils";
 import ExpenseCard from "../ExpenseCard";
+import { useBackgroundColorClass } from "@/utils/themeUtils";
 import { CustomText } from "../CustomText";
-
 
 type Expense = {
   id: number;
-  date: Date;
+  date: string; // Change to string to ensure consistent date format
   expenses: number;
   type: string;
   note: string;
+  desc: string;
 };
 
-// Group bills by date
-const groupByDate = (items: Expense[]): { [key: string]: Expense[] } => {
-  return items.reduce((groups, item) => {
-    const date = new Date(item.date).toISOString().split("T")[0];
-    if (!groups[date]) {
-      groups[date] = [];
+// Group expenses by date
+const groupByDate = (expenses: Expense[]) => {
+  return expenses.reduce((acc, expense) => {
+    const date = expense.date.split("T")[0];
+    if (!acc[date]) {
+      acc[date] = [];
     }
-    groups[date].push(item);
-    return groups;
-  }, {} as { [key: string]: Expense[] });
-};
+    acc[date].push(expense);
+    return acc;
+  }, {} as Record<string, Expense[]>);
+}
 
-const list = () => {
+const List = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
   const [expense, setExpense] = useState<Expense[]>([]);
 
-  // Call API to get bills
+  // Call API to get expenses
   useEffect(() => {
-    const fetchBills = async () => {
+    const fetchExpenses = async () => {
       try {
         const memberId = await getMemberId();
         if (memberId) {
@@ -55,14 +54,14 @@ const list = () => {
           console.error("Member ID is null");
         }
       } catch (error) {
-        console.error("Error fetching bills:", error);
+        console.error("Error fetching expenses:", error);
       }
     };
 
-    fetchBills();
+    fetchExpenses();
   }, []);
 
-  // Refresh bills
+  // Refresh expenses
   const onRefresh = async () => {
     try {
       setRefreshing(true);
@@ -74,21 +73,19 @@ const list = () => {
         console.error("Member ID is null");
       }
     } catch (error) {
-      console.error("Error fetching bills:", error);
+      console.error("Error fetching expenses:", error);
     }
     setRefreshing(false);
   };
 
   const handleDelete = async (id: number) => {};
 
-  const groupedExpense= groupByDate(expense);
+  const groupedExpense = groupByDate(expense);
   const today = new Date().toISOString().split("T")[0];
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView
-       className={`h-full ${useBackgroundColorClass()}`}>
-      
+      <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
         <FlatList
           data={Object.keys(groupedExpense)}
           keyExtractor={(date) => date}
@@ -110,9 +107,10 @@ const list = () => {
                   type={expense.type}
                   expenses={expense.expenses}
                   note={expense.note}
-                  Opacity= {theme === "dark" ? 0.4 : 0.2}
-                  AdsCardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}  
-                  ExCardColor={theme === "dark" ? "#151515" : "#24232110"}                                 
+                  desc={expense.desc}
+                  Opacity={theme === "dark" ? 0.4 : 0.2}
+                  AdsCardColor={theme === "dark" ? "#1d1d1d" : "#24232108"}
+                  ExCardColor={theme === "dark" ? "#151515" : "#24232110"}
                   ExpenseColor={theme === "dark" ? "#ffaa00" : "#ffaa00"}
                   NoteColor={theme === "dark" ? "#868686" : "#656360"}
                   onDelete={handleDelete}
@@ -121,7 +119,9 @@ const list = () => {
             </View>
           )}
           ListEmptyComponent={() => (
-            <CustomText className="pt-10 text-center text-white">{t("common.notfound")}</CustomText>
+            <CustomText className="pt-10 text-center text-white">
+              {t("common.notfound")}
+            </CustomText>
           )}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -132,4 +132,4 @@ const list = () => {
   );
 };
 
-export default list;
+export default List;

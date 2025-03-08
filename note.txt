@@ -21,12 +21,6 @@ npx expo install --fix
 x start 
 npx expo start
 
-x activate Python
-source env/bin/activate  
-
-x run server  python django
-python manage.py runserver
-
 x Create New Project
 npx create-expo-app@latest Flexi-React-Expo -t tabs
 

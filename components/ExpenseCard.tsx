@@ -5,16 +5,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/providers/ThemeProvider";
 import icons from "@/constants/icons";
 
-const formatDate = (dateString: string) => {
+const formatDate = (date: string) => {
   const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
   };
-  return new Date(dateString).toLocaleDateString("en-US", options); // Change 'en-US' to desired locale
-};
+  return new Date(date).toLocaleString(undefined, options).replace(',', '');
+}
+
+
 
 export default function ExpenseCard({
   id,
@@ -22,6 +24,7 @@ export default function ExpenseCard({
   expenses,
   type,
   note,
+  desc,
   AdsCardColor,
   ExCardColor,
   Opacity,
@@ -76,7 +79,7 @@ export default function ExpenseCard({
   );
 
   return (
-    <View className="flex ">
+    <View className="flex " key={id}> {/* Move key prop to the parent View */}
       <Swipeable renderRightActions={renderRightActions}>
         <View
           className={`flex flex-col items-center pt-3 pb-4 px-4 pe-16  my-1 rounded-se-md          
@@ -92,7 +95,8 @@ export default function ExpenseCard({
                   className="text-sm text-zinc-500 font-normal"
                   numberOfLines={1}
                 >
-                  {formatDate(date)}
+                  {/* {formatDate(date)} */}
+                  {date}  
                 </Text>
 
                 <Text
@@ -100,7 +104,14 @@ export default function ExpenseCard({
                   style={{ color: NoteColor }}
                   numberOfLines={1}
                 >
-                  {note} 
+                  {desc}
+                </Text>
+                <Text
+                  className="text-base  font-psemibold"
+                  style={{ color: NoteColor }}
+                  numberOfLines={1}
+                >
+                  {note}
                 </Text>
               </View>
             </View>

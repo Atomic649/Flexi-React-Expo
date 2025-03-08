@@ -38,7 +38,7 @@ export const sumOfAdsCost = async (req: Request, res: Response) => {
     });
     // console.log(adsCosts);
 
-    const sum = adsCosts.reduce((acc, curr) => acc + curr.adsCost, 0);
+    const sum = adsCosts.reduce((acc, curr) => acc + curr.adsCost.toNumber(), 0);
     res.json(sum);
   } catch (e) {
     console.error(e);
@@ -143,7 +143,7 @@ export const calculateProfit = async (req: Request, res: Response) => {
       },
     });
 
-    const sumOfAdsCost = adsCosts.reduce((acc, curr) => acc + curr.adsCost, 0);
+    const sumOfAdsCost = adsCosts.reduce((acc, curr) => acc + curr.adsCost.toNumber(), 0);
     // console.log(sumOfAdsCost);
 
     const bills = await prisma.bill.findMany({

@@ -22,6 +22,7 @@ app.use(cors());
 // Use Static Files
 app.use("/uploads", express.static("uploads"));
 app.use("/uploads/images", express.static("uploads/images"));
+app.use("/uploads/pdf", express.static("uploads/pdf"));
 
 // --------------IMPORT ROUTES-----------------
 

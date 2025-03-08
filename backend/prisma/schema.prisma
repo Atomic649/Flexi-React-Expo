@@ -233,7 +233,7 @@ model AdsCost {
   date      DateTime @default(now())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  adsCost   Int
+  adsCost   Decimal
 
   // Relation
   memberId    String
@@ -251,7 +251,7 @@ model Expense {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   id        Int      @id @default(autoincrement())
-  amount    Int
+  amount    Decimal
   group     String?
   image     String?
   note      String?

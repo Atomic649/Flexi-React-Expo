@@ -45,7 +45,7 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
   );
 
   return (
-    <View className="flex-1 w-full ">
+    <View className="flex-1 w-full mt-3">
       <View className="flex-row w-full justify-between p-1 px-4 "
       style={{ backgroundColor: theme === 'dark' ? '#3f3e3b' : '#777471' }}>
         <Text className={`${headerClass} w-1/6`}>Date</Text>

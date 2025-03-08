@@ -106,7 +106,7 @@ Table AdsCost {
   date DateTime [default: `now()`, not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
-  adsCost Int [not null]
+  adsCost Decimal [not null]
   memberId String [not null]
   platformId Int [not null]
   product String [not null]
@@ -122,7 +122,7 @@ Table Expense {
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   id Int [pk, increment]
-  amount Int [not null]
+  amount Decimal [not null]
   group String
   image String
   note String

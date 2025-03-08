@@ -182,12 +182,12 @@ const getAdsCostsByDate = async (req: Request, res: Response) => {
       const platformId = item.platformId;
       if (adsCostByDateAndPlatform[key]) {
       if (adsCostByDateAndPlatform[key][platformId]) {
-        adsCostByDateAndPlatform[key][platformId] += item.adsCost || 0;
+        adsCostByDateAndPlatform[key][platformId] += Number(item.adsCost) || 0;
       } else {
-        adsCostByDateAndPlatform[key][platformId] = item.adsCost ?? 0;
+        adsCostByDateAndPlatform[key][platformId] = item.adsCost?.toNumber() ?? 0;
       }
       } else {
-      adsCostByDateAndPlatform[key] = { [platformId]: item.adsCost ?? 0 };
+      adsCostByDateAndPlatform[key] = { [platformId]: Number(item.adsCost) ?? 0 };
       }
     });
 

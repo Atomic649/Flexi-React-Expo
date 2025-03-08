@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL, Python_URL } from "@/utils/config";
+import { API_URL} from "@/utils/config";
 import { getToken } from "./utility";
 
 // Function to create an Axios instance without authentication
@@ -9,12 +9,7 @@ export const getAxios = () => {
   });
 };
 
-// Function to create an Axios instance without authentication
-export const getAxiosPython = () => {
-  return axios.create({
-    baseURL: Python_URL,
-  });
-};
+
 
 // Function to create an Axios instance with authentication
 export const getAxiosWithAuth = async () => {

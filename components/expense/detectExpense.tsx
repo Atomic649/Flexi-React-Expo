@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,16 +7,19 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Modal,
+  SafeAreaView,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import * as DocumentPicker from "expo-document-picker";
 import { WebView } from "react-native-webview";
 import * as FileSystem from "expo-file-system";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import ExpenseTable from "./ExpenseTable";
-import { sendPdfPath } from "@/api/pdf_api";
+import { getMemberId } from "@/utils/utility";
+import CallAPIExpense from "@/api/expense_api";
+
 
 export default function DetectExpense() {
   const { theme } = useTheme();
@@ -24,59 +27,70 @@ export default function DetectExpense() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [expenses, setExpenses] = useState<any[]>([]);
+ 
 
-  const expenses = [
-    {
-      date: "2023-10-01",
-      note: "Facebook ADS",
-      amount: "$100",
-      file: "receipt1.pdf",
-    },
-    {
-      date: "2023-10-02",
-      note: "Kerry Express",
-      amount: "$20",
-      file: "receipt2.pdf",
-    },
-    // Add more expenses as needed
-  ];
+  // Add more expenses as needed
 
   const pickAndProcessPdf = async () => {
     const result = await DocumentPicker.getDocumentAsync({
       type: "application/pdf",
     });
-    console.log("🔥result", result);
+     console.log("🔥result", result);
 
     //get uri from result
     const uri =
       result.assets && result.assets.length > 0 ? result.assets[0].uri : null;
     if (!uri) {
       setError("No PDF selected or invalid file.");
-      return;
-    }
-    console.log("🔥uri", uri);
-
-    // send pdf path to server by calling sendPdfPath
-    
-    const response = await sendPdfPath({ pdfPath: uri });
-    console.log("🔥response", response)
-   
+      return;    
+    }      
     try {
       const fileInfo = await FileSystem.getInfoAsync(uri);
       console.log("🔥fileInfo", fileInfo);
 
       setPdfUri(uri);
       setModalVisible(true);
+      console.log("🔥pdfUri", pdfUri);
+     
     } catch (error) {
       console.error("🚨pickAndProcessPdf", error);
       setError("Failed to process PDF");
     }
   };
 
+  const confirmAndProcessPdf = async () => {
+    setModalVisible(false);
+    setLoading(true);
+    try {
+      const memberId = await getMemberId();
+      const filePath = pdfUri;
+      if (memberId && filePath) {
+        const response = await CallAPIExpense.extractPDFExpenseAPI(memberId, filePath);
+        if (response) {
+          setExpenses(response);
+        } else {
+          console.error("No expenses found in the PDF.");
+        }
+      } else {
+        console.error("Member ID is null or filePath is null");
+      }
+    } catch (error: any) {
+      console.error("Error fetching expenses:", error);
+      if (error.message === "Duplicate data found") {
+        setError("Duplicate data found");
+      } else {
+        setError("Failed to process PDF");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
       <TouchableOpacity
-        className="items-center justify-start"
+        className="items-center justify-start mt-5"
         style = {{backgroundColor: "transparent",
           width: "50%",         
           alignSelf: "center",         
@@ -96,11 +110,20 @@ export default function DetectExpense() {
       </TouchableOpacity>
 
       <Text
-        className="text-white text-center text-base pb-10"
+        className="text-white text-center text-base "
         style={{ color: theme === "dark" ? "#ffffff" : "#424140" }}
       >
         Detect expenses automatically
       </Text>
+
+      {error && (
+        <Text
+          className="text-center text-red-500 pb-2 "
+          style={{ color: theme === "dark" ? "#ff8800" : "#ff0000" }}
+        >
+          {error}
+        </Text>
+      )}
 
       <ExpenseTable expenses={expenses} />
 
@@ -137,14 +160,7 @@ export default function DetectExpense() {
               />
               <Button
                 title="Confirm"
-                onPress={() => {
-                  setModalVisible(false);
-                  setLoading(true);
-                  setTimeout(() => {
-                    setLoading(false);
-                    setError("Failed to process PDF");
-                  }, 3000);
-                }}
+                onPress={confirmAndProcessPdf}
                 color="#ff1713"
               />
             </View>
