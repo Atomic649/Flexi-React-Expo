@@ -198,6 +198,7 @@ const getListofAdsandExpenses = async (req: Request, res: Response) => {
     const expenses = await prisma.expense.findMany({
       where: {
         memberId: memberId,
+        save: true,
       },
       select: {
         date: true,

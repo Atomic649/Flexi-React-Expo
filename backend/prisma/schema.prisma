@@ -257,6 +257,7 @@ model Expense {
   note      String?
   desc      String?
   deleted   Boolean?  @default(false)
+  save      Boolean?  @default(false)
   channel   Bank?
   code     String?
 

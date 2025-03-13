@@ -73,6 +73,7 @@ const PlatformCard = ({
             theme === "dark" ? "border-zinc-700" : "border-[#61fff2]"
           }                     
             `}
+            // m-1 pt-2 w-full h-0 pb-[75%]      
         >
           {/* Sales */}
           <View className="flex-row justify-center w-full  ps-6">

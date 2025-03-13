@@ -139,3 +139,26 @@ export const pdfExtract = async (req: Request, res: Response): Promise<void> => 
     res.status(500).json({ message: e.message });
   }
 };
+
+// save detected expenses 
+// set save to true multiple ids [] body request
+export const saveDetectExpense = async (req: Request, res: Response) => {
+  const { ids } = req.body;
+  
+  try {
+    const expense = await prisma.expense.updateMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+      data: {
+        save: true,
+      },
+    });
+    res.json({ message: "Expenses saved successfully", ids: ids });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "failed to save expense" });
+  }
+};

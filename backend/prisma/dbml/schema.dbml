@@ -128,6 +128,7 @@ Table Expense {
   note String
   desc String
   deleted Boolean [default: false]
+  save Boolean [default: false]
   channel Bank
   code String
   businessAcc Int [not null]
