@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   TextInput,
   Alert,
+  Dimensions,
 } from "react-native";
 
 import * as DocumentPicker from "expo-document-picker";
@@ -22,7 +23,7 @@ import ExpenseTable from "./ExpenseTable";
 import { getMemberId } from "@/utils/utility";
 import CallAPIExpense from "@/api/expense_api";
 import { router } from "expo-router";
-
+import ExpenseDetail from "@/app/expenseDetail"; // Import the ExpenseDetail component
 
 export default function DetectExpense() {
   const { theme } = useTheme();
@@ -31,21 +32,23 @@ export default function DetectExpense() {
   const [error, setError] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [expenses, setExpenses] = useState<any[]>([]);
- 
+  const [bankAccountNo, setBankAccountNo] = useState<string | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const screenWidth = Dimensions.get("window").width;
+  const [selectedExpense, setSelectedExpense] = useState<any | null>(null);
 
   // auto delete if save is false
   const autoDelete = async () => {
     try {
       const response = await CallAPIExpense.autoDeleteExpenseAPI();
-      console.log("🔥response", response)
-      } catch (error) {
-        console.error("Error fetching expenses:", error);
-      }
+      console.log("🔥response", response);
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+    }
   };
 
-
   const pickAndProcessPdf = async () => {
-    autoDelete();   
+    autoDelete();
     const result = await DocumentPicker.getDocumentAsync({
       type: "application/pdf",
     });
@@ -105,91 +108,117 @@ export default function DetectExpense() {
   };
 
   const handleSave = async () => {
-    const allExpenseIds = expenses.map(expense => expense.id);
+    const allExpenseIds = expenses.map((expense) => expense.id);
     console.log("🔥allExpenseIds", allExpenseIds);
 
     if (allExpenseIds.length > 0) {
       try {
-        const response = await CallAPIExpense.saveDetectExpenseAPI(allExpenseIds);
+        const response = await CallAPIExpense.saveDetectExpenseAPI(
+          allExpenseIds
+        );
         console.log("🔥response", response);
         setExpenses([]); // Clear all data in
         Alert.alert("Expenses saved successfully"),
-        router.push("(tabs)/expense");
-        
-        
-       
+          router.push("(tabs)/expense");
       } catch (error) {
         console.error("Error saving expenses:", error);
       }
     }
   };
 
+  const handleAdd = async () => {};
+
+  const toggleExpenseDetail = (expense: any) => {
+    setSelectedExpense(expense);
+  };
+
   return (
     <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
       <View className="flex-row items-center justify-between px-5 py-3">
-        <View className="flex-row items-center justify-center">
         <TouchableOpacity
-          className="items-start justify-start mt-2 px-4"
+          className="items-center justify-center"
           style={{
-            backgroundColor: "transparent",
+            backgroundColor: theme === "dark" ? "#6efdd4" : "#6efdd4",
+            width: screenWidth / 3 - 10,
+            height: 50,
+            alignSelf: "center",
+          }}
+          onPress={handleAdd}
+        >
+          <Ionicons
+            name="add"
+            size={24}
+            color={theme === "dark" ? "primary" : "#3b3b3b"}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          className="items-center justify-center "
+          style={{
+            backgroundColor: theme === "dark" ? "#0feac2" : "#0feac2",
+            width: screenWidth / 3 - 10,
+            height: 50,
             alignSelf: "center",
           }}
           onPress={pickAndProcessPdf}
         >
-          <FontAwesome name="file-pdf-o" size={36} color="#0feac2" />
-          <View className=" flex-row "></View>
+          <FontAwesome
+            name="file-pdf-o"
+            size={24}
+            color={theme === "dark" ? "primary" : "#3b3b3b"}
+          />
+          <Text
+            className="text-center text-xs font-bold"
+            style={{ color: theme === "dark" ? "primary" : "#3b3b3b" }}
+          >
+            SCB ONLY
+          </Text>
         </TouchableOpacity>
-        <View className="flex-row items-center justify-center">
-        <Text
-          className="text-start text-xl font-bold pt-2"
-          style={{ color: theme === "dark" ? "#ffffff" : "#6c6f6f" }}
-        >
-          SCB - 
-        </Text>
-        <TextInput
-          className={` mt-2 mx-1 h-12 w-48 px-4 rounded-2xl border-2 focus:border-secondary ${
-            theme === "dark"
-              ? "bg-primary-100 border-black-200"
-              : "bg-white border-gray-100"
-          }`}
-          value=""
-          placeholder="Bank Account No."
-          placeholderTextColor={theme === "dark" ? "#ccc" : "#666"}
-        />
-       
-        
-        </View>
-        </View>
 
         <TouchableOpacity
-          className="items-center justify-center  px-2"
+          className="items-center justify-center"
           style={{
-            backgroundColor: "#0feac2",
-            width: 56,
+            backgroundColor: theme === "dark" ? "#fbac03ff" : "#ffd000",
+            width: screenWidth / 3 - 10,
             height: 50,
-            borderRadius: 10,
             alignSelf: "center",
           }}
           onPress={handleSave}
         >
-        <Text className="text-white text-center text-base font-bold ">SAVE</Text>
-        
-        
+          <Text
+            className="text-center text-base font-bold"
+            style={{ color: theme === "dark" ? "primary" : "#3b3b3b" }}
+          >
+            SAVE
+          </Text>
         </TouchableOpacity>
       </View>
 
-    
-
-      {error && (
-        <Text
-          className="text-center text-red-500 pb-2 "
-          style={{ color: theme === "dark" ? "#ff8800" : "#ff0000" }}
-        >
-          {error}
-        </Text>
+      {expenses.length > 0 && (
+        <ExpenseTable
+          expenses={expenses}
+          onRowPress={toggleExpenseDetail} // Pass the toggle function to the table
+        />
       )}
 
-      <ExpenseTable expenses={expenses} />
+      {error && (
+        <View className="flex-1 justify-center items-center">
+          <Text
+            className="text-center text-red-500 "
+            style={{ color: theme === "dark" ? "#ff8800" : "#ff8000" }}
+          >
+            {error}
+          </Text>
+        </View>
+      )}
+
+      {selectedExpense && (
+        <ExpenseDetail
+          visible={!!selectedExpense}
+          onClose={() => setSelectedExpense(null)}
+          expense={selectedExpense}
+        />
+      )}
 
       <Modal
         visible={modalVisible}

@@ -1,7 +1,6 @@
 import { Bank, PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import fs from "fs";
-import { parseInt } from "lodash";
 import pdfParse from "pdf-parse";
 
 // Create  instance of PrismaClient

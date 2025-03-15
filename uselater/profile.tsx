@@ -133,7 +133,34 @@ export default function Profile() {
           placeholderTextColor={theme === "dark" ? "#ccc" : "#666"}
         />
          
-         
+          <View className="flex-row items-center">
+                       <TextInput
+                         className={` mt-2 mx-1 h-12 w-48 px-4 rounded-2xl border-2 focus:border-secondary ${
+                           theme === "dark"
+                             ? "bg-primary-100 border-black-200"
+                             : "bg-white border-gray-100"
+                         }`}
+                         value={bankAccountNo ?? undefined}
+                         onChangeText={setBankAccountNo}
+                         placeholder="Bank Account No."
+                         placeholderTextColor={theme === "dark" ? "#ccc" : "#666"}
+                         style={{ color: theme === "dark" ? "#ffffff" : "#000000" }} // Adjusted text color
+                         onFocus={() => setIsFocused(true)}
+                         onBlur={() => setIsFocused(false)}
+                       />
+                       {isFocused && (
+                         <TouchableOpacity
+                           className="items-center justify-center px-2"
+                           onPress={handleCheck}
+                         >
+                           <FontAwesome
+                             name="check-circle"
+                             size={24}
+                             color={theme === "dark" ? "#ffa600" : "#000000"}
+                           />
+                         </TouchableOpacity>
+                       )}
+                     </View>
 
 
 
