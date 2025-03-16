@@ -17,7 +17,7 @@ import { CustomText } from "../CustomText";
 
 type Expense = {
   id: number;
-  date: string; // Change to string to ensure consistent date format
+  date: string;
   expenses: number;
   type: string;
   note: string;

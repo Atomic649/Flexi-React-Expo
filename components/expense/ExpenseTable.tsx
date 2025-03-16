@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, FlatList, TouchableOpacity, RefreshControl } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import { router } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -26,6 +26,10 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
   const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [expenseList, setExpenseList] = useState(expenses);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Sort expenses by date
+  const sortedExpenses = expenseList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const headerClass = `font-bold p-2  ${
     theme === "dark" ? "text-white" : "text-[#ffffff]"
@@ -62,6 +66,22 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
     setSelectedExpense(item);
     setIsModalVisible(true);
   };
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      const memberId = String(await getMemberId());
+      console.log("Member ID:", memberId);
+      if (memberId) {
+        const expenses = await CallAPIExpense.getAllExpensesAPI(memberId);
+        setExpenseList(expenses);
+      }
+    } catch (error) {
+      console.error("Error refreshing expenses", error);
+    }
+    setRefreshing(false);
+  }
+  , []);
 
   const renderItem = ({ item }: { item: Expense }) => (
     <TouchableOpacity onPress={() => onRowPress(item)}>
@@ -157,15 +177,19 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
         {/* <Text className={`${headerClass} w-1/6`}>File</Text> */}
       </View>
       <FlatList
-        data={expenseList}
+        data={sortedExpenses} // Use sorted expenses
         renderItem={renderItem}
         keyExtractor={(_item, index) => index.toString()}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
       {selectedExpense && (
         <ExpenseDetail
           visible={isModalVisible}
-          onClose={() => setIsModalVisible(false)}
-          expense={selectedExpense} // Pass the selected expense with id
+          onClose={() => setIsModalVisible(false)}         
+          expense={selectedExpense} // Pass the selected expense with 
+          
         />
       )}
     </View>

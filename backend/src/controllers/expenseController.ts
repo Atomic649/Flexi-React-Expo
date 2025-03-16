@@ -61,9 +61,16 @@ const createExpense = async (req: Request, res: Response) => {
 };
 
 // Get All Expenses - Get
-const getExpenses = async (_: Request, res: Response) => {
+const getExpenses = async (req: Request, res: Response) => {
+  const { memberId } = req.params;
   try {
-    const expenses = await prisma.expense.findMany();
+    const expenses = await prisma.expense.findMany(
+      {
+        where: {
+          memberId: memberId,
+        },
+      },
+    );
     res.json(expenses);
   } catch (e) {
     console.error(e);

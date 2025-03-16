@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/", authenticateToken, createExpense);
 
 // Getting all Expenses
-router.get("/", authenticateToken, getExpenses);
+router.get("/all/:memberId", authenticateToken, getExpenses);
 
 // Getting a Expense by ID 
 router.get("/:id", authenticateToken, getExpenseById);

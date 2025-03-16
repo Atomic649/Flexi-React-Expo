@@ -26,7 +26,27 @@ class CallAPIExpense {
       }
     }
   }
+// Get all expenses by memberId in body req
+  async getAllExpensesAPI(memberId: string): Promise<any> {
+    try {
+      const axiosInstance = await getAxiosWithAuth();
+      const response = await axiosInstance.get(`/expense/all/${memberId}`);
 
+      console.log("🚀GetAllExpensesAPI:", response.data);
+
+      return response.data;
+    } catch (error) {
+      console.error("🚨 Get All Expenses API Error:", error);
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 404) {
+          throw new Error("API endpoint not found (404)");
+        }
+        throw error.response.data;
+      } else {
+        throw new Error("Network Error");
+      }
+    }
+  }
   // auto delete if save is false
   async autoDeleteExpenseAPI(): Promise<any> {
     try {
@@ -140,7 +160,10 @@ class CallAPIExpense {
       }
     }
   }
+ 
 }
+
+
 
 
 

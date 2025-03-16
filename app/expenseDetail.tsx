@@ -130,26 +130,13 @@ export default function ExpenseDetail({
       onClose();
       
       if (data.error) throw new Error(data.error);
-
-      // setAlertConfig({
-      //   visible: true,
-      //   title: t("product.alerts.successTitle"),
-      //   message: t("product.alerts.successMessage"),
-      //   buttons: [
-      //     {
-      //       text: t("product.alerts.ok"),
-      //       onPress: () => {
-      //         setAlertConfig((prev) => ({ ...prev, visible: false }));
-      //         // close expense detail
-      //         
-      //       },
-      //     },
-      //   ],
-      // });
+    
     } catch (error: any) {
       setError(error.message);
     }
   };
+
+  
 
   return (
     <Modal
@@ -195,7 +182,7 @@ export default function ExpenseDetail({
                 />
               )}
               <CustomText className="text-center font-bold">
-                {date.replace("T", "  ").replace(/:\d{2}\.\d{3}Z$/, "")}
+                {date ? date.replace("T", "  ").replace(/:\d{2}\.\d{3}Z$/, "") : ""}
               </CustomText>
               <CustomText className="text-center text-lg font-bold">
                 {desc}
