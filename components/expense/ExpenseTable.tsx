@@ -3,7 +3,9 @@ import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import { router } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import ExpenseDetail from "@/app/expenseDetail";
+import ExpenseDetail from "@/app/expenseDetail"; // Ensure correct import
+import CallAPIExpense from "@/api/expense_api";
+import { getMemberId } from "@/utils/utility";
 
 interface Expense {
   date: string;
@@ -23,6 +25,7 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
   const { theme } = useTheme();
   const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [expenseList, setExpenseList] = useState(expenses);
 
   const headerClass = `font-bold p-2  ${
     theme === "dark" ? "text-white" : "text-[#ffffff]"
@@ -39,9 +42,19 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
     console.log(`File pressed: ${file}`);
   };
 
-  const handleDelete = (id: number) => {
-    // Handle delete logic here
-    console.log(`Delete expense with id: ${id}`);
+  const handleDelete = async (id: number) => {
+    try {
+      const memberId = String(await getMemberId());
+      console.log("Member ID:", memberId);
+      if (memberId) {
+        await CallAPIExpense.deleteExpenseAPI(id, memberId);
+        setExpenseList(expenseList.filter((expense) => expense.id !== id));
+      } else {
+        console.log("Member ID is null");
+      }
+    } catch (error) {
+      console.error("Error deleting expense", error);
+    }
   };
 
   const handlePress = (item: Expense) => {
@@ -144,7 +157,7 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
         {/* <Text className={`${headerClass} w-1/6`}>File</Text> */}
       </View>
       <FlatList
-        data={expenses}
+        data={expenseList}
         renderItem={renderItem}
         keyExtractor={(_item, index) => index.toString()}
       />
@@ -152,7 +165,7 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
         <ExpenseDetail
           visible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
-          expense={selectedExpense}
+          expense={selectedExpense} // Pass the selected expense with id
         />
       )}
     </View>

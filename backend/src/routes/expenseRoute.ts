@@ -5,8 +5,7 @@ import {
   getExpenseById,
   updateExpenseById, 
   searchExpenseByDate,
-  autoDeleteExpense
-
+  deleteExpenseById
 } from "../controllers/expenseController";
 import authenticateToken from "../middleware/authMiddleware";
 // Create express router
@@ -24,14 +23,11 @@ router.get("/:id", authenticateToken, getExpenseById);
 // Updating a Expense by ID
 router.put("/:id", authenticateToken, updateExpenseById);
 
-
-
 // Searching Expense by date
 router.get("/search/:date", authenticateToken, searchExpenseByDate);
 
-// Auto delete if save is false
-router.delete("/autoDelete", authenticateToken, autoDeleteExpense);
-
+// Delete a Expense by ID
+router.delete("/:id", authenticateToken, deleteExpenseById);
 
 
 export default router;

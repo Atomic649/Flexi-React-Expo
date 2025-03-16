@@ -1,4 +1,11 @@
-import { ScrollView, TouchableOpacity, Image, Modal, Text, TextInput } from "react-native";
+import {
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Modal,
+  Text,
+  TextInput,
+} from "react-native";
 import { View } from "@/components/Themed";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import CustomButton from "@/components/CustomButton";
@@ -6,7 +13,6 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
 import { CustomText } from "@/components/CustomText";
-import FormField2 from "@/components/FormField2";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/providers/ThemeProvider";
@@ -33,7 +39,6 @@ export default function ExpenseDetail({
   const { t } = useTranslation();
   const { theme } = useTheme();
   const router = useRouter();
-  const { id } = useLocalSearchParams();
   const [date, setDate] = useState(expense.date);
   const [note, setNote] = useState(expense.note);
   const [desc, setDesc] = useState(expense.desc);
@@ -42,24 +47,24 @@ export default function ExpenseDetail({
   const [image, setImage] = useState<string | null>(null);
   const [error, setError] = useState("");
 
-  const fieldStyles = "mt-2 mb-2";
-
   useEffect(() => {
     const fetchExpense = async () => {
       try {
-        const expense = await CallAPIExpense.getExpenseByIdAPI(Number(id));
-        setDate(expense.date);
-        setNote(expense.note);
-        setDesc(expense.desc);
-        setAmount(expense.amount);
-        setFile(expense.file);
+        console.log("Fetching expense with ID:", expense.id); // Add logging
+        const fetchedExpense = await CallAPIExpense.getExpenseByIdAPI(expense.id); // Use the id from the expense object
+        console.log("Fetched expense:", fetchedExpense); // Add logging
+        setDate(fetchedExpense.date);
+        setNote(fetchedExpense.note);
+        setDesc(fetchedExpense.desc);
+        setAmount(fetchedExpense.amount);
+        setFile(fetchedExpense.file);
       } catch (error) {
         console.error("Error fetching expense:", error);
       }
     };
 
     fetchExpense();
-  }, [id]);
+  }, [expense.id]); // Use the id from the expense object
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -92,15 +97,15 @@ export default function ExpenseDetail({
   });
 
   // Handle update
-  const handleUpdateProduct = async () => {
+  const handleUpdateExpense = async () => {
     setError("");
 
     // Check if all fields are filled
     if (!date || !note || !desc || !amount) {
       setAlertConfig({
         visible: true,
-        title: t("product.validation.incomplete"),
-        message: t("product.validation.invalidData"),
+        title: t("expense.updated"),
+        message: t("expense.updated.message"),
         buttons: [
           {
             text: t("common.ok"),
@@ -113,32 +118,34 @@ export default function ExpenseDetail({
     }
 
     try {
-      // Call the update API
-      const data = await CallAPIExpense.updateExpenseAPI(Number(id), {
+      const updatedExpense = {
         date,
         note,
         desc,
         amount: Number(amount),
         file,
-      });
+      };
 
+      const data = await CallAPIExpense.updateExpenseAPI(expense.id, updatedExpense);
+      onClose();
+      
       if (data.error) throw new Error(data.error);
 
-      setAlertConfig({
-        visible: true,
-        title: t("product.alerts.successTitle"),
-        message: t("product.alerts.successMessage"),
-        buttons: [
-          {
-            text: t("product.alerts.ok"),
-            onPress: () => {
-              setAlertConfig((prev) => ({ ...prev, visible: false }));
-              // go to product page
-              router.replace("(tabs)/product");
-            },
-          },
-        ],
-      });
+      // setAlertConfig({
+      //   visible: true,
+      //   title: t("product.alerts.successTitle"),
+      //   message: t("product.alerts.successMessage"),
+      //   buttons: [
+      //     {
+      //       text: t("product.alerts.ok"),
+      //       onPress: () => {
+      //         setAlertConfig((prev) => ({ ...prev, visible: false }));
+      //         // close expense detail
+      //         
+      //       },
+      //     },
+      //   ],
+      // });
     } catch (error: any) {
       setError(error.message);
     }
@@ -172,7 +179,7 @@ export default function ExpenseDetail({
           <TouchableOpacity
             activeOpacity={1}
             style={{
-                            justifyContent: "center",
+              justifyContent: "center",
               width: "90%",
               backgroundColor: theme === "dark" ? "#2D2D2D" : "#ffffff",
               borderRadius: 10,
@@ -187,22 +194,25 @@ export default function ExpenseDetail({
                   className="mt-4 mb-6 self-center rounded-md"
                 />
               )}
-
+              <CustomText className="text-center font-bold">
+                {date.replace("T", "  ").replace(/:\d{2}\.\d{3}Z$/, "")}
+              </CustomText>
               <CustomText className="text-center text-lg font-bold">
                 {desc}
               </CustomText>
-                <Text
+              <Text
                 className="text-center text-2xl font-bold"
                 style={{ color: theme === "dark" ? "#ffffff" : "#000000" }}
-                >
+              >
                 {amount}
-                </Text>
+              </Text>
               <TextInput
                 className={`mt-3 mb-2 mx-1 h-14  px-4 rounded-2xl border-2 focus:border-secondary ${
                   theme === "dark"
                     ? "bg-primary-100 border-black-200"
                     : "bg-white border-gray-100"
                 }`}
+                style={{ color: theme === "dark" ? "#ffffff" : "#000000" }}
                 value={note}
                 onChangeText={setNote}
                 placeholder="note"
@@ -212,8 +222,12 @@ export default function ExpenseDetail({
                   onPress={pickImage}
                   className=" items-center justify-center"
                 >
-                  <Ionicons name="document-text-outline"size={26} color="#999999" />
-                  <CustomText className="text-center text-blue-500 mt-1">
+                  <Ionicons
+                    name="document-text-outline"
+                    size={26}
+                    color="#999999"
+                  />
+                  <CustomText className="text-center mt-1">
                     Attach File
                   </CustomText>
                 </TouchableOpacity>
@@ -224,7 +238,7 @@ export default function ExpenseDetail({
 
                 <CustomButton
                   title="Save"
-                  handlePress={handleUpdateProduct}
+                  handlePress={handleUpdateExpense}
                   containerStyles="px-12 mt-2"
                   textStyles="!text-white"
                 />

@@ -90,16 +90,19 @@ const getExpenseById = async (req: Request, res: Response) => {
 // Update a Expense by ID - Put
 const updateExpenseById = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const {memberId}= req.body
   const expenseInput: userInput = req.body;
   try {
     const expense = await prisma.expense.update({
       where: {
         id: Number(id),
+        memberId
       },
       data: {
         date: expenseInput.date,
         amount: expenseInput.amount,
         group: expenseInput.group,
+        note: expenseInput.note,
         image: expenseInput.image,
         memberId: expenseInput.memberId,
       },
@@ -107,6 +110,25 @@ const updateExpenseById = async (req: Request, res: Response) => {
     res.json(expense);
   } catch (e) {
     console.error(e);
+  }
+};
+
+// Delete a Expense by ID - Delete
+const deleteExpenseById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const memberId = req.body.memberId;
+  
+  try {
+    const expense = await prisma.expense.delete({
+      where: {
+        id: Number(id),
+        memberId: memberId
+      },
+    });
+    res.json({ message: `Expense with ID ${id} deleted` });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "failed to delete expense" });
   }
 };
 
@@ -147,6 +169,6 @@ export {
   getExpenseById,
   updateExpenseById,
   searchExpenseByDate,
-  autoDeleteExpense
-  
+  autoDeleteExpense,
+  deleteExpenseById
 };

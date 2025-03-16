@@ -31,7 +31,7 @@ class CallAPIExpense {
   async autoDeleteExpenseAPI(): Promise<any> {
     try {
       const axiosInstance = await getAxiosWithAuth();
-      const response = await axiosInstance.delete(`/expense/autoDelete`);
+      const response = await axiosInstance.delete(`/pdf/autoDelete`);
 
       console.log("🚀AutoDeleteExpenseAPI:", response.data);
 
@@ -116,6 +116,32 @@ class CallAPIExpense {
       }
     }
   }
+
+  // delete expense by id
+  async deleteExpenseAPI(id: number, memberId: string): Promise<any> {
+    try {
+      const axiosInstance = await getAxiosWithAuth();
+      const response = await axiosInstance.delete(`/expense/${id}`, {
+        data: { memberId },
+      });
+
+      console.log("🚀DeleteExpenseAPI:", response.data);
+
+      return response.data;
+    } catch (error) {
+      console.error("🚨 Delete Expense API Error:", error);
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 404) {
+          throw new Error("API endpoint not found (404)");
+        }
+        throw error.response.data;
+      } else {
+        throw new Error("Network Error");
+      }
+    }
+  }
 }
+
+
 
 export default new CallAPIExpense();
