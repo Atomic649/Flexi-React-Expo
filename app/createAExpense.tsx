@@ -7,9 +7,8 @@ import {
   TextInput,
 } from "react-native";
 import { View } from "@/components/Themed";
-import { useRouter, useLocalSearchParams } from "expo-router";
 import CustomButton from "@/components/CustomButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
 import { CustomText } from "@/components/CustomText";
@@ -17,6 +16,9 @@ import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/providers/ThemeProvider";
 import CallAPIExpense from "@/api/expense_api";
+import MultiDateCalendar from "@/components/MultiDateCalendar";
+import { getMemberId } from "@/utils/utility";
+import { format } from "date-fns";
 
 interface ExpenseDetailProps {
   visible: boolean;
@@ -32,44 +34,21 @@ interface ExpenseDetailProps {
   };
 }
 
-export default function ExpenseDetail({
+export default function CreateExpense({
   visible,
   onClose,
-  expense,
 }: ExpenseDetailProps) {
   const { t } = useTranslation();
-  const { theme } = useTheme();
-  const router = useRouter();
-  const [date, setDate] = useState(expense.date);
-  const [note, setNote] = useState(expense.note);
-  const [desc, setDesc] = useState(expense.desc);
-  const [amount, setAmount] = useState(expense.amount);
-  const [image, setImage] = useState(expense.image);
-  const [group, setGroup] = useState(expense.group);
+  const { theme } = useTheme();  
+  const [note, setNote] = useState<string>("");
+  const [amount, setAmount] = useState<string>("");
+  const [image, setImage] = useState<string | undefined>();
+  const [group, setGroup] = useState<string | undefined>();
   const [error, setError] = useState("");
   const [imageModalVisible, setImageModalVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    const fetchExpense = async () => {
-      try {
-        console.log("Fetching expense with ID:", expense.id); // Add logging
-        const fetchedExpense = await CallAPIExpense.getExpenseByIdAPI(
-          expense.id
-        ); // Use the id from the expense object
-        console.log("Fetched expense:", fetchedExpense); // Add logging
-        setDate(fetchedExpense.date);
-        setNote(fetchedExpense.note);
-        setDesc(fetchedExpense.desc);
-        setAmount(fetchedExpense.amount);
-        setImage(fetchedExpense.image);
-        setGroup(fetchedExpense.group);
-      } catch (error) {
-        console.error("Error fetching expense:", error);
-      }
-    };
-
-    fetchExpense();
-  }, [expense.id]); // Use the id from the expense object
+  const [calendarVisible, setCalendarVisible] = useState(false);
+  const [date, setDate] = useState<string[]>([new Date().toISOString()]);
+  const [SelectedDates, setSelectedDates] = useState<string[]>([new Date().toISOString()]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -102,15 +81,15 @@ export default function ExpenseDetail({
   });
 
   // Handle update
-  const handleUpdateExpense = async () => {
+  const handleCreateExpense = async () => {
     setError("");
 
     // Check if all fields are filled
-    if (!date || !note || !desc || !amount) {
+    if (!date || !note || !amount) {
       setAlertConfig({
         visible: true,
-        title: t("expense.updated"),
-        message: t("expense.updated.message"),
+        title: t("expense.create.error.title"),
+        message: t("expense.create.error.message"),
         buttons: [
           {
             text: t("common.ok"),
@@ -123,19 +102,23 @@ export default function ExpenseDetail({
     }
 
     try {
-      const updatedExpense = {
-        date,
-        note,
-        desc,
-        amount: Number(amount),
-        image,
-        group,
-      };
+    // convert date to string
 
-      const data = await CallAPIExpense.updateExpenseAPI(
-        expense.id,
-        updatedExpense
-      );
+    const memberId = await getMemberId(); // Assuming getMemberId is a function that fetches the memberId
+
+    const formattedDate = format(new Date(date[0]), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+
+    const Expense = {
+      date: formattedDate, // Use the formatted date
+      note,
+      amount: Number(amount),
+      image,
+      group,
+      memberId,
+      
+    };
+
+      const data = await CallAPIExpense.createAExpenseAPI(Expense);
       onClose();
 
       if (data.error) throw new Error(data.error);
@@ -154,6 +137,14 @@ export default function ExpenseDetail({
         ? "bg-zinc-800"
         : "bg-zinc-200"
     }`;
+
+  const handleDatesChange =  (dates: string[]) => {
+    setSelectedDates(dates);
+    console.log("Selected Dates:", dates);
+    setDate(dates); // Store the dates as an array
+    setCalendarVisible(false);
+  };  // force to chose only one date
+  
 
   return (
     <Modal
@@ -200,20 +191,35 @@ export default function ExpenseDetail({
                   />
                 )}
               </TouchableOpacity>
-              <CustomText className="text-center font-bold">
-                {date
-                  ? date.replace("T", "  ").replace(/:\d{2}\.\d{3}Z$/, "")
-                  : ""}
-              </CustomText>
-              <CustomText className="text-center text-lg font-bold">
-                {desc}
-              </CustomText>
-              <Text
-                className="text-center text-2xl font-bold"
-                style={{ color: theme === "dark" ? "#ffffff" : "#000000" }}
-              >
-                {amount}
-              </Text>
+
+              <View className="flex-row items-center justify-center bg-transparent  rounded-full p-2 ml-2">
+                <CustomText
+                  className={`text-base mx-2 ${
+                    theme === "dark" ? "text-[#c9c9c9]" : "text-[#48453e]"
+                  }`}
+                >
+                  {SelectedDates.length > 0
+                    ? new Date(SelectedDates[0]).toLocaleString()
+                    : t("dashboard.selectDate")}
+                </CustomText>
+                {/* icon Calendar */}
+                <Ionicons
+                  name="calendar"
+                  size={24}
+                  color={theme === "dark" ? "#ffffff" : "#444541"}
+                  onPress={() => setCalendarVisible(true)}
+                />
+              </View>
+
+              <TextInput
+                className={`text-center text-2xl font-bold py-3 ${
+                  theme === "dark" ? "text-secondary-100" : "text-black"
+                }`}
+                value={amount}
+                onChangeText={setAmount}
+                placeholder="0.00"
+                keyboardType="numeric"
+              />
               <TextInput
                 className={`mt-3 mb-2 mx-1 h-14  px-4 rounded-2xl border-2 focus:border-secondary ${
                   theme === "dark"
@@ -293,6 +299,13 @@ export default function ExpenseDetail({
                   </TouchableOpacity>
                 </ScrollView>
               </View>
+
+              {error ? (
+                <View className="items-center">
+                  <Text className="text-secondary mt-3">{error}</Text>
+                </View>
+                ) : null}
+
               <View className="flex-row justify-evenly">
                 <TouchableOpacity
                   onPress={pickImage}
@@ -308,13 +321,10 @@ export default function ExpenseDetail({
                   </CustomText>
                 </TouchableOpacity>
 
-                {error ? (
-                  <CustomText className="text-red-500 mt-4">{error}</CustomText>
-                ) : null}
 
                 <CustomButton
                   title="Save"
-                  handlePress={handleUpdateExpense}
+                  handlePress={handleCreateExpense}
                   containerStyles="px-12 mt-2"
                   textStyles="!text-white"
                 />
@@ -347,6 +357,36 @@ export default function ExpenseDetail({
                 className="absolute top-0 right-0 p-4"
               ></TouchableOpacity>
             </View>
+          </TouchableOpacity>
+        </Modal>
+
+        {/* Modal for MultiDateCalendar */}
+        <Modal
+          visible={calendarVisible}
+          transparent={true}
+          animationType="none"
+          onRequestClose={() => setCalendarVisible(false)}
+        >
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => setCalendarVisible(false)}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: theme === "dark" ? "#000000b5" : "#b4cac6a9",
+            }}
+          >
+            <TouchableOpacity
+              activeOpacity={1}
+              style={{
+                backgroundColor: theme === "dark" ? "#18181b" : "#ffffff",
+                padding: 16,
+                borderRadius: 16,
+              }}
+            >
+              <MultiDateCalendar onDatesChange={handleDatesChange}  />
+            </TouchableOpacity>
           </TouchableOpacity>
         </Modal>
 

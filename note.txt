@@ -15,8 +15,8 @@ npx prisma migrate dev --name init
 npx expo install expo@latest
 npx expo install --fix
 
-! -------UPDATE PYTHON LASTED---------
- python3.12 -m pip install --upgrade pip
+! --------Setting Terminal Power10K-----------
+p10k configure
 
 x start 
 npx expo start

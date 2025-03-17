@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Bank, PrismaClient } from "@prisma/client";
 import Joi from "joi";
+import { parseISO } from "date-fns";
 
 //Create  instance of PrismaClient
 const prisma = new PrismaClient();
@@ -25,15 +26,30 @@ const schema = Joi.object({
   group: Joi.string(),
   image: Joi.string(),
   memberId: Joi.string().required(),
-  businessAcc: Joi.number().required(),
+  businessAcc: Joi.number(),
   note: Joi.string(),
   channel: Joi.string(),
 });
 
 //  create a new expense - Post
 const createExpense = async (req: Request, res: Response) => {
+  const memberId = req.body.memberId;
+  // find businessAcc by memberId
+  const businessAcc = await prisma.businessAcc.findFirst({
+    where: {
+      memberId: memberId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!businessAcc) {
+    return res.status(400).json({ message: "Business account not found" });
+  }
+
   const expenseInput: userInput = req.body;
-  console.log(expenseInput);
+  console.log("Input", expenseInput);
 
   // validate the request body
   const { error } = schema.validate(expenseInput);
@@ -41,6 +57,10 @@ const createExpense = async (req: Request, res: Response) => {
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
+
+  // Parse the date string to preserve timezone information
+  expenseInput.date = parseISO(expenseInput.date.toString());
+
   try {
     const expense = await prisma.expense.create({
       data: {
@@ -49,9 +69,10 @@ const createExpense = async (req: Request, res: Response) => {
         group: expenseInput.group,
         image: expenseInput.image,
         memberId: expenseInput.memberId,
-        businessAcc: expenseInput.businessAcc,
+        businessAcc: businessAcc.id,
         note: expenseInput.note,
         channel: expenseInput.channel,
+        save: true,
       },
     });
     res.json(expense);
@@ -60,17 +81,17 @@ const createExpense = async (req: Request, res: Response) => {
   }
 };
 
-// Get All Expenses - Get
+// Get All Expenses - Get 
+// use in DetectExpense
 const getExpenses = async (req: Request, res: Response) => {
   const { memberId } = req.params;
   try {
-    const expenses = await prisma.expense.findMany(
-      {
-        where: {
-          memberId: memberId,
-        },
+    const expenses = await prisma.expense.findMany({
+      where: {
+        memberId: memberId,
+        save: false
       },
-    );
+    });
     res.json(expenses);
   } catch (e) {
     console.error(e);
@@ -97,13 +118,13 @@ const getExpenseById = async (req: Request, res: Response) => {
 // Update a Expense by ID - Put
 const updateExpenseById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const {memberId}= req.body
+  const { memberId } = req.body;
   const expenseInput: userInput = req.body;
   try {
     const expense = await prisma.expense.update({
       where: {
         id: Number(id),
-        memberId
+        memberId,
       },
       data: {
         date: expenseInput.date,
@@ -124,12 +145,12 @@ const updateExpenseById = async (req: Request, res: Response) => {
 const deleteExpenseById = async (req: Request, res: Response) => {
   const { id } = req.params;
   const memberId = req.body.memberId;
-  
+
   try {
     const expense = await prisma.expense.delete({
       where: {
         id: Number(id),
-        memberId: memberId
+        memberId: memberId,
       },
     });
     res.json({ message: `Expense with ID ${id} deleted` });
@@ -169,7 +190,6 @@ const autoDeleteExpense = async () => {
   }
 };
 
-
 export {
   createExpense,
   getExpenses,
@@ -177,5 +197,5 @@ export {
   updateExpenseById,
   searchExpenseByDate,
   autoDeleteExpense,
-  deleteExpenseById
+  deleteExpenseById,
 };

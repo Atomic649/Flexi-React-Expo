@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   Button,
-  StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
   Modal,
   SafeAreaView,
-  TextInput,
   Alert,
   Dimensions,
 } from "react-native";
@@ -18,12 +16,13 @@ import { WebView } from "react-native-webview";
 import * as FileSystem from "expo-file-system";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
-import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import ExpenseTable from "./ExpenseTable";
 import { getMemberId } from "@/utils/utility";
 import CallAPIExpense from "@/api/expense_api";
 import { router } from "expo-router";
 import ExpenseDetail from "@/app/expenseDetail"; // Import the ExpenseDetail component
+import CreateExpense from "@/app/createAExpense"; // Import the CreateExpense component
 
 export default function DetectExpense() {
   const { theme } = useTheme();
@@ -32,10 +31,9 @@ export default function DetectExpense() {
   const [error, setError] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [expenses, setExpenses] = useState<any[]>([]);
-  const [bankAccountNo, setBankAccountNo] = useState<string | null>(null);
-  const [isFocused, setIsFocused] = useState(false);
   const screenWidth = Dimensions.get("window").width;
   const [selectedExpense, setSelectedExpense] = useState<any | null>(null);
+  const [isCreateExpenseVisible, setIsCreateExpenseVisible] = useState(false);
 
   // auto delete if save is false
   const autoDelete = async () => {
@@ -126,7 +124,9 @@ export default function DetectExpense() {
     }
   };
 
-  const handleAdd = async () => {};
+  const handleAdd = () => {
+    setIsCreateExpenseVisible(true);
+  };
 
   const toggleExpenseDetail = (expense: any) => {
     setSelectedExpense(expense);
@@ -259,6 +259,18 @@ export default function DetectExpense() {
           </View>
         </View>
       </Modal>
+
+      <CreateExpense
+        visible={isCreateExpenseVisible}
+        onClose={() => setIsCreateExpenseVisible(false)} expense={{
+          date: "",
+          note: "",
+          desc: "",
+          amount: "",
+          image: "",
+          id: 0,
+          group: ""
+        }}      />
     </SafeAreaView>
   );
 }

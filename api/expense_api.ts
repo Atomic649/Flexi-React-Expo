@@ -160,6 +160,28 @@ class CallAPIExpense {
       }
     }
   }
+
+  // create expense
+  async createAExpenseAPI(data: any): Promise<any> {
+    try {
+      const axiosInstance = await getAxiosWithAuth();
+      const response = await axiosInstance.post(`/expense`, data);
+
+      console.log("🚀CreateExpenseAPI:", response.data);
+
+      return response.data;
+    } catch (error) {
+      console.error("🚨 Create Expense API Error:", error);
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 404) {
+          throw new Error("API endpoint not found (404)");
+        }
+        throw error.response.data;
+      } else {
+        throw new Error("Network Error");
+      }
+    }
+  }
  
 }
 

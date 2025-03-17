@@ -6,7 +6,7 @@ import { useTheme } from "@/providers/ThemeProvider";
 import icons from "@/constants/icons";
 
 const formatDate = (date: string) => {
-  return date.replace("T","   ").replace(":00.000Z", "");
+  return date.replace("T", "   ").replace(/:\d{2}\.\d{3}Z$/, "");
 }
 
 export default function ExpenseCard({

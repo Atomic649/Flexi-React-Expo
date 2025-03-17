@@ -121,6 +121,7 @@ export const pdfExtract = async (req: Request, res: Response): Promise<void> => 
     const expenses = await prisma.expense.findMany({
       where: {
         memberId: expense.memberId,
+        save: false,
       },
     });
     return expenses;

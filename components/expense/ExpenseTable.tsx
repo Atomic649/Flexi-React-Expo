@@ -12,7 +12,8 @@ interface Expense {
   note: string;
   desc: string;
   amount: string;
-  file: string;
+  image: string;
+  group: string;
   id: number;
 }
 
@@ -41,10 +42,7 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
     theme === "dark" ? "text-white" : "text-black"
   }`;
 
-  const handleFilePress = (file: string) => {
-    // Handle file press logic here
-    console.log(`File pressed: ${file}`);
-  };
+  
 
   const handleDelete = async (id: number) => {
     try {
@@ -127,17 +125,16 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
             </Text>
 
             <View className="flex-row">
-              <TouchableOpacity
-                onPress={() => handleFilePress(item.file)}
+              <TouchableOpacity               
                 className="flex-1 m-2 justify-center items-center"
-                disabled={!item.file}
+                disabled={!item.image}
               >
                 <Ionicons
                   className="text-center"
                   name="document-text-outline"
                   size={16}
                   color={
-                    !item.file
+                    !item.image
                       ? theme === "dark"
                         ? "rgba(255, 255, 255, 0.3)"
                         : "rgba(103, 103, 103, 0.3)"
