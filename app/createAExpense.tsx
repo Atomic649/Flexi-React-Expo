@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { View } from "@/components/Themed";
 import CustomButton from "@/components/CustomButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import CustomAlert from "@/components/CustomAlert";
 import { CustomText } from "@/components/CustomText";
@@ -23,6 +23,7 @@ import { format } from "date-fns";
 interface ExpenseDetailProps {
   visible: boolean;
   onClose: () => void;
+  success: () => void;
   expense: {
     date: string;
     note: string;
@@ -35,7 +36,8 @@ interface ExpenseDetailProps {
 }
 
 export default function CreateExpense({
-  visible,
+  success,
+  visible,  
   onClose,
 }: ExpenseDetailProps) {
   const { t } = useTranslation();
@@ -49,6 +51,7 @@ export default function CreateExpense({
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [date, setDate] = useState<string[]>([new Date().toISOString()]);
   const [SelectedDates, setSelectedDates] = useState<string[]>([new Date().toISOString()]);
+  
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -120,6 +123,7 @@ export default function CreateExpense({
 
       const data = await CallAPIExpense.createAExpenseAPI(Expense);
       onClose();
+      success();
 
       if (data.error) throw new Error(data.error);
     } catch (error: any) {

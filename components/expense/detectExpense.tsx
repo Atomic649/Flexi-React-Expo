@@ -23,6 +23,7 @@ import CallAPIExpense from "@/api/expense_api";
 import { router } from "expo-router";
 import ExpenseDetail from "@/app/expenseDetail"; // Import the ExpenseDetail component
 import CreateExpense from "@/app/createAExpense"; // Import the CreateExpense component
+import { CustomText } from "../CustomText";
 
 export default function DetectExpense() {
   const { theme } = useTheme();
@@ -34,6 +35,7 @@ export default function DetectExpense() {
   const screenWidth = Dimensions.get("window").width;
   const [selectedExpense, setSelectedExpense] = useState<any | null>(null);
   const [isCreateExpenseVisible, setIsCreateExpenseVisible] = useState(false);
+  const [isCreateSuccess, setIsCreateSuccess] = useState(false);
 
   // auto delete if save is false
   const autoDelete = async () => {
@@ -200,6 +202,22 @@ export default function DetectExpense() {
           onRowPress={toggleExpenseDetail} // Pass the toggle function to the table
         />
       )}
+      {isCreateSuccess && (
+        <View className="flex-1 justify-center items-center">
+          <Text
+            className="text-center "
+            style={{ color: theme === "dark" ? "#ff8800" : "#ff8000" }}
+          >
+            Expenses Saved Successfully  
+          </Text>
+          <CustomText
+            className="text-center  "
+            style={{ color: theme === "dark" ? "#ff8800" : "#ff8000" }}
+          >
+            View in Expense List
+          </CustomText>
+        </View>
+      )}
 
       {error && (
         <View className="flex-1 justify-center items-center">
@@ -261,16 +279,19 @@ export default function DetectExpense() {
       </Modal>
 
       <CreateExpense
+        success={() => setIsCreateSuccess(true)}
         visible={isCreateExpenseVisible}
-        onClose={() => setIsCreateExpenseVisible(false)} expense={{
+        onClose={() => setIsCreateExpenseVisible(false)}
+        expense={{
           date: "",
           note: "",
           desc: "",
           amount: "",
           image: "",
           id: 0,
-          group: ""
-        }}      />
+          group: "",
+        }}
+      />
     </SafeAreaView>
   );
 }
