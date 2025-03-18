@@ -113,6 +113,7 @@ const List = () => {
                   ExCardColor={theme === "dark" ? "#151515" : "#24232110"}
                   ExpenseColor={theme === "dark" ? "#ffaa00" : "#ffaa00"}
                   NoteColor={theme === "dark" ? "#868686" : "#656360"}
+                  DescColor={theme === "dark" ? "#868686" : "#656360"}
                   onDelete={handleDelete}
                 />
               ))}

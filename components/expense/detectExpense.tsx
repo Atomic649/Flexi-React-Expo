@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -36,6 +36,7 @@ export default function DetectExpense() {
   const [selectedExpense, setSelectedExpense] = useState<any | null>(null);
   const [isCreateExpenseVisible, setIsCreateExpenseVisible] = useState(false);
   const [isCreateSuccess, setIsCreateSuccess] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   // auto delete if save is false
   const autoDelete = async () => {
@@ -106,6 +107,27 @@ export default function DetectExpense() {
       setLoading(false);
     }
   };
+  // refreshing table
+  const onRefresh = useCallback(async () => {
+      setRefreshing(true);
+      console.log("🔥 Refreshing...");
+      
+      try {
+        const memberId = String(await getMemberId());
+        console.log("Member ID:", memberId);
+        if (memberId) {
+          const expenses = await CallAPIExpense.getAllExpensesAPI(memberId);
+          setExpenses(expenses);
+          setError(null);
+          setRefreshing(true);
+         
+        }
+      } catch (error) {
+        console.error("Error refreshing expenses", error);
+      }
+      setRefreshing(false);
+    }, []);
+  
 
   const handleSave = async () => {
     const allExpenseIds = expenses.map((expense) => expense.id);
@@ -118,13 +140,33 @@ export default function DetectExpense() {
         );
         console.log("🔥response", response);
         setExpenses([]); // Clear all data in
-        Alert.alert("Expenses saved successfully"),
+        Alert.alert(
+          "Successfully",
+          "View in the Expense List",
+          [
+            {
+              text: "OK",
+              onPress: () => router.push("(tabs)/expense"),
+            },
+          ]
+        );
           router.push("(tabs)/expense");
       } catch (error) {
         console.error("Error saving expenses:", error);
       }
     }
   };
+
+  // if create success, refresh the page
+  useEffect(() => {
+    if (isCreateSuccess) {
+      onRefresh();
+      setIsCreateSuccess(false);
+      console.log("🔥 Refreshing... after create");
+    }
+  }, [isCreateSuccess]);
+
+  
 
   const handleAdd = () => {
     setIsCreateExpenseVisible(true);
@@ -134,6 +176,7 @@ export default function DetectExpense() {
     setSelectedExpense(expense);
   };
 
+  
   return (
     <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
       <View className="flex-row items-center justify-between px-5 py-3">
@@ -202,31 +245,14 @@ export default function DetectExpense() {
           onRowPress={toggleExpenseDetail} // Pass the toggle function to the table
         />
       )}
-      {isCreateSuccess && (
-        <View className="flex-1 justify-center items-center">
-          <Text
-            className="text-center "
-            style={{ color: theme === "dark" ? "#ff8800" : "#ff8000" }}
-          >
-            Expenses Saved Successfully  
-          </Text>
-          <CustomText
-            className="text-center  "
-            style={{ color: theme === "dark" ? "#ff8800" : "#ff8000" }}
-          >
-            View in Expense List
-          </CustomText>
-        </View>
-      )}
-
       {error && (
-        <View className="flex-1 justify-center items-center">
-          <Text
-            className="text-center text-red-500 "
-            style={{ color: theme === "dark" ? "#ff8800" : "#ff8000" }}
+        <View className="flex-1 justify-center items-center ">
+          <View
+            className="p-8 rounded-2xl"
+            style={{ backgroundColor: theme === "dark" ? "#282625" : "#edeceb" }}
           >
-            {error}
-          </Text>
+            <CustomText className="text-center ">{error}</CustomText>
+          </View>
         </View>
       )}
 
@@ -279,7 +305,10 @@ export default function DetectExpense() {
       </Modal>
 
       <CreateExpense
-        success={() => setIsCreateSuccess(true)}
+        success={() => {
+          setIsCreateSuccess(true);
+          console.log("🔥isCreateSuccess", isCreateSuccess);
+        }}
         visible={isCreateExpenseVisible}
         onClose={() => setIsCreateExpenseVisible(false)}
         expense={{

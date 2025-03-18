@@ -20,6 +20,7 @@ export default function ExpenseCard({
   ExCardColor,
   Opacity,
   NoteColor,
+  DescColor,
   onDelete,
 }: any) {
   
@@ -91,8 +92,8 @@ export default function ExpenseCard({
                 </Text>
 
                 <Text
-                  className="text-base  font-psemibold"
-                  style={{ color: NoteColor }}
+                  className="text-sm  font-normal"
+                  style={{ color: DescColor }}
                   numberOfLines={1}
                 >
                   {desc}

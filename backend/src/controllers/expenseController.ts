@@ -11,7 +11,7 @@ interface userInput {
   date: Date;
   amount: number;
   group: string;
-  image: string;
+  image: string;  
   memberId: string;
   businessAcc: number;
   note: string;
@@ -24,6 +24,7 @@ const schema = Joi.object({
   date: Joi.date().required(),
   amount: Joi.number().required(),
   group: Joi.string(),
+  desc: Joi.string(),
   image: Joi.string(),
   memberId: Joi.string().required(),
   businessAcc: Joi.number(),
@@ -58,6 +59,8 @@ const createExpense = async (req: Request, res: Response) => {
     return res.status(400).json({ message: error.details[0].message });
   }
 
+  
+
   // Parse the date string to preserve timezone information
   expenseInput.date = parseISO(expenseInput.date.toString());
 
@@ -66,13 +69,14 @@ const createExpense = async (req: Request, res: Response) => {
       data: {
         date: expenseInput.date,
         amount: expenseInput.amount,
+        desc: expenseInput.desc,
         group: expenseInput.group,
         image: expenseInput.image,
         memberId: expenseInput.memberId,
         businessAcc: businessAcc.id,
         note: expenseInput.note,
         channel: expenseInput.channel,
-        save: true,
+        save: false,
       },
     });
     res.json(expense);
@@ -129,6 +133,7 @@ const updateExpenseById = async (req: Request, res: Response) => {
       data: {
         date: expenseInput.date,
         amount: expenseInput.amount,
+        desc: expenseInput.desc,
         group: expenseInput.group,
         note: expenseInput.note,
         image: expenseInput.image,

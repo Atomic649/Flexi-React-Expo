@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, FlatList, TouchableOpacity, RefreshControl } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
-import { router } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ExpenseDetail from "@/app/expenseDetail"; // Ensure correct import
 import CallAPIExpense from "@/api/expense_api";
@@ -36,13 +35,11 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
     theme === "dark" ? "text-white" : "text-[#ffffff]"
   }`;
   const cellClass = `flex-1 text-center pt-3 ${
-    theme === "dark" ? "text-white" : "text-black"
+    theme === "dark" ? "text-white" : "text-zinc-900"
   }`;
   const dateClass = `flex-1 text-center  text-sm p-3 ${
-    theme === "dark" ? "text-white" : "text-black"
+    theme === "dark" ? "text-white" : "text-zinc-900"
   }`;
-
-  
 
   const handleDelete = async (id: number) => {
     try {
@@ -59,11 +56,6 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
     }
   };
 
-  const handlePress = (item: Expense) => {
-    // Show the ExpenseDetail modal
-    setSelectedExpense(item);
-    setIsModalVisible(true);
-  };
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -98,13 +90,13 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
             <Text className={dateClass} numberOfLines={2}>
               {item.date.split("T")[0]}
               {"\n"}
-              {item.date.split("T")[1].replace(":00.000Z", "")}
+              {item.date.split("T")[1].replace(/:\d{2}\.\d{3}Z$/, "")}
             </Text>
           </View>
           <View className=" w-3/6">
             <Text
               className={`flex-2 text-end pt-3  ${
-                theme === "dark" ? "text-white" : "text-black"
+                theme === "dark" ? "text-white" : "text-zinc-900"
               }`}
               numberOfLines={1}
             >
@@ -112,7 +104,7 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
             </Text>
             <Text
               className={`flex-2 text-end p-3  ${
-                theme === "dark" ? "text-white" : "text-black"
+                theme === "dark" ? "text-white" : "text-zinc-900"
               }`}
               numberOfLines={1}
             >

@@ -45,6 +45,7 @@ export default function CreateExpense({
   const { theme } = useTheme();  
   const [note, setNote] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
   const [image, setImage] = useState<string | undefined>();
   const [group, setGroup] = useState<string | undefined>();
   const [error, setError] = useState("");
@@ -89,6 +90,7 @@ export default function CreateExpense({
   const clearForm = () => {
     setNote("");
     setAmount("");
+    setDesc("");
     setImage(undefined);
     setGroup(undefined);
     setDate([new Date().toISOString()]);
@@ -132,6 +134,7 @@ export default function CreateExpense({
       date: formattedDate, // Use the formatted date
       note,
       amount: Number(amount),
+      desc,
       image,
       group,
       memberId,
@@ -232,6 +235,14 @@ export default function CreateExpense({
                   onPress={() => setCalendarVisible(true)}
                 />
               </View>
+              <TextInput
+                className="text-center text-base"
+                value={desc}
+                onChangeText={setDesc}
+                placeholder="DESCRIPTION (optional)"
+                placeholderTextColor={theme === "dark" ? "#6d6c67" : "#adaaa6"}
+                
+                />
 
                 <TextInput
                 className={`text-center text-2xl font-bold py-3 ${

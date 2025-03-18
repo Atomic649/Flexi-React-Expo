@@ -39,7 +39,6 @@ export default function ExpenseDetail({
 }: ExpenseDetailProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
-  const router = useRouter();
   const [date, setDate] = useState(expense.date);
   const [note, setNote] = useState(expense.note);
   const [desc, setDesc] = useState(expense.desc);
@@ -107,7 +106,7 @@ export default function ExpenseDetail({
     setError("");
 
     // Check if all fields are filled
-    if (!date || !note || !desc || !amount) {
+    if (!date || !note|| !amount) {
       setAlertConfig({
         visible: true,
         title: t("expense.updated"),
@@ -206,15 +205,25 @@ export default function ExpenseDetail({
                   ? date.replace("T", "  ").replace(/:\d{2}\.\d{3}Z$/, "")
                   : ""}
               </CustomText>
-              <CustomText className="text-center text-lg font-bold">
-                {desc}
-              </CustomText>
-              <Text
-                className="text-center text-2xl font-bold"
-                style={{ color: theme === "dark" ? "#ffffff" : "#000000" }}
-              >
-                {amount}
-              </Text>
+             
+              <TextInput
+                className="text-center text-base"
+                value={desc}
+                onChangeText={setDesc}
+                placeholder="DESCRIPTION (optional)"
+                placeholderTextColor={theme === "dark" ? "#6d6c67" : "#adaaa6"}
+                
+                />
+              <TextInput
+                className={`text-center text-2xl font-bold py-3 ${
+                  theme === "dark" ? "text-secondary-100" : "text-secondary"
+                }`}
+                value={amount}
+                onChangeText={setAmount}
+                placeholder="0.00"
+                placeholderTextColor={theme === "dark" ? "#6d6c67" : "#adaaa6"}
+                keyboardType="numeric"
+                />
               <TextInput
                 className={`mt-3 mb-2 mx-1 h-14  px-4 rounded-2xl border-2 focus:border-secondary ${
                   theme === "dark"
