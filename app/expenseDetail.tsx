@@ -71,10 +71,10 @@ export default function ExpenseDetail({
     fetchExpense();
   }, [expense.id]); // Use the id from the expense object
 
-  const pickImage = async () => {
+  const pickImage = async (allowsEditing = false) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing,
       aspect: [16, 9],
       quality: 1,
     });
@@ -82,7 +82,8 @@ export default function ExpenseDetail({
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
-  };
+ 
+ }
 
   // Add alert config state
   const [alertConfig, setAlertConfig] = useState<{
@@ -295,7 +296,7 @@ export default function ExpenseDetail({
               </View>
               <View className="flex-row justify-evenly">
                 <TouchableOpacity
-                  onPress={pickImage}
+                  onPress={() => pickImage()}
                   className=" items-center justify-center"
                 >
                   <Ionicons

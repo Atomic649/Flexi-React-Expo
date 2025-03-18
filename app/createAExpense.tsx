@@ -19,6 +19,7 @@ import CallAPIExpense from "@/api/expense_api";
 import MultiDateCalendar from "@/components/MultiDateCalendar";
 import { getMemberId } from "@/utils/utility";
 import { format } from "date-fns";
+import { th } from "date-fns/locale"; // Import Thai locale if needed
 
 interface ExpenseDetailProps {
   visible: boolean;
@@ -53,10 +54,10 @@ export default function CreateExpense({
   const [SelectedDates, setSelectedDates] = useState<string[]>([new Date().toISOString()]);
   
 
-  const pickImage = async () => {
+  const pickImage = async (allowsEditing = false) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing,
       aspect: [16, 9],
       quality: 1,
     });
@@ -64,7 +65,9 @@ export default function CreateExpense({
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
-  };
+ 
+ }
+ 
 
   // Add alert config state
   const [alertConfig, setAlertConfig] = useState<{
@@ -83,7 +86,21 @@ export default function CreateExpense({
     buttons: [],
   });
 
-  // Handle update
+  const clearForm = () => {
+    setNote("");
+    setAmount("");
+    setImage(undefined);
+    setGroup(undefined);
+    setDate([new Date().toISOString()]);
+    setSelectedDates([new Date().toISOString()]);
+    setError("");
+  };
+
+  const handleClose = () => {
+    clearForm();
+    onClose();
+  };
+
   const handleCreateExpense = async () => {
     setError("");
 
@@ -122,10 +139,11 @@ export default function CreateExpense({
     };
 
       const data = await CallAPIExpense.createAExpenseAPI(Expense);
+      if (data.error) throw new Error(data.error);
+
+      clearForm();
       onClose();
       success();
-
-      if (data.error) throw new Error(data.error);
     } catch (error: any) {
       setError(error.message);
     }
@@ -155,7 +173,7 @@ export default function CreateExpense({
       visible={visible}
       transparent={true}
       animationType="slide"
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
     >
       <TouchableOpacity
         style={{
@@ -165,7 +183,7 @@ export default function CreateExpense({
           backgroundColor: theme === "dark" ? "#000000aa" : "#bfbfbfaa",
         }}
         activeOpacity={1}
-        onPressOut={onClose}
+        onPressOut={handleClose}
       >
         <ScrollView
           contentContainerStyle={{
@@ -203,7 +221,7 @@ export default function CreateExpense({
                   }`}
                 >
                   {SelectedDates.length > 0
-                    ? new Date(SelectedDates[0]).toLocaleString()
+                    ? format(new Date(SelectedDates[0]), "dd-MM-yyyy HH:mm", { locale: th })
                     : t("dashboard.selectDate")}
                 </CustomText>
                 {/* icon Calendar */}
@@ -215,26 +233,28 @@ export default function CreateExpense({
                 />
               </View>
 
-              <TextInput
+                <TextInput
                 className={`text-center text-2xl font-bold py-3 ${
-                  theme === "dark" ? "text-secondary-100" : "text-black"
+                  theme === "dark" ? "text-secondary-100" : "text-secondary"
                 }`}
                 value={amount}
                 onChangeText={setAmount}
                 placeholder="0.00"
+                placeholderTextColor={theme === "dark" ? "#6d6c67" : "#adaaa6"}
                 keyboardType="numeric"
-              />
-              <TextInput
+                />
+                <TextInput
                 className={`mt-3 mb-2 mx-1 h-14  px-4 rounded-2xl border-2 focus:border-secondary ${
                   theme === "dark"
-                    ? "bg-primary-100 border-black-200"
-                    : "bg-white border-gray-100"
+                  ? "bg-primary-100 border-black-200"
+                  : "bg-white border-zinc-300"
                 }`}
                 style={{ color: theme === "dark" ? "#ffffff" : "#000000" }}
                 value={note}
                 onChangeText={setNote}
                 placeholder="note"
-              />
+                placeholderTextColor={theme === "dark" ? "#504f4d" : "#c0beb5"}
+                />
               <View className="flex-row justify-evenly items-center">
                 <ScrollView
                   horizontal
@@ -312,7 +332,7 @@ export default function CreateExpense({
 
               <View className="flex-row justify-evenly">
                 <TouchableOpacity
-                  onPress={pickImage}
+                  onPress={() => pickImage()}
                   className=" items-center justify-center"
                 >
                   <Ionicons

@@ -53,6 +53,13 @@ const Dashboard = () => {
     console.log("Selected Dates:", dates);
   };
 
+  const selectedDateRange =
+    selectedDates.length > 1
+      ? `${selectedDates[0]} to ${selectedDates[selectedDates.length - 1]}`
+      : selectedDates.length === 1
+      ? `${selectedDates[0]}`
+      : t("dashboard.selectDate");
+
   return (
     <LinearGradient
       colors={
@@ -86,9 +93,7 @@ const Dashboard = () => {
                   theme === "dark" ? "text-[#c9c9c9]" : "text-[#48453e]"
                 }`}
               >
-                {selectedDates.length > 0
-                  ? selectedDates.join(" to ")
-                  : t("dashboard.selectDate")}
+                {selectedDateRange}
               </CustomText>
               {/* icon Calendar */}
               <Ionicons

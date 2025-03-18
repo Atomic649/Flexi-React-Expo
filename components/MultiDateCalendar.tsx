@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { Calendar, DateData } from "react-native-calendars";
 import { useTheme } from "@/providers/ThemeProvider";
+import { eachDayOfInterval, format } from "date-fns";
 
 interface MultiDateCalendarProps {
   onDatesChange: (dates: string[]) => void;
@@ -23,16 +24,41 @@ const MultiDateCalendar: React.FC<MultiDateCalendarProps> = ({
     if (newSelectedDates[dateString]) {
       delete newSelectedDates[dateString]; // Deselect the date
     } else {
-      newSelectedDates[dateString] = {
-        selected: true,
-        selectedColor: theme === "dark" ? "#2dd4bf" : "#ffb30e",
-      }; // Select the date
+      const selectedDateKeys = Object.keys(newSelectedDates);
+      if (selectedDateKeys.length > 0) {
+        const firstSelectedDate = new Date(selectedDateKeys[0]);
+        const newDate = new Date(dateString);
+
+        if (newDate < firstSelectedDate) {
+          // If the new date is before the first selected date, select the range
+          const datesInRange = eachDayOfInterval({ start: newDate, end: firstSelectedDate });
+          datesInRange.forEach(date => {
+            newSelectedDates[format(date, "yyyy-MM-dd")] = {
+              selected: true,
+              selectedColor: theme === "dark" ? "#ffb30e" : "#ffb30e",
+            };
+          });
+        } else {
+          // If the new date is after the first selected date, select the range
+          const datesInRange = eachDayOfInterval({ start: firstSelectedDate, end: newDate });
+          datesInRange.forEach(date => {
+            newSelectedDates[format(date, "yyyy-MM-dd")] = {
+              selected: true,
+              selectedColor: theme === "dark" ? "#ffb30e" : "#ffb30e",
+            };
+          });
+        }
+      } else {
+        newSelectedDates[dateString] = {
+          selected: true,
+          selectedColor: theme === "dark" ? "#ffb30e" : "#ffb30e",
+        }; // Select the date
+      }
     }
 
     setSelectedDates(newSelectedDates);
     onDatesChange(Object.keys(newSelectedDates)); // Pass the selected dates to the parent
   };
-
 
   const calendarTheme =
     theme === "dark"
@@ -40,12 +66,12 @@ const MultiDateCalendar: React.FC<MultiDateCalendarProps> = ({
           backgroundColor: "#8d8c8b",
           calendarBackground: "#18181b",
           textSectionTitleColor: "#ffffff",
-          textSectionTitleDisabledColor: "#555555",
-          dayTextColor: "#ffffff",
-          todayTextColor: "#2dd4bf",
+          textSectionTitleDisabledColor: "#868282",
+          dayTextColor: "#ffb30e",
+          todayTextColor: "#5bffef",
           selectedDayTextColor: "#ffffff",
-          selectedDayBackgroundColor: "#2dd4bf",
-          arrowColor: "#2dd4bf",
+          selectedDayBackgroundColor: "#ffb30e",
+          arrowColor: "#ffffff",
           monthTextColor: "#ffffff",
           indicatorColor: "#ffffff",
         }
@@ -63,29 +89,40 @@ const MultiDateCalendar: React.FC<MultiDateCalendarProps> = ({
           indicatorColor: "#000000",
         };
 
+  const selectedDateKeys = Object.keys(selectedDates);
+  const selectedDateRange =
+    selectedDateKeys.length > 1
+      ? `${selectedDateKeys[0]} to ${selectedDateKeys[selectedDateKeys.length - 1]}`
+      : selectedDateKeys.length === 1
+      ? `${selectedDateKeys[0]}`
+      : "";
+
   return (
     <View style={styles.container}>
+      <Text style={[styles.selectedDatesText, { color: "#ffb30e" }]}>
+        {selectedDateRange}
+      </Text>
       <Calendar
         onDayPress={handleDayPress}
         markedDates={selectedDates}
         theme={calendarTheme}
-        enableMultiSelect={false} // Enable multi-date selection
+        enableMultiSelect={false} // Disable multi-date selection
+        maxDate={new Date().toISOString().split("T")[0]} // Disable future dates
       />
-      {/* <Text style={[styles.selectedDatesText, { color: textColor }]}>
-        Selected Dates: {Object.keys(selectedDates).join(', ')}
-      </Text> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    padding: 14,
   },
   selectedDatesText: {
     marginTop: 16,
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 14,
+    fontWeight:"bold",
+    textAlign: "center",
+    
   },
 });
 
