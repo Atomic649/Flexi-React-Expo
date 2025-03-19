@@ -2,7 +2,6 @@ import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import { t } from "i18next";
 
 const formatDate = (dateString: string) => {
@@ -86,7 +85,7 @@ export default function BillCard({
 
   return (
     <View className="flex ">
-      <Swipeable renderRightActions={renderRightActions}>
+      {/* <Swipeable renderLeftActions={renderRightActions}> */}
         <View
           className={`flex flex-col items-center pt-3 pb-4 px-4 pe-12  my-1 rounded-se-md          
          border-r-4 `}
@@ -143,7 +142,7 @@ export default function BillCard({
             </View>
           </View>
         </View>
-      </Swipeable>
+      {/* </Swipeable> */}
     </View>
   );
 }
