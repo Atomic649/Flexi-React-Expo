@@ -6,14 +6,16 @@ import { Dimensions } from "react-native";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import detectExpense from '../../components/expense/detectExpense';
 import list from '../../components/expense/list';
+import { useTranslation } from "react-i18next";
 
 
 const Expense = () => {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "list", title: "Expense List" },
-    { key: "detectExpense", title: "Update Expense" },
+    { key: "list", title: t("expense.title.expenseList") },
+    { key: "detectExpense", title: t("expense.title.updateExpense") },
     
   ]);
 

@@ -55,7 +55,7 @@ const Dashboard = () => {
 
   const selectedDateRange =
     selectedDates.length > 1
-      ? `${selectedDates[0]} to ${selectedDates[selectedDates.length - 1]}`
+      ? `${selectedDates[0]} ${t('common.to')} ${selectedDates[selectedDates.length - 1]}`
       : selectedDates.length === 1
       ? `${selectedDates[0]}`
       : t("dashboard.selectDate");

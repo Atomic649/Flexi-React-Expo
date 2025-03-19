@@ -206,15 +206,14 @@ export default function ExpenseDetail({
                   : ""}
               </CustomText>
              
-              <TextInput
+                <TextInput
                 className="text-center text-base"
                 value={desc}
                 onChangeText={setDesc}
-                placeholder="DESCRIPTION (optional)"
+                placeholder={t("expense.detail.description")}
                 placeholderTextColor={theme === "dark" ? "#6d6c67" : "#adaaa6"}
-                
                 />
-              <TextInput
+                <TextInput
                 className={`text-center text-2xl font-bold py-3 ${
                   theme === "dark" ? "text-secondary-100" : "text-secondary"
                 }`}
@@ -224,97 +223,105 @@ export default function ExpenseDetail({
                 placeholderTextColor={theme === "dark" ? "#6d6c67" : "#adaaa6"}
                 keyboardType="numeric"
                 />
-              <TextInput
+                <TextInput
                 className={`mt-3 mb-2 mx-1 h-14  px-4 rounded-2xl border-2 focus:border-secondary ${
                   theme === "dark"
-                    ? "bg-primary-100 border-black-200"
-                    : "bg-white border-gray-100"
+                  ? "bg-primary-100 border-black-200"
+                  : "bg-white border-gray-100"
                 }`}
                 style={{ color: theme === "dark" ? "#ffffff" : "#000000" }}
                 value={note}
                 onChangeText={setNote}
-                placeholder="note"
-              />
-              <View className="flex-row justify-evenly items-center">
+                placeholder={t("expense.detail.note")}
+                />
+                <View className="flex-row justify-evenly items-center">
                 <ScrollView
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   className="flex-row m-1 "
                 >
                   <TouchableOpacity
-                    onPress={() => setGroup("Marketing")}
-                    className={groupButtonClass("Marketing")}
+                  onPress={() => setGroup("Marketing")}
+                  className={groupButtonClass("Marketing")}
                   >
-                    <CustomText>Marketing</CustomText>
+                  <CustomText>{t("expense.detail.group.marketing")}</CustomText>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => setGroup("Transport")}
-                    className={groupButtonClass("Transport")}
+                  onPress={() => setGroup("Transport")}
+                  className={groupButtonClass("Transport")}
                   >
-                    <CustomText>Transport</CustomText>
+                  <CustomText>{t("expense.detail.group.transport")}</CustomText>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => setGroup("Taxation")}
-                    className={groupButtonClass("Taxation")}
+                  onPress={() => setGroup("Taxation")}
+                  className={groupButtonClass("Taxation")}
                   >
-                    <CustomText>Taxation</CustomText>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() => setGroup("Office")}
-                    className={groupButtonClass("Office")}
-                  >
-                    <CustomText>Office</CustomText>
+                  <CustomText>{t("expense.detail.group.taxation")}</CustomText>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => setGroup("Employee")}
-                    className={groupButtonClass("Employee")}
+                  onPress={() => setGroup("Office")}
+                  className={groupButtonClass("Office")}
                   >
-                    <CustomText>Employee</CustomText>
+                  <CustomText>{t("expense.detail.group.office")}</CustomText>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => setGroup("Product")}
-                    className={groupButtonClass("Product")}
+                  onPress={() => setGroup("Employee")}
+                  className={groupButtonClass("Employee")}
                   >
-                    <CustomText>Product</CustomText>
+                  <CustomText>{t("expense.detail.group.employee")}</CustomText>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => setGroup("Packing")}
-                    className={groupButtonClass("Packing")}
+                  onPress={() => setGroup("Product")}
+                  className={groupButtonClass("Product")}
                   >
-                    <CustomText>Packing</CustomText>
+                  <CustomText>{t("expense.detail.group.product")}</CustomText>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => setGroup("Utilities")}
-                    className={groupButtonClass("Utilities")}
+                  onPress={() => setGroup("Packing")}
+                  className={groupButtonClass("Packing")}
                   >
-                    <CustomText>Utilities</CustomText>
+                  <CustomText>{t("expense.detail.group.packing")}</CustomText>
                   </TouchableOpacity>
+
                   <TouchableOpacity
-                    onPress={() => setGroup("Others")}
-                    className={groupButtonClass("Others")}
+                  onPress={() => setGroup("Utilities")}
+                  className={groupButtonClass("Utilities")}
                   >
-                    <CustomText>Others</CustomText>
+                  <CustomText>{t("expense.detail.group.utility")}</CustomText>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                  onPress={() => setGroup("Account")}
+                  className={groupButtonClass("Account")}
+                  >
+                  <CustomText>{t("expense.detail.group.account")}</CustomText>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                  onPress={() => setGroup("Others")}
+                  className={groupButtonClass("Others")}
+                  >
+                  <CustomText>{t("expense.detail.group.other")}</CustomText>
                   </TouchableOpacity>
                 </ScrollView>
-              </View>
-              <View className="flex-row justify-evenly">
+                </View>
+                <View className="flex-row justify-evenly">
                 <TouchableOpacity
                   onPress={() => pickImage()}
                   className=" items-center justify-center"
                 >
                   <Ionicons
-                    name="document-text-outline"
-                    size={26}
-                    color="#999999"
+                  name="document-text-outline"
+                  size={26}
+                  color="#999999"
                   />
                   <CustomText className="text-center mt-1">
-                    Attach Bill
+                    {t("expense.detail.attachBill")}
                   </CustomText>
                 </TouchableOpacity>
 
@@ -323,7 +330,7 @@ export default function ExpenseDetail({
                 ) : null}
 
                 <CustomButton
-                  title="Save"
+                  title={t("common.save")}
                   handlePress={handleUpdateExpense}
                   containerStyles="px-12 mt-2"
                   textStyles="!text-white"

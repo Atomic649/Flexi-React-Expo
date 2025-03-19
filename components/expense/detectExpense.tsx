@@ -24,9 +24,11 @@ import { router } from "expo-router";
 import ExpenseDetail from "@/app/expenseDetail"; // Import the ExpenseDetail component
 import CreateExpense from "@/app/createAExpense"; // Import the CreateExpense component
 import { CustomText } from "../CustomText";
+import { useTranslation } from "react-i18next";
 
 export default function DetectExpense() {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [pdfUri, setPdfUri] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -141,11 +143,11 @@ export default function DetectExpense() {
         console.log("🔥response", response);
         setExpenses([]); // Clear all data in
         Alert.alert(
-          "Successfully",
-          "View in the Expense List",
+          t("expense.alerts.successTitle"),
+          t("expense.alerts.successMessage"),
           [
             {
-              text: "OK",
+              text: t("common.ok"),
               onPress: () => router.push("(tabs)/expense"),
             },
           ]
@@ -212,12 +214,12 @@ export default function DetectExpense() {
             size={24}
             color={theme === "dark" ? "primary" : "#3b3b3b"}
           />
-          <Text
+            <Text
             className="text-center text-xs font-bold"
             style={{ color: theme === "dark" ? "primary" : "#3b3b3b" }}
-          >
-            SCB ONLY
-          </Text>
+            >
+            {t("expense.buttons.pdf")}
+            </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -234,7 +236,7 @@ export default function DetectExpense() {
             className="text-center text-base font-bold"
             style={{ color: theme === "dark" ? "primary" : "#3b3b3b" }}
           >
-            SAVE
+            {t("expense.buttons.save")}
           </Text>
         </TouchableOpacity>
       </View>
@@ -251,7 +253,7 @@ export default function DetectExpense() {
             className="p-8 rounded-2xl"
             style={{ backgroundColor: theme === "dark" ? "#282625" : "#edeceb" }}
           >
-            <CustomText className="text-center ">{error}</CustomText>
+            <CustomText className="text-center ">{t("expense.table.pdferror")}</CustomText>
           </View>
         </View>
       )}
@@ -290,14 +292,14 @@ export default function DetectExpense() {
             )}
             <View className="flex-row justify-between px-10 mt-4">
               <Button
-                title="Cancel"
-                onPress={() => setModalVisible(false)}
-                color="#006eff"
+              title={t("common.cancel")}
+              onPress={() => setModalVisible(false)}
+              color="#006eff"
               />
               <Button
-                title="Confirm"
-                onPress={confirmAndProcessPdf}
-                color="#ff1713"
+              title={t("common.confirm")}
+              onPress={confirmAndProcessPdf}
+              color="#ff1713"
               />
             </View>
           </View>

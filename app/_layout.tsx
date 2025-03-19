@@ -113,7 +113,7 @@ function RootLayoutNav() {
           name="roadmap"
           options={{
         ...showTopBarAndBackIcon(theme),
-        title: "Roadmap",
+        title: t("roadmap.title"),
         headerTitleStyle: getHeaderTitleStyle(),
           }}
         />

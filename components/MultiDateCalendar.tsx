@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { Calendar, DateData } from "react-native-calendars";
 import { useTheme } from "@/providers/ThemeProvider";
 import { eachDayOfInterval, format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 interface MultiDateCalendarProps {
   onDatesChange: (dates: string[]) => void;
@@ -12,6 +13,7 @@ const MultiDateCalendar: React.FC<MultiDateCalendarProps> = ({
   onDatesChange,
 }) => {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>(
     {}
   );
@@ -92,7 +94,7 @@ const MultiDateCalendar: React.FC<MultiDateCalendarProps> = ({
   const selectedDateKeys = Object.keys(selectedDates);
   const selectedDateRange =
     selectedDateKeys.length > 1
-      ? `${selectedDateKeys[0]} to ${selectedDateKeys[selectedDateKeys.length - 1]}`
+      ? ` ${selectedDateKeys[0]} ${t('common.to')} ${selectedDateKeys[selectedDateKeys.length - 1]}`
       : selectedDateKeys.length === 1
       ? `${selectedDateKeys[0]}`
       : "";

@@ -7,14 +7,16 @@ import { useBackgroundColorClass } from "@/utils/themeUtils";
 import ByOrder from "../../components/income/byOrder";
 import Daily from "../../components/income/daily";
 import Monthly from "../../components/income/monthly";
+import { useTranslation } from "react-i18next";
 
 const Income = () => {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "byOrder", title: "byOrder" },
-    { key: "daily", title: "Daily" },
-    { key: "monthly", title: "Monthly" },
+    { key: "byOrder", title: t("income.title.byOrder") },
+    { key: "daily", title: t("income.title.Daily") },
+    { key: "monthly", title: t("income.title.Monthly") },
   ]);
 
   const renderScene = SceneMap({

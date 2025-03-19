@@ -5,6 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import ExpenseDetail from "@/app/expenseDetail"; // Ensure correct import
 import CallAPIExpense from "@/api/expense_api";
 import { getMemberId } from "@/utils/utility";
+import { useTranslation } from "react-i18next";
 
 interface Expense {
   date: string;
@@ -22,6 +23,7 @@ interface ExpenseTableProps {
 }
 
 const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -160,9 +162,9 @@ const ExpenseTable = ({ expenses, onRowPress }: ExpenseTableProps) => {
         className="flex-row w-full justify-between p-1 px-4 "
         style={{ backgroundColor: theme === "dark" ? "#3f3e3b" : "#5e5953" }}
       >
-        <Text className={`${headerClass} w-1/6`}>Date</Text>
-        <Text className={`${headerClass} w-1/2`}>Note</Text>
-        <Text className={`${headerClass} w-1/4`}>Amount</Text>
+        <Text className={`${headerClass} w-1/6`}>{t('expense.table.date')}</Text>
+        <Text className={`${headerClass} w-1/2`}>{t('expense.table.notedesc')}</Text>
+        <Text className={`${headerClass} w-1/4`}>{t('expense.table.amount')}</Text>
         {/* <Text className={`${headerClass} w-1/6`}>File</Text> */}
       </View>
       <FlatList

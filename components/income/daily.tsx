@@ -77,39 +77,39 @@ const Daily = () => {
             backgroundColor: theme === "dark" ? "#adacac" : "#d0cfcb",
           }}
         >
-          <View className="flex flex-row m-2 items-start justify-evenly w-full pl-5 px-5">
-            <View className="flex flex-col items-center w-1/5">
+            <View className="flex flex-row m-2 items-start justify-evenly w-full pl-5 px-5">
+            <View className="flex flex-col items-start  w-1/5">
               <Text className={textStyle} numberOfLines={1}>
-                Date
+              {t("income.table.date")}
               </Text>
             </View>
 
             <View className="flex flex-col items-center w-1/6">
               <Text className={textStyle} numberOfLines={1}>
-                Amount
+              {t("income.table.amount")}
               </Text>
             </View>
 
             <View className="flex flex-col items-center w-1/6">
               <Text className={textStyle} numberOfLines={3}>
-                Sales
+              {t("income.table.sales")}
               </Text>
             </View>
 
             <View className="flex flex-col items-center w-1/6">
               <Text className={textStyle} numberOfLines={1}>
-                AdCost
+              {t("income.table.adCost")}
               </Text>
             </View>
 
             <View className="flex flex-col items-center w-1/6">
               <Text className={textStyle} numberOfLines={1}>
-                Profit
+              {t("income.table.profit")}
               </Text>
             </View>
             <View className="flex flex-col items-center w-1/6">
               <Text className={textStyle} numberOfLines={1}>
-                % Ads
+              {t("income.table.percentAd")}
               </Text>
             </View>
           </View>

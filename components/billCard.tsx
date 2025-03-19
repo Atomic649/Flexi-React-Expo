@@ -3,6 +3,7 @@ import React from "react";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { t } from "i18next";
 
 const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -116,7 +117,7 @@ export default function BillCard({
                   numberOfLines={3}
                   style={{ color: ProductNameColor }}
                 >
-                  {product} {amount} pcs 
+                  {product} {amount} {t("common.pcs") }
                 </Text>
               </View>
             </View>

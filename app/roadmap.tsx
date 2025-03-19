@@ -69,76 +69,77 @@ export default function RoadMap() {
         )}
       </View>
       <View className="flex-col gap-4 bg px-2">
-{/* mission 1 */}
+        {/* mission 1 */}
         <View className="flex-row items-center justify-between mx-2 px-8">
           <View className="flex-col items-start justify-center">
-        <CustomText className="text-center text-lg font-bold text-white">
-          {t("5 Products ")}
-        </CustomText>
-        <CustomText className="text-center text-base text-white">
-          {t("100 users")}
-        </CustomText>
+            <CustomText className="text-center text-lg font-bold text-white">
+              5 {t("roadmap.products")}
+            </CustomText>
+            <CustomText className="text-center text-base text-white">
+              100 {t("roadmap.users")}
+            </CustomText>
           </View>
           {/* lock icon */}
           <Ionicons
-        name="lock-closed"
-        size={24}
-        color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
+            name="lock-closed"
+            size={24}
+            color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
           />
         </View>
-{/* mission 2 */}
+        {/* mission 2 */}
         <View className="flex-row items-center justify-between mx-2 px-8">
           <View className="flex-col items-start justify-center">
-        <CustomText className="text-center text-lg font-bold text-white">
-          {t("2 Business ")}
-        </CustomText>
-        <CustomText className="text-center text-base text-white">
-          {t("500 users")}
-        </CustomText>
+            <CustomText className="text-center text-lg font-bold text-white">
+              2 {t("roadmap.business")}
+            </CustomText>
+            <CustomText className="text-center text-base text-white">
+              500 {t("roadmap.users")}
+            </CustomText>
           </View>
           {/* lock icon */}
           <Ionicons
-        name="lock-closed"
-        size={24}
-        color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
+            name="lock-closed"
+            size={24}
+            color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
           />
         </View>
-{/* mission 3 */}
+        {/* mission 3 */}
         <View className="flex-row items-center justify-between mx-2 px-8">
           <View className="flex-col items-start justify-center">
-        <CustomText className="text-center text-lg font-bold text-white">
-          {t("5 Store Connections ")}
-        </CustomText>
-        <CustomText className="text-center text-base text-white">
-          {t("1000 users")}
-        </CustomText>
+            <CustomText className="text-center text-lg font-bold text-white">
+              5 {t("roadmap.store")}
+            </CustomText>
+            <CustomText className="text-center text-base text-white">
+              1000 {t("roadmap.users")}
+            </CustomText>
           </View>
           {/* lock icon */}
           <Ionicons
-        name="lock-closed"
-        size={24}
-        color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
+            name="lock-closed"
+            size={24}
+            color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
           />
         </View>
-{/* mission 4 */}
+        {/* mission 4 */}
         <View className="flex-row items-center justify-between mx-2 px-8">
           <View className="flex-col items-start justify-center">
-        <CustomText className="text-center text-lg  text-white"
-        style= {{fontWeight: "bold"}}>
-          {t("5 Ads Connections ")}
-        </CustomText>
-        <CustomText className="text-center text-base text-white">
-          {t("1000 users")}
-        </CustomText>
+            <CustomText
+              className="text-center text-lg  text-white"
+              style={{ fontWeight: "bold" }}
+            >
+              5 {t("roadmap.ads")}
+            </CustomText>
+            <CustomText className="text-center text-base text-white">
+              2000 {t("roadmap.users")}
+            </CustomText>
           </View>
           {/* lock icon */}
           <Ionicons
-        name="lock-closed"
-        size={24}
-        color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
+            name="lock-closed"
+            size={24}
+            color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
           />
         </View>
-
       </View>
     </SafeAreaView>
   );
