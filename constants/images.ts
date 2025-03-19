@@ -1,7 +1,6 @@
 import profile from "../assets/images/profile.png"
 import thumbnail from "../assets/images/thumbnail.png"
 import cards from "../assets/images/cards.png"
-import path from "../assets/images/path.png"
 import logo from "../assets/images/logo.png"
 import adscoke from "../assets/images/ads-coke.jpg"
 import adsline from "../assets/images/ads-line.jpg"
@@ -12,8 +11,7 @@ import empty from "../assets/images/empty.png"
 export default { 
     profile, 
     thumbnail, 
-    cards, 
-    path, 
+    cards,     
     logo, 
     adscoke,
     adsline,
