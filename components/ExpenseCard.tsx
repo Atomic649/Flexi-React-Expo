@@ -72,7 +72,9 @@ export default function ExpenseCard({
 
   return (
     <View className="flex " key={id}> {/* Move key prop to the parent View */}
-      <Swipeable renderRightActions={renderRightActions}>
+      {/* <Swipeable
+      //  renderRightActions={renderRightActions}
+       > */}
         <View
           className={`flex flex-col items-center pt-3 pb-4 px-4 pe-16  my-1 rounded-se-md          
         `}
@@ -126,7 +128,7 @@ export default function ExpenseCard({
             </View>
           </View>
         </View>
-      </Swipeable>
+      {/* </Swipeable> */}
     </View>
   );
 }

@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import MonthlyCard from "../MonthlyCard";
 import { CustomText } from "../CustomText";
+import i18n from "@/i18n";
 
 type MonthlyCardProps = {
   month: string;
@@ -67,7 +68,13 @@ const monthly = () => {
   };
 
   // Adjust font size and color of Title Table
-  const textStyle = "text-sm text-zinc-600 font-bold";
+  const textStyle = {
+    fontSize: 13,
+    color: theme === "dark" ? "#e5e7eb" : "#4b5563",
+    fontWeight: "700" as "700", // or any other acceptable value
+    fontFamily: i18n.language === "th" ? "NotoSansThai-Regular" : "Poppins-Regular",
+  };
+
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -80,36 +87,36 @@ const monthly = () => {
         >
           <View className="flex flex-row m-2 items-start justify-evenly w-full pl-5 px-5">
             <View className="flex flex-col items-start w-1/5">
-              <Text className={textStyle} numberOfLines={1}>
+              <Text style={textStyle} numberOfLines={1}>
               {t("income.table.month")}
               </Text>
             </View>
 
             <View className="flex flex-col items-center w-1/6">
-              <Text className={textStyle} numberOfLines={1}>
+              <Text style={textStyle} numberOfLines={1}>
               {t("income.table.amount")}
               </Text>
             </View>
 
             <View className="flex flex-col items-center w-1/6">
-              <Text className={textStyle} numberOfLines={3}>
+              <Text style={textStyle} numberOfLines={3}>
                 {t("income.table.sales")}                          
               </Text>
             </View>
 
             <View className="flex flex-col items-center w-1/6">
-              <Text className={textStyle} numberOfLines={1}>
+              <Text style={textStyle} numberOfLines={1}>
               {t("income.table.adCost")}
               </Text>
             </View>
 
             <View className="flex flex-col items-center w-1/6">
-              <Text className={textStyle} numberOfLines={1}>
+              <Text style={textStyle} numberOfLines={1}>
               {t("income.table.profit")}
               </Text>
             </View>
             <View className="flex flex-col items-center w-1/6">
-              <Text className={textStyle} numberOfLines={1}>
+              <Text style={textStyle} numberOfLines={1}>
               {t("income.table.percentAd")}
               </Text>
             </View>

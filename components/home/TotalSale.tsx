@@ -2,13 +2,12 @@ import React from "react";
 import { View, Text } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import CircularChart from "@/components/CircularChart";
-import { useTextColorClass } from "@/utils/themeUtils";
 import { useTranslation } from "react-i18next";
 import { CustomText } from "@/components/CustomText"; // Assuming you have a CustomText component
 
 const TotalSale = () => {
   const { theme } = useTheme();
-  const { t, i18n } = useTranslation(); // กำหนดตัวแปรใช้งานภาษา
+  const { t } = useTranslation(); // กำหนดตัวแปรใช้งานภาษา
   const titleStyle = `text-sm ${
     theme === "dark" ? "text-[#ababab]" : "text-[#48453e]"
   } text-center font-normal`;
