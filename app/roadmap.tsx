@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Animated, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Animated, Image, SafeAreaView } from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import { useTranslation } from "react-i18next";
@@ -8,6 +7,7 @@ import CallAPIUser from "@/api/user_api";
 import images from "@/constants/images";
 import { CustomText } from "@/components/CustomText";
 import { Ionicons } from "@expo/vector-icons";
+import CustomButton from "@/components/CustomButton";
 
 export default function RoadMap() {
   const { theme } = useTheme();
@@ -54,7 +54,7 @@ export default function RoadMap() {
 
   return (
     <SafeAreaView className={`h-full ${useBackgroundColorClass()}`}>
-      <View className="flex-row items-center justify-center mb-5">
+      <View className="flex-row items-center justify-center m-4">
         <Image
           source={images.logo}
           style={{ width: 100, height: 100, marginBottom: 20 }}
@@ -68,7 +68,7 @@ export default function RoadMap() {
           </Animated.Text>
         )}
       </View>
-      <View className="flex-col gap-4 bg px-2">
+      <View className="flex-col h-1/3 gap-4 px-2">
         {/* mission 1 */}
         <View className="flex-row items-center justify-between mx-2 px-8">
           <View className="flex-col items-start justify-center">
@@ -140,6 +140,43 @@ export default function RoadMap() {
             color={theme === "dark" ? "#03dcc7" : "#04ecd5"}
           />
         </View>
+      </View>
+
+      {/* Vision */}
+      <View className="flex-col items-center mt-8">
+        <View
+          className=" w-full  py-5 m-2 items-center justify-center"
+          style={{ 
+            backgroundColor: theme === "dark" ? "#242422" : "#f0f0f0",
+            borderWidth: 1,
+            borderColor: theme === "dark" ? "#03dcc7" : "#04ecd5"
+          }}
+        >
+          <CustomText className="text-center justify-center text-lg font-bold text-white">
+            {t("roadmap.vision")}
+          </CustomText>
+        </View>
+        <View className="w-full mt-5 items-center justify-center px-5">
+          <CustomText className="text-center justify-center text-base text-white">
+            {t("roadmap.mission")}
+          </CustomText>
+        </View>
+      </View>
+
+      <View className="flex-row items-center justify-around mt-6 ">
+        <CustomButton
+          title={t("common.joinTeam")}
+          handlePress={() => {}}
+          containerStyles="px-8 mt-2"
+          textStyles="!text-white"
+        />
+
+        <CustomButton
+          title={t("common.advertise")}
+          handlePress={() => {}}
+          containerStyles="px-8 mt-2"
+          textStyles="!text-white"
+        />
       </View>
     </SafeAreaView>
   );

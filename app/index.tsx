@@ -98,15 +98,11 @@ export default function Index() {
               {/* Slogan */}
               <View className="relative mt-5">
                 <CustomText weight="bold" className="text-3xl text-center dark:text-white leading-10">
-                  {t('landing.slogan.line1')}{"\n"}
-                  {t('landing.slogan.line2')}{" "}
-                  <CustomText weight="bold" className="text-secondary-200">AuraShop</CustomText>
+                  {t('minimize your task')}{"\n"}
+                  {t('maximize your profit')}{" "}
+                  <CustomText weight="bold" className="text-secondary-200">Flexi Business Hub</CustomText>
                 </CustomText>
-                <Image
-                  source={images.path}
-                  className="w-[120px] h-[15px] absolute -bottom-4 -right-8"
-                  resizeMode="contain"
-                />
+               
               </View>
 
               {/* คำอธิบาย */}
