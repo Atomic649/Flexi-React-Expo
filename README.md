@@ -1,12 +1,12 @@
 # Flexi-React-Expo
 
 
-x start project
+start project-
 npm install
 
 
-x start expo
+start expo-
 npx expo start
 
-x start noder server
+start noder server-
 npm start
