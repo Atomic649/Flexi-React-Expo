@@ -90,7 +90,7 @@ Table Bill {
   platform IncomeChannel [not null]
   cashStatus Boolean [not null, default: false]
   price Int [not null]
-  imageBill String [not null]
+  image String
   deleted Boolean [default: false]
   productList Product [not null]
   memberId String [unique, not null]
@@ -142,9 +142,7 @@ Table DetectPDF {
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   filePath String [not null]
-  bankNo String
   fileName String [not null]
-  deleted Boolean [default: false]
   businessAcc Int [not null]
   businessId BusinessAcc [not null]
   memberId String [not null]

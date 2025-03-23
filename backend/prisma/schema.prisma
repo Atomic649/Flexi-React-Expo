@@ -215,7 +215,7 @@ model Bill {
   platform   IncomeChannel
   cashStatus Boolean     @default(false)
   price      Int
-  imageBill  String
+  image  String?
   deleted    Boolean?     @default(false)
 
   // Relation 
@@ -273,9 +273,7 @@ model DetectPDF{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   filePath   String
-  bankNo     String?
   fileName  String
-  deleted   Boolean?  @default(false)
   businessAcc Int
   businessId  BusinessAcc @relation(fields: [businessAcc], references: [id])
   memberId    String

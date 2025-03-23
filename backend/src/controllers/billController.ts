@@ -4,7 +4,7 @@ import Joi from "joi";
 import multer from "multer";
 import multerConfig from "./multer_config";
 
-const upload = multer(multerConfig.config).single(multerConfig.keyUpload);
+const upload = multer(multerConfig.multerConfigImage.config).single(multerConfig.multerConfigImage.keyUpload);
 
 // Create  instance of PrismaClient
 const prisma = new PrismaClient();
@@ -30,7 +30,7 @@ interface billInput {
   memberId: string;
   purchaseAt: Date;
   businessAcc: number;
-  imageBill: string;
+  image: string;
   storeId: number;
 }
 
@@ -65,7 +65,7 @@ const schema = Joi.object({
   price: Joi.number().required(),
   memberId: Joi.string().required(),
   businessAcc: Joi.number().required(),
-  imageBill: Joi.string(),
+  image: Joi.string(),
   storeId: Joi.number().required(),
 });
 
@@ -122,7 +122,7 @@ const createBill = async (req: Request, res: Response) => {
           purchaseAt: billInput.purchaseAt,
           businessAcc: billInput.businessAcc,
           storeId: billInput.storeId,
-          imageBill: req.file?.filename ?? "",
+          image: req.file?.filename ?? "",
         },
       });
       //console.log(bill);
@@ -227,7 +227,7 @@ const updateBill = async (req: Request, res: Response) => {
           memberId: billInput.memberId,
           purchaseAt: billInput.purchaseAt,
           businessAcc: billInput.businessAcc,
-          imageBill: req.file?.filename ?? "",
+          image: req.file?.filename ?? "",
         },
       });
       //console.log(bill);

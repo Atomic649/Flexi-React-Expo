@@ -2,6 +2,7 @@ import { Bank, PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import fs from "fs";
 import pdfParse from "pdf-parse";
+import multer from "multer";
 
 // Create  instance of PrismaClient
 const prisma = new PrismaClient();
@@ -19,23 +20,79 @@ interface Expense {
   channel: Bank;
 }
 
-export const pdfExtract = async (req: Request, res: Response): Promise<void> => {
-  // hardcoded file path
-  const filePath = "/Volumes/LACIES/Flexi-React-Expo/backend/uploads/pdf/AcctSt3.pdf";
+// Interface for request body from client
+interface DetectPDF {
+  filePath: string;
+  fileName: string;
+  memberId: string;
+  businessAcc: number;
+}
+
+export const pdfExtract = async (
+  req: Request,res: Response): Promise<void> => {
+    
+  const filePath = req.body.filePath || req.query.filePath;
+  console.log("🔥filePath", filePath);
+
+  // store filePath in the database using prisma
+  const storeFilePath = async (req: Request) => {
+    const file = req.file;
+    if (!file) {
+      throw new Error("No file uploaded");
+    }
+
+    const detectPDF: DetectPDF = {
+      filePath: file.path,
+      fileName: file.originalname,
+      memberId: req.body.memberId,
+      businessAcc: parseInt(req.body.businessAcc),
+    };
+
+    const createdDetectPDF = await prisma.detectPDF.create({
+      data: detectPDF,
+    });
+
+    res
+      .status(201)
+      .json({
+        message: "File path stored successfully",
+        detectPDF: createdDetectPDF,
+      });
+  };
+
+  try {
+    await storeFilePath(req);
+  } catch (e: any) {
+    console.error(e);
+    res.status(500).json({ message: e.message });
+  }
 
   // read file
-  const buffer = fs.readFileSync(filePath);
+  const detectPDFRecord = await prisma.detectPDF.findFirst({
+    where: {
+      filePath: filePath,
+    },
+  });
+
+  if (!detectPDFRecord) {
+    throw new Error("File path not found in the database");
+  }
+
+  const buffer = fs.readFileSync(detectPDFRecord.filePath);
   const data = await pdfParse(buffer);
   let text = data.text;
   console.log("🔥text", text);
 
   // pattern to match: datetime and X2/ENET only credit, excluding the second amount
-  const pattern = /\b(\d{2}\/\d{2}\/\d{2})\s+(\d{2}:\d{2})\s+X[2]\/ENET\d{1,3}(?:,\d{3})*\.\d{2}\d{1,3}(?:,\d{3})*\.\d{2}\b/g;
+  const pattern =
+    /\b(\d{2}\/\d{2}\/\d{2})\s+(\d{2}:\d{2})\s+X[2]\/ENET\d{1,3}(?:,\d{3})*\.\d{2}\d{1,3}(?:,\d{3})*\.\d{2}\b/g;
   const matches = text.match(pattern);
 
   // Extract DESC and note
-  const descNotePattern = /(\d{2}\/\d{2}\/\d{2}\s+\d{2}:\d{2}\s+X2\/ENET\d{1,3}(?:,\d{3})*\.\d{2}\d{1,3}(?:,\d{3})*\.\d{2})\s+(.+?)\s+(-)/g;
-  const descNoteMatches: { transaction: string; desc: string; note: string }[] = [];
+  const descNotePattern =
+    /(\d{2}\/\d{2}\/\d{2}\s+\d{2}:\d{2}\s+X2\/ENET\d{1,3}(?:,\d{3})*\.\d{2}\d{1,3}(?:,\d{3})*\.\d{2})\s+(.+?)\s+(-)/g;
+  const descNoteMatches: { transaction: string; desc: string; note: string }[] =
+    [];
   let match;
   while ((match = descNotePattern.exec(text)) !== null) {
     const [_, transaction, desc, note] = match;
@@ -44,30 +101,43 @@ export const pdfExtract = async (req: Request, res: Response): Promise<void> => 
   console.log("🔥descNoteMatches", descNoteMatches);
 
   // process matches to desired format
-  const formattedMatches = matches?.map(match => {
-    const matchGroups = match.match(/(\d{2}\/\d{2}\/\d{2})\s+(\d{2}:\d{2})\s+(X2\/ENET\d{1,3}(?:,\d{3})*\.\d{2}\d{1,3}(?:,\d{3})*\.\d{2})/);
+  const formattedMatches = matches?.map((match) => {
+    const matchGroups = match.match(
+      /(\d{2}\/\d{2}\/\d{2})\s+(\d{2}:\d{2})\s+(X2\/ENET\d{1,3}(?:,\d{3})*\.\d{2}\d{1,3}(?:,\d{3})*\.\d{2})/
+    );
     if (!matchGroups) {
       throw new Error("Match groups not found");
     }
     const [_, date, time, transaction] = matchGroups;
-    const formattedTransaction = transaction.replace(/(\d{1,3}(?:,\d{3})*\.\d{2})\d{1,3}(?:,\d{3})*\.\d{2}/, '$1');
+    const formattedTransaction = transaction.replace(
+      /(\d{1,3}(?:,\d{3})*\.\d{2})\d{1,3}(?:,\d{3})*\.\d{2}/,
+      "$1"
+    );
 
     // combine date and time into the desired format
-    const [day, month, year] = date.split('/');
+    const [day, month, year] = date.split("/");
     const formattedDateTime = `20${year}-${month}-${day}T${time}:00.000Z`;
     return { dateTime: formattedDateTime, transaction: formattedTransaction };
   });
 
   console.log("🔥formattedMatches", formattedMatches);
-  // separate Code and Amount from formattedMatches    
-  const codeAmount = formattedMatches?.map(match => {
+  // separate Code and Amount from formattedMatches
+  const codeAmount = formattedMatches?.map((match) => {
     const [code, amount] = match.transaction.split(/(?<=X2\/ENET)\s*/);
-    const descMatch = descNoteMatches.find(descMatch => {
+    const descMatch = descNoteMatches.find((descMatch) => {
       const [descDate, descTime] = descMatch.transaction.split(/\s+/);
-      const formattedDescDateTime = `20${descDate.split('/')[2]}-${descDate.split('/')[1]}-${descDate.split('/')[0]}T${descTime}:00.000Z`;
+      const formattedDescDateTime = `20${descDate.split("/")[2]}-${
+        descDate.split("/")[1]
+      }-${descDate.split("/")[0]}T${descTime}:00.000Z`;
       return formattedDescDateTime === match.dateTime;
     });
-    return { dateTime: match.dateTime, code: code.trim(), amount: parseFloat(amount.replace(/,/g, '')), desc: descMatch?.desc, note: descMatch?.note };
+    return {
+      dateTime: match.dateTime,
+      code: code.trim(),
+      amount: parseFloat(amount.replace(/,/g, "")),
+      desc: descMatch?.desc,
+      note: descMatch?.note,
+    };
   });
   console.log("🔥codeAmount", codeAmount);
 
@@ -86,12 +156,12 @@ export const pdfExtract = async (req: Request, res: Response): Promise<void> => 
       throw new Error("No codeAmount data found");
     }
 
-    // check duplicate data before creating 
+    // check duplicate data before creating
     const duplicateData = await prisma.expense.findMany({
       where: {
         memberId: expense.memberId,
         date: {
-          in: codeAmount.map(item => item.dateTime),
+          in: codeAmount.map((item) => item.dateTime),
         },
       },
     });
@@ -127,24 +197,25 @@ export const pdfExtract = async (req: Request, res: Response): Promise<void> => 
     return expenses;
   };
 
-
-
   try {
     await createExpenses();
-    res.status(201).json({ message: "Expenses created successfully", expenses: await getExpenses()
-      
-     });
+    res
+      .status(201)
+      .json({
+        message: "Expenses created successfully",
+        expenses: await getExpenses(),
+      });
   } catch (e: any) {
     console.error(e);
     res.status(500).json({ message: e.message });
   }
 };
 
-// save detected expenses 
+// save detected expenses
 // set save to true multiple ids [] body request
 export const saveDetectExpense = async (req: Request, res: Response) => {
   const { ids } = req.body;
-  
+
   try {
     const expense = await prisma.expense.updateMany({
       where: {

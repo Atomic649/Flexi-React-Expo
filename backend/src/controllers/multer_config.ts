@@ -36,16 +36,64 @@ const fileFilter = (
   }
 }
 
-
-
-const multerConfig = {
+const multerConfigImage = {
   config: {
     storage,
-    limits: { fileSize: 1024 * 1024 * 5 }, 
+    limits: { fileSize: 1024 * 1024 * 10 }, 
     fileFilter,
   },
-    keyUpload: "imageBill",
+  keyUpload: "image", // Ensure this matches the key used in the form data
 };
 
 
-export default multerConfig
+
+// PDF-specific storage
+const folderPDF = "./uploads/pdf/"
+if (!fs.existsSync(folderPDF)) {
+  fs.mkdirSync(folderPDF)
+}
+
+const storagePDF = multer.diskStorage({
+  destination: (
+    req: Request,
+    file: Express.Multer.File,
+    callback: (error: Error | null, destination: string) => void
+  ) => {
+    callback(null, folderPDF)
+  },
+  filename: (
+    req: Request,
+    file: Express.Multer.File,
+    callback: (error: Error | null, filename: string) => void
+  ) => {
+    const ext = file.mimetype.split("/")[1]
+    callback(null, `${file.fieldname}-${Date.now()}.${ext}`)
+  },
+})
+
+const fileFilterPDF = (
+  req: Request,
+  file: Express.Multer.File,
+  callback: FileFilterCallback
+) => {
+  if (file.mimetype === "application/pdf") {
+    callback(null, true)
+  } else {
+    callback(new Error("Not a PDF! Please upload a PDF."))
+  }
+}
+
+// Export PDF config
+export const pdfMulterConfig = {
+  config: {
+    storage: storagePDF,
+    limits: { fileSize: 1024 * 1024 * 10 },
+    fileFilter: fileFilterPDF,
+  },
+  keyUpload: "pdf",
+}
+
+
+
+
+export default { multerConfigImage, pdfMulterConfig }
