@@ -33,6 +33,15 @@ interface DetectPDF {
   businessAcc: number;
 }
 
+// Add this helper function at the top of the file
+const deleteUploadedFile = (filePath: string) => {
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error('Error deleting file:', err);
+    }
+  });
+};
+
 export const pdfExtract = async (
   req: Request,
   res: Response
@@ -164,7 +173,7 @@ export const pdfExtract = async (
         }
       };
 
-          // get the data from the database just created with id
+      // get the data from the database just created with id
       const getExpenses = async () => {
         const expense: Expense = req.body;
         const expenses = await prisma.expense.findMany({
@@ -185,6 +194,8 @@ export const pdfExtract = async (
       } catch (e: any) {
         console.error(e);
         res.status(500).json({ message: e.message });
+      } finally {
+        deleteUploadedFile(filePath); // Delete the uploaded file after processing
       }
     } catch (e: any) {
       console.error(e);
