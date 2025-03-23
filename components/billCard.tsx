@@ -33,7 +33,7 @@ export default function BillCard({
   memberId,
   purchaseAt,
   businessAcc,
-  imageBill,
+  image,
   storeId,
   CardColor,
   PriceColor,

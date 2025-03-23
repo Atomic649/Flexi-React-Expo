@@ -64,17 +64,21 @@ export default function DetectExpense() {
       setError("No PDF selected or invalid file.");
       return;
     }
-    try {
-      const fileInfo = await FileSystem.getInfoAsync(uri);
-      console.log("🔥fileInfo", fileInfo);
+    else{
+      try {
+        const fileInfo = await FileSystem.getInfoAsync(uri);
+        console.log("🔥fileInfo", fileInfo);
+  
+        setPdfUri(uri);
+        setModalVisible(true);
+        console.log("🔥pdfUriChoose", pdfUri);
+      } catch (error) {
+        console.error("🚨pickAndProcessPdf", error);
+        setError("Failed to process PDF");
+      }
 
-      setPdfUri(uri);
-      setModalVisible(true);
-      console.log("🔥pdfUri", pdfUri);
-    } catch (error) {
-      console.error("🚨pickAndProcessPdf", error);
-      setError("Failed to process PDF");
     }
+    
   };
 
   const confirmAndProcessPdf = async () => {
@@ -83,6 +87,8 @@ export default function DetectExpense() {
     try {
       const memberId = await getMemberId();
       const filePath = pdfUri;
+      console.log("🔥filePath",filePath);
+
       if (memberId && filePath) {
         const response = await CallAPIExpense.extractPDFExpenseAPI(
           memberId,

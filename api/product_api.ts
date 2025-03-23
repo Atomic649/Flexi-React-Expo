@@ -38,18 +38,14 @@ class CallAPIProduct {
   }
 
   // Create Product
-  async createProductAPI(data: {
-    name: string;
-    description: string;
-    barcode: string;
-    stock: number;
-    price: number;
-    memberId: string;
-    image?: string;
-  }): Promise<any> {
+  async createProductAPI(formData: FormData): Promise<any> {
     try {
       const axiosInstance = await getAxiosWithAuth();
-      const response = await axiosInstance.post("/product/", data);
+      const response = await axiosInstance.post("/product/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response.data;
     } catch (error) {
       console.error("🚨 Create Product API Error:", error);
@@ -59,19 +55,12 @@ class CallAPIProduct {
         throw new Error("Network Error");
       }
     }
+    
+  
   }
 
   // Update Product
-  async updateProductAPI(
-    id: number,
-    data: {
-      name: string;
-      description: string;
-      barcode: string;
-      stock: number;
-      price: number;
-      image?: string;
-    }
+  async updateProductAPI( id: number, data: FormData
   ): Promise<any> {
     try {
       const axiosInstance = await getAxiosWithAuth();

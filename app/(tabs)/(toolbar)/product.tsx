@@ -74,6 +74,7 @@ export default function Home() {
   const getImageUri = (image: string | null) => {
     if (!image) return null;
     return image.startsWith("file://") ? image : IMAGE_URL + image;
+    
   };
 
   const handleDeleteProduct = async (id: number) => {

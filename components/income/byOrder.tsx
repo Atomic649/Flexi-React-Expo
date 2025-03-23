@@ -35,7 +35,7 @@ type Bill = {
   memberId: string;
   purchaseAt: Date;
   businessAcc: number;
-  imageBill: string;
+  image: string;
   storeId: number;
 };
 

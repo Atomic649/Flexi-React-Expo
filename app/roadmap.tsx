@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Animated, Image, SafeAreaView } from "react-native";
+import { View, Animated, Image, SafeAreaView ,Text} from "react-native";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,7 @@ import images from "@/constants/images";
 import { CustomText } from "@/components/CustomText";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
+import i18n from "@/i18n";
 
 export default function RoadMap() {
   const { theme } = useTheme();
@@ -149,12 +150,18 @@ export default function RoadMap() {
           style={{ 
             backgroundColor: theme === "dark" ? "#242422" : "#f0f0f0",
             borderWidth: 1,
-            borderColor: theme === "dark" ? "#03dcc7" : "#04ecd5"
+            borderColor: theme === "dark" ? "#03dcc7" : "#04ecd5",
+            borderRadius: 10,
           }}
         >
-          <CustomText className="text-center justify-center text-lg font-bold text-white">
+          <Text className="text-center justify-center text-lg font-bold"
+            style={{ color: theme === "dark" ? "#08ffe6" : "#04ecd5",
+              fontFamily: i18n.language === "th" ? "NotoSansThai-Regular" : "Poppins-Regular",
+              fontSize: 18,
+              fontWeight: "bold" as "bold",
+             }}>
             {t("roadmap.vision")}
-          </CustomText>
+          </Text>
         </View>
         <View className="w-full mt-5 items-center justify-center px-5">
           <CustomText className="text-center justify-center text-base text-white">

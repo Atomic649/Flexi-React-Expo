@@ -1,4 +1,4 @@
-import { ScrollView, TouchableOpacity, Image } from "react-native";
+import { ScrollView, TouchableOpacity, Image, SafeAreaView, Platform } from "react-native";
 import { View } from "@/components/Themed";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import CustomButton from "@/components/CustomButton";
@@ -8,12 +8,12 @@ import CustomAlert from "@/components/CustomAlert";
 import { CustomText } from "@/components/CustomText";
 import { useBackgroundColorClass } from "@/utils/themeUtils";
 import CallAPIProduct from "@/api/product_api";
-import { SafeAreaView } from "react-native";
 import FormField2 from "@/components/FormField2";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/providers/ThemeProvider";
+import { IMAGE_URL } from "@/utils/config";
 
 export default function EditProduct() {
   const { t } = useTranslation();
@@ -85,11 +85,16 @@ export default function EditProduct() {
     buttons: [],
   });
 
+   const getImageUri = (image: string | null) => {
+      if (!image) return null;
+      return image.startsWith("file://") ? image : IMAGE_URL + image;
+      
+    };
+
   // Handle update
   const handleUpdateProduct = async () => {
     setError("");
 
-    // Check if all fields are filled
     if (!name || !description || !barcode || !stock || !price) {
       setAlertConfig({
         visible: true,
@@ -98,8 +103,7 @@ export default function EditProduct() {
         buttons: [
           {
             text: t("common.ok"),
-            onPress: () =>
-              setAlertConfig((prev) => ({ ...prev, visible: false })),
+            onPress: () => setAlertConfig((prev) => ({ ...prev, visible: false })),
           },
         ],
       });
@@ -107,15 +111,23 @@ export default function EditProduct() {
     }
 
     try {
-      // Call the update API
-      const data = await CallAPIProduct.updateProductAPI(Number(id), {
-        name,
-        description,
-        barcode,
-        stock: Number(stock),
-        price: Number(price),
-        image: image || "",
-      });
+      const formData = new FormData();
+
+      if (image) {
+        formData.append("image", {
+          uri: image,
+          name: "image.jpg",
+          type: "image/jpeg",
+        } as unknown as Blob);
+      }
+
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('barcode', barcode);
+      formData.append('stock', stock.toString());
+      formData.append('price', price.toString());
+
+      const data = await CallAPIProduct.updateProductAPI(Number(id), formData);
 
       if (data.error) throw new Error(data.error);
 
@@ -128,7 +140,6 @@ export default function EditProduct() {
             text: t("product.alerts.ok"),
             onPress: () => {
               setAlertConfig((prev) => ({ ...prev, visible: false }));
-              // go to product page
               router.replace("(tabs)/product");
             },
           },
@@ -140,12 +151,12 @@ export default function EditProduct() {
   };
 
   return (
-    <SafeAreaView className={`flex-1   ${useBackgroundColorClass()}`}>
+    <SafeAreaView className={`flex-1 ${useBackgroundColorClass()}`}>
       <ScrollView>
-        <View className=" flex-1 justify-center h-full px-4 py-5 pb-20">
+        <View className="flex-1 justify-center h-full px-4 py-5 pb-20">
           {image && (
             <Image
-              source={{ uri: image }}
+              source={{ uri: getImageUri(image) || '' }}
               style={{ width: 350, height: 350 }}
               className="mt-4 mb-6 self-center rounded-md"
             />

@@ -7,6 +7,9 @@ git push
 x dbdiagram
 https://dbdiagram.io/d
 
+! --------Docker compose--------------
+docker compose config
+docker compose up -d
 
 ! ------- UPDATE DATABASE ----------
 npx prisma migrate dev --name init

@@ -40,24 +40,21 @@ export default function CreateProduct() {
       const uniqueId = await AsyncStorage.getItem("uniqueId");
       setMemberId(uniqueId);
     };
-
     fetchMemberId();
   }, []);
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
 
-  // Add alert config state
   const [alertConfig, setAlertConfig] = useState<{
     visible: boolean;
     title: string;
@@ -74,11 +71,9 @@ export default function CreateProduct() {
     buttons: [],
   });
 
-  // Handle register
   const handleCreateProduct = async () => {
     setError("");
 
-    // Check if all fields are filled
     if (!name || !description || !barcode || !stock || !price) {
       setAlertConfig({
         visible: true,
@@ -96,18 +91,28 @@ export default function CreateProduct() {
     }
 
     try {
-      // Call the register API
-      const data = await CallAPIProduct.createProductAPI({
-        name,
-        description,
-        barcode,
-        stock: Number(stock),
-        price: Number(price),
-        memberId: (await getMemberId()) || "",
-        image: image || "",
-      });
+      const formData = new FormData();
 
-      if (data.error) throw new Error(data.error);
+      if (image) {
+        formData.append("image", {
+          uri: image,
+          name: "image.jpg",
+          type: "image/jpeg",
+        } as unknown as Blob);
+      }
+
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("barcode", barcode);
+      formData.append("stock", stock);
+      formData.append("price", price);
+      formData.append("memberId", (await getMemberId()) || "");
+
+      const data = await CallAPIProduct.createProductAPI(formData);
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
 
       setAlertConfig({
         visible: true,
@@ -123,17 +128,15 @@ export default function CreateProduct() {
           },
         ],
       });
-
-      
     } catch (error: any) {
       setError(error.message);
     }
   };
 
   return (
-    <SafeAreaView className={`flex-1   ${useBackgroundColorClass()}`}>
+    <SafeAreaView className={`flex-1 ${useBackgroundColorClass()}`}>
       <ScrollView>
-        <View className=" flex-1 justify-center h-full px-4 py-5 pb-20">
+        <View className="flex-1 justify-center h-full px-4 py-5 pb-20">
           {image && (
             <Image
               source={{ uri: image }}
@@ -142,16 +145,16 @@ export default function CreateProduct() {
             />
           )}
 
-            <FormField2
+          <FormField2
             title={t("product.productName")}
             value={name}
             handleChangeText={setproductname}
             bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
             textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles="mt-0 mb-2"
-            />
+          />
 
-            <FormField2
+          <FormField2
             title={t("product.barcode")}
             value={description}
             handleChangeText={setdescription}
@@ -159,45 +162,45 @@ export default function CreateProduct() {
             bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
             textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             keyboardType="number-pad"
-            />
+          />
 
-            <FormField2
+          <FormField2
             title={t("product.description")}
             value={barcode}
             handleChangeText={setbarcode}
             bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
             textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
             otherStyles={fieldStyles}
-            />
+          />
 
-            <View className="flex flex-row justify-between">
+          <View className="flex flex-row justify-between">
             <View className="w-1/2 pr-2">
               <FormField2
-              title={t("product.stock")}
-              value={stock}
-              handleChangeText={setstock}
-              otherStyles={fieldStyles}
-              bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
-              textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
-              keyboardType="number-pad"
+                title={t("product.stock")}
+                value={stock}
+                handleChangeText={setstock}
+                otherStyles={fieldStyles}
+                bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+                textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
+                keyboardType="number-pad"
               />
             </View>
             <View className="w-1/2 pl-2">
               <FormField2
-              title={t("product.price")}
-              value={price}
-              handleChangeText={setprice}
-              otherStyles={fieldStyles}
-              bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
-              textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
-              keyboardType="number-pad"
+                title={t("product.price")}
+                value={price}
+                handleChangeText={setprice}
+                otherStyles={fieldStyles}
+                bgColor={theme === "dark" ? "#2D2D2D" : "#e1e1e1"}
+                textcolor={theme === "dark" ? "#b1b1b1" : "#606060"}
+                keyboardType="number-pad"
               />
             </View>
-            </View>
+          </View>
 
           <TouchableOpacity
             onPress={pickImage}
-            className="mt-8 mb-2 items-center text"
+            className="mt-8 mb-2 items-center"
           >
             <Ionicons name="image" size={54} color="#cac9c8" />
             <CustomText className="text-center text-zinc-500 mt-1">
@@ -205,12 +208,14 @@ export default function CreateProduct() {
             </CustomText>
           </TouchableOpacity>
 
-          {error ? <CustomText className="text-red-500 mt-4">{error}</CustomText> : null}
+          {error ? (
+            <CustomText className="text-red-500 mt-4">{error}</CustomText>
+          ) : null}
 
           <CustomButton
             title={t("product.createbutton")}
             handlePress={handleCreateProduct}
-            containerStyles="mt-5 "
+            containerStyles="mt-5"
             textStyles="!text-white"
           />
         </View>
@@ -221,7 +226,9 @@ export default function CreateProduct() {
         title={alertConfig.title}
         message={alertConfig.message}
         buttons={alertConfig.buttons}
-        onClose={() => setAlertConfig((prev) => ({ ...prev, visible: false }))}
+        onClose={() =>
+          setAlertConfig((prev) => ({ ...prev, visible: false }))
+        }
       />
     </SafeAreaView>
   );
