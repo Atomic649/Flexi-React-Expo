@@ -3,12 +3,13 @@ import { getAxiosWithAuth } from "@/utils/axiosInstance";
 
 class CallAPIExpense {
   // Extract expenses from PDF
-  async extractPDFExpenseAPI(memberId: string, filePath: string): Promise<any> {
+  async extractPDFExpenseAPI(formData: FormData): Promise<any> {
     try {
       const axiosInstance = await getAxiosWithAuth();
-      const response = await axiosInstance.post(`/pdf/pdfExtract`, {
-        memberId,
-        filePath,
+      const response = await axiosInstance.post(`/pdf/pdfExtract`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       console.log("🚀PDFExtractAPI:", response.data);
@@ -184,9 +185,5 @@ class CallAPIExpense {
   }
  
 }
-
-
-
-
 
 export default new CallAPIExpense();

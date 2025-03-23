@@ -83,17 +83,23 @@ export default function DetectExpense() {
 
   const confirmAndProcessPdf = async () => {
     setModalVisible(false);
-    setLoading(true);
+    setLoading(true);    
+    onRefresh();//refreshing the table
     try {
       const memberId = await getMemberId();
       const filePath = pdfUri;
-      console.log("🔥filePath",filePath);
+      console.log("🔥filePath", filePath);
 
       if (memberId && filePath) {
-        const response = await CallAPIExpense.extractPDFExpenseAPI(
-          memberId,
-          filePath
-        );
+        const formData = new FormData();
+        formData.append("filePath", {
+          uri: filePath,
+          name: "file.pdf",
+          type: "application/pdf",
+        } as unknown as Blob);
+        formData.append("memberId", memberId);
+
+        const response = await CallAPIExpense.extractPDFExpenseAPI(formData);
         if (response.message === "Expenses created successfully") {
           setError(null);
           setExpenses(response.expenses);
@@ -115,6 +121,7 @@ export default function DetectExpense() {
       setLoading(false);
     }
   };
+
   // refreshing table
   const onRefresh = useCallback(async () => {
       setRefreshing(true);
@@ -315,6 +322,7 @@ export default function DetectExpense() {
       <CreateExpense
         success={() => {
           setIsCreateSuccess(true);
+          onRefresh();
           console.log("🔥isCreateSuccess", isCreateSuccess);
         }}
         visible={isCreateExpenseVisible}

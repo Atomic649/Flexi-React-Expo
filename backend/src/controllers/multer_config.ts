@@ -83,6 +83,17 @@ const fileFilterPDF = (
   }
 }
 
+// Delete file PDF
+export const deleteFilePDF = (filePath: string) => {
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    console.log("File deleted")
+  })
+}
+
 // Export PDF config
 export const pdfMulterConfig = {
   config: {
@@ -90,7 +101,7 @@ export const pdfMulterConfig = {
     limits: { fileSize: 1024 * 1024 * 10 },
     fileFilter: fileFilterPDF,
   },
-  keyUpload: "pdf",
+  keyUpload: "filePath",
 }
 
 
